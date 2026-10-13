@@ -959,7 +959,7 @@ header .container{
 
 /* =========================================
    品牌核心 Core Section
-   電腦版：左側品牌標題，右側四張卡片
+   電腦版：左側四張卡片，右側品牌標題
    平板版：標題置頂，四張卡片排列下方
    手機版：標題置頂，小手機卡片兩欄
    保留原本字體、顏色、卡片造型及陰影
@@ -984,11 +984,12 @@ header .container{
 
 /* =========================================
    左右背景裝飾圖片
+   保留原本設定，預設不顯示
 ========================================= */
 
-/* .core-section::before {
+/*
+.core-section::before {
   content: "";
-
   position: absolute;
   z-index: 0;
 
@@ -1005,13 +1006,11 @@ header .container{
 
   transform: translateY(-50%);
   pointer-events: none;
-
   opacity: 0.4;
 }
 
 .core-section::after {
   content: "";
-
   position: absolute;
   z-index: 0;
 
@@ -1028,9 +1027,9 @@ header .container{
 
   transform: translateY(-50%);
   pointer-events: none;
-
   opacity: 0.4;
-} */
+}
+*/
 
 
 /* =========================================
@@ -1042,7 +1041,7 @@ header .container{
   z-index: 2;
 
   width: calc(100% - 48px);
-  max-width: 1050px;
+  max-width: 1250px;
 
   margin: 0 auto;
 
@@ -1051,22 +1050,22 @@ header .container{
   align-items: center;
   justify-content: center;
 
-  gap: 24px;
+  gap: 35px;
 
   box-sizing: border-box;
 }
 
 
 /* =========================================
-   品牌標題區｜電腦版左側
+   品牌標題區｜電腦版右側
 ========================================= */
 
 .core-title {
   position: relative;
 
-  order: 1;
+  order: 2;
 
-  flex: 0 0 125px;
+  flex: 0 0 180px;
   min-width: 0;
 
   display: flex;
@@ -1075,10 +1074,10 @@ header .container{
 
   padding: 0;
 
-  text-align: center;
+  text-align: left;
   box-sizing: border-box;
 
-  transform: translateX(-45px);
+  transform: none;
 }
 
 
@@ -1097,7 +1096,7 @@ header .container{
 
   padding: 8px 0;
 
-  background-color: var(--core-bg);
+  /* background-color: var(--core-bg); */
 
   text-align: left;
 }
@@ -1147,20 +1146,20 @@ header .container{
 
 
 /* =========================================
-   四大品牌卡片排列｜電腦版右側
+   四大品牌卡片排列｜電腦版左側
 ========================================= */
 
 .core-cards {
-  order: 2;
+  order: 1;
 
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
 
   display: grid;
-  grid-template-columns: repeat(4, 180px);
+  grid-template-columns: repeat(4, minmax(0, 180px));
 
   justify-content: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 
@@ -1170,8 +1169,8 @@ header .container{
   position: relative;
   z-index: 0;
 
-  width: 180px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 180px;
   min-width: 0;
   min-height: 145px;
 
@@ -1315,7 +1314,7 @@ header .container{
 
 
 /* =========================================
-   1400px 以上
+   1400px 以上｜大尺寸桌機
 ========================================= */
 
 @media (min-width: 1400px) {
@@ -1338,30 +1337,38 @@ header .container{
 
   .core-wrap {
     max-width: 1250px;
-    gap: 35px;
+    gap: 45px;
   }
 
-  /* 品牌標題維持左側 */
-
-  .core-title {
-    order: 1;
-    flex: 0 0 125px;
-
-    transform: translateX(-90px);
-  }
-
-  /* 四張卡片維持右側 */
+  /* 左側四張卡片 */
 
   .core-cards {
-    order: 2;
+    order: 1;
 
-    grid-template-columns: repeat(4, 180px);
+    grid-template-columns: repeat(4, minmax(0, 180px));
     justify-content: center;
-    gap: 40px;
+    gap: 25px;
+  }
+
+  /* 右側品牌標題 */
+
+  .core-title {
+    order: 2;
+    flex: 0 0 190px;
+
+    transform: none;
+  }
+
+  .core-title-cn {
+    font-size: 36px;
+  }
+
+  .core-title-text small {
+    font-size: 15px;
   }
 
   .core-card {
-    width: 180px;
+    width: 100%;
   }
 }
 
@@ -1391,8 +1398,7 @@ header .container{
 
 
 /* =========================================
-   1201px–1399px｜電腦版
-   卡片固定 180px，不撐滿欄位
+   1201px–1399px｜一般桌機
 ========================================= */
 
 @media (min-width: 1201px) and (max-width: 1399px) {
@@ -1401,17 +1407,31 @@ header .container{
     width: calc(100% - 40px);
     max-width: 1200px;
 
-    gap: 18px;
+    gap: 25px;
   }
 
-  /* 品牌標題維持左側 */
+  /* 左側卡片 */
 
-  .core-title {
+  .core-cards {
     order: 1;
 
-    flex: 0 0 115px;
+    flex: 1 1 auto;
+    min-width: 0;
 
-    transform: translateX(-45px);
+    grid-template-columns: repeat(4, minmax(0, 180px));
+
+    justify-content: center;
+    gap: 16px;
+  }
+
+  /* 右側標題 */
+
+  .core-title {
+    order: 2;
+
+    flex: 0 0 160px;
+
+    transform: none;
   }
 
   .core-title-cn {
@@ -1422,26 +1442,11 @@ header .container{
     font-size: 14px;
   }
 
-  /* 四大品牌卡片：固定寬度 */
-
-  .core-cards {
-    order: 2;
-
-    flex: 0 1 auto;
-    min-width: 0;
-
-    display: grid;
-    grid-template-columns: repeat(4, 180px);
-
-    justify-content: center;
-    gap: 16px;
-  }
-
   /* 卡片 */
 
   .core-card {
-    width: 180px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 180px;
     min-width: 0;
     min-height: 145px;
 
@@ -1510,14 +1515,13 @@ header .container{
     justify-content: center;
 
     transform: none;
+    text-align: center;
   }
 
   .core-title-text {
     min-width: 112px;
     align-items: center;
   }
-
-  /* 標題字體 */
 
   .core-title-cn {
     font-size: 30px;
@@ -1527,7 +1531,7 @@ header .container{
     font-size: 15px;
   }
 
-  /* 四張卡片在標題下方 */
+  /* 四張卡片排列在下方 */
 
   .core-cards {
     order: 1;
@@ -1544,6 +1548,7 @@ header .container{
 
   .core-card {
     width: 100%;
+    max-width: none;
     min-width: 0;
     min-height: 145px;
 
@@ -1574,6 +1579,8 @@ header .container{
     font-size: 16px;
     letter-spacing: 0;
     line-height: 1.5;
+
+    white-space: normal;
   }
 
   .core-section::before,
@@ -1587,7 +1594,7 @@ header .container{
 
 
 /* =========================================
-   992px–1200px｜平板
+   992px–1200px｜平板橫向
 ========================================= */
 
 @media (min-width: 992px) and (max-width: 1200px) {
@@ -1652,7 +1659,6 @@ header .container{
     width: 60px;
     height: 60px;
   }
-
 
   .core-section::before,
   .core-section::after {
@@ -1725,16 +1731,24 @@ header .container{
   }
 
   .core-icon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 0;
-    }
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0;
+  }
+
+  .core-icon img {
+    width: 56px;
+    height: 56px;
+  }
 
   .core-card {
     width: 100%;
+    max-width: none;
     min-width: 0;
     min-height: 125px;
+
     padding: 10px 1px 8px;
+
     box-shadow: 3px 3px 0 rgba(179, 154, 117, 0.2);
   }
 
@@ -1744,8 +1758,6 @@ header .container{
 
     border-radius: 8px;
   }
-
-
 
   .core-card strong {
     font-size: 16px;
@@ -1790,7 +1802,7 @@ header .container{
 
 
 /* =========================================
-   480px 以下｜小手機，卡片兩欄
+   575px 以下｜手機卡片兩欄
 ========================================= */
 
 @media (max-width: 575px) {
@@ -1829,6 +1841,10 @@ header .container{
     margin-bottom: 5px;
   }
 
+  .core-icon img {
+    width: 54px;
+    height: 54px;
+  }
 
   .core-card strong {
     font-size: 18px;
@@ -1839,7 +1855,7 @@ header .container{
     font-size: 14px;
     letter-spacing: 0.015em;
 
-    white-space: nowrap;
+    white-space: normal;
   }
 
   .core-section::before,
@@ -1885,7 +1901,8 @@ header .container{
   }
 
   .core-card > small {
-    font-size: 8px;
+    font-size: 11px;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -1904,6 +1921,7 @@ header .container{
     transform: none;
   }
 }
+
 
 /* 精選行程 */
 
