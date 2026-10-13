@@ -1,0 +1,2593 @@
+@charset "UTF-8";
+
+:root {
+  --ink: #4b4038;
+  --muted: #88796c;
+  --gold: #b39a75;
+  --gold2:#9E7557;
+  --gold-dark: #8e7554;
+  --paper: #f8f2eb;
+  --paper-2: #efe3d6;
+  --white: #fffdf9;
+  --line: rgba(142, 117, 84, .38);
+  --core-bg: #fffaf3;
+  --core-card-bg: #f3efe4;
+  --core-gold: #b49a72;
+  --core-gold-dark: #8c6940;
+  --core-text: #3E1010;
+  --core-muted: #9E7557;
+  --shadow: 0 18px 45px rgba(68, 53, 40, .10);
+  --serif: "Times New Roman", "Noto Serif TC", serif;
+  --sans: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+  --max: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--white);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.section-inner {
+  width: min(calc(100% - 80px), var(--max));
+  margin: 0 auto;
+}
+
+.section-paper {
+  background:
+    linear-gradient(rgba(255,255,255,.68), rgba(255,255,255,.68)),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(179,154,117,.07) 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(179,154,117,.07) 24px),
+    var(--paper);
+}
+
+.section-white {
+  background: #fffdfa;
+}
+
+/* header */
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+
+    background: white;
+    height: 66px;
+    border-bottom: 1px solid #e6e6e6;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+header .container{
+    max-width: 1200px;
+    height: 66px;
+    margin: 0 auto;
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ===== Logo ===== */
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo img{
+    height: 45px;
+    width: auto;
+    display: block;
+}
+
+
+/* Hero */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  height: 520px;
+  max-height: none;
+  overflow: hidden;
+  background: #d8c5ad;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(90deg, rgba(54,37,20,.15), transparent 55%),
+    url("../images/ar-ul/banner-1.jpg")
+    center center / cover no-repeat;
+  transform: scale(1.02);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(36,26,17,.12),
+    transparent 55%,
+    rgba(36,26,17,.18)
+  );
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 15px rgba(0,0,0,.28);
+  padding-top: 140px;
+}
+
+.hero-content .eyebrow {
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: .42em;
+}
+
+.hero-content h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(35px, 3vw, 50px);
+  font-weight: 400;
+  letter-spacing: .18em;
+}
+
+.hero-content p:last-child {
+  margin: 7px 0 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  letter-spacing: 0.08rem;
+}
+
+
+/* 平板 */
+@media (max-width: 991px) {
+
+  .hero {
+    height: 360px;
+  }
+
+  .hero-content {
+    padding-top: 90px;
+  }
+
+}
+
+
+/* 手機 */
+@media (max-width: 767px) {
+
+  .hero {
+    height: 280px;
+  }
+
+  .hero-content {
+    padding: 55px 20px 0;
+  }
+
+  .hero-content .eyebrow {
+    margin-bottom: 6px;
+    font-size: 8px;
+    letter-spacing: .28em;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(28px, 8vw, 40px);
+    letter-spacing: .12em;
+  }
+
+  .hero-content p:last-child {
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: .12em;
+  }
+
+}
+
+
+/* 小手機 */
+@media (max-width: 575px) {
+
+  .hero {
+    height: 260px;
+  }
+
+  .hero-content {
+    padding-top: 45px;
+  }
+
+  .hero-content h1 {
+    font-size: 29px;
+  }
+
+  .hero-content p:last-child {
+    font-size: 9px;
+  }
+
+}
+
+
+/* 起源｜整體區塊 */
+
+.brand-section {
+  padding: 105px 0 60px;
+}
+
+.origin-section {
+  padding: 10px 0;
+}
+
+
+/* =========================================
+   起源｜上方中央品牌標題
+========================================= */
+
+.brand-heading {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 75px;
+  padding: 0 70px;
+  text-align: center;
+}
+
+
+/* The Art of Travel */
+
+.brand-heading .section-kicker {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--gold-dark);
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+
+/* 巨匠｜Icon｜典藏 */
+
+.brand-heading .brand-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin: 0;
+  color: #3f3934;
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: .12em;
+}
+
+
+/* 巨匠 / 典藏文字 */
+
+.brand-title-word {
+  display: inline-block;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+
+/* 巨匠與典藏中間 Icon */
+
+.brand-title-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  margin: 0 3px;
+}
+
+.brand-title-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+/* 品牌副標 */
+
+.brand-heading p {
+  margin: 18px auto 0;
+  color: #20201f;
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 2;
+  letter-spacing: .12em;
+}
+
+
+/* 品牌副標｜英文 */
+
+.brand-heading p .brand-subtitle-highlight {
+  color: var(--gold2);
+  font-size: 20px;
+  letter-spacing: .1rem;
+}
+
+
+/* =========================================
+   左上／右下裝飾 Icon
+========================================= */
+
+.brand-heading-icon {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  opacity: .65;
+}
+
+.brand-heading-icon img {
+  display: block;
+  width: 60%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+/* 左上 Icon */
+
+.brand-heading-icon-left {
+  left: 90px;
+}
+
+
+/* 右下 Icon */
+
+.brand-heading-icon-right {
+  right: 90px;
+  bottom: -8px;
+}
+
+
+/* =========================================
+   起源｜左右內容版面
+========================================= */
+
+.brand-grid {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 70px;
+  align-items: center;
+}
+
+
+/* =========================================
+   左側文字
+========================================= */
+
+.brand-copy {
+  width: 100%;
+  max-width: 480px;
+  padding-left: 50px;
+}
+
+
+/* 區塊英文小標 */
+
+.section-kicker {
+  display: block;
+  color: var(--gold-dark);
+  font-family: var(--serif);
+  font-size: 13px;
+  letter-spacing: .20em;
+  text-transform: uppercase;
+}
+
+
+/* 左側標題 */
+
+.brand-copy h2,
+.brand-copy h3 {
+  margin: 18px 0 28px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(27px, 3vw, 40px);
+  line-height: 1.45;
+  letter-spacing: .08em;
+}
+
+
+/* 引號 */
+
+.brand-copy .ornament {
+  font-family: Georgia, serif;
+  color: var(--gold);
+  font-size: 48px;
+  line-height: 1;
+  height: 28px;
+}
+
+
+/* 左側內文 */
+
+.brand-copy p {
+  margin: 18px 0 30px;
+  max-width: 430px;
+  color: #776b61;
+  font-size: 16px;
+  line-height: 2.1;
+  letter-spacing: .07em;
+}
+
+
+/* =========================================
+   左側底部照片
+========================================= */
+
+.brand-line {
+  position: relative;
+  width: 180px;
+  height: 110px;
+  margin-top: 30px;
+  overflow: hidden;
+}
+
+.brand-line img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform .6s ease;
+}
+
+.brand-line:hover img {
+  transform: scale(1.03);
+}
+
+
+/* =========================================
+   右側主視覺照片
+   桌機：寬度 80%，高度 100%
+========================================= */
+
+.brand-photo {
+  position: relative;
+  display: block;
+  width: 95%;
+  min-width: 0;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.brand-photo img {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform .8s ease;
+}
+
+.brand-photo:hover img {
+  transform: scale(1.01);
+}
+
+
+/* =========================================
+   大螢幕
+========================================= */
+
+@media (min-width: 1400px) {
+
+  .brand-grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 30px;
+  }
+
+  .origin-section .section-inner {
+    width: min(calc(100% - 80px), 1300px);
+    margin: 0 auto;
+  }
+
+  .brand-photo {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+}
+
+
+/* =========================================
+   平板
+========================================= */
+
+@media (max-width: 991px) {
+
+  .brand-section {
+    padding: 80px 0 85px;
+  }
+
+  .origin-section {
+    padding: 80px 0 85px;
+  }
+
+  /* 上方標題 */
+
+  .brand-heading {
+    margin-bottom: 60px;
+    padding: 0 55px;
+  }
+
+  .brand-heading h2 {
+    font-size: 32px;
+  }
+
+  .brand-heading .brand-title {
+    gap: 0;
+    font-size: 32px;
+    white-space: nowrap;
+  }
+
+  .brand-title-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 2px;
+  }
+
+  .brand-title-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* 副標 */
+
+  .brand-heading p {
+    font-size: 12px;
+  }
+
+  .brand-heading p .brand-subtitle-highlight {
+    color: var(--gold2);
+    font-size: 12px;
+  }
+
+  /* 裝飾 Icon */
+
+  .brand-heading-icon {
+    width: 38px;
+    height: 38px;
+    opacity: .6;
+  }
+
+  /* 左右內容 */
+
+  .brand-grid {
+    grid-template-columns: 0.82fr 1.18fr;
+    gap: 40px;
+  }
+
+  /* 左側文字 */
+
+  .brand-copy {
+    width: 100%;
+    padding-left: 20px;
+    max-width: none;
+  }
+
+  .brand-copy h2,
+  .brand-copy h3 {
+    font-size: 30px;
+    letter-spacing: .06em;
+  }
+
+  .brand-copy p {
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  /* 左側底部照片 */
+
+  .brand-line {
+    width: 160px;
+    height: 100px;
+    margin-top: 28px;
+  }
+
+  /* 平板照片：維持 80% 寬度 */
+
+  .brand-photo {
+    width: 80%;
+    height: 100%;
+    min-width: 0;
+    margin: 0 auto;
+  }
+
+  .brand-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+}
+
+
+/* =========================================
+   手機
+========================================= */
+
+@media (max-width: 767px) {
+
+  .brand-section {
+    padding: 65px 20px 70px;
+  }
+
+  .origin-section {
+    padding: 65px 20px 70px;
+  }
+
+  /* 上方中央標題 */
+
+  .brand-heading {
+    margin-bottom: 50px;
+    padding: 0 42px;
+  }
+
+  .brand-heading .section-kicker {
+    margin-bottom: 10px;
+    font-size: 10px;
+    letter-spacing: .20em;
+  }
+
+  .brand-heading .brand-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    font-size: 26px;
+    line-height: 1.5;
+    letter-spacing: .06em;
+  }
+
+  /* 中間 Icon */
+
+  .brand-title-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 1px;
+  }
+
+  .brand-title-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* 副標 */
+
+  .brand-heading p {
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 1.9;
+    letter-spacing: .06em;
+  }
+
+  .brand-heading p .brand-subtitle-highlight {
+    color: var(--gold2);
+    font-size: 11px;
+    letter-spacing: .06em;
+  }
+
+  /* 裝飾 Icon */
+
+  .brand-heading-icon {
+    width: 30px;
+    height: 30px;
+    opacity: .55;
+  }
+
+  .brand-heading-icon-left {
+    top: -5px;
+    left: 5px;
+  }
+
+  .brand-heading-icon-right {
+    right: 5px;
+    bottom: -5px;
+  }
+
+  .brand-heading-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* 左右內容改為上下排列 */
+
+  .brand-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    align-items: stretch;
+  }
+
+  /* 左側文字 */
+
+  .brand-copy {
+    width: 100%;
+    padding-left: 0;
+    max-width: none;
+  }
+
+  .section-kicker {
+    font-size: 12px;
+    letter-spacing: .16em;
+  }
+
+  .brand-copy h2,
+  .brand-copy h3 {
+    margin: 15px 0 22px;
+    font-size: 26px;
+    line-height: 1.55;
+    letter-spacing: .05em;
+  }
+
+  .brand-copy .ornament {
+    font-size: 42px;
+    height: 24px;
+  }
+
+  .brand-copy p {
+    margin: 16px 0;
+    max-width: none;
+    font-size: 13px;
+    line-height: 2;
+    letter-spacing: .04em;
+  }
+
+  /* 左側底部照片 */
+
+  .brand-line {
+    width: 150px;
+    height: 90px;
+    margin-top: 25px;
+  }
+
+  .brand-line img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* 手機照片：滿版寬度，16:10 比例 */
+
+  .brand-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    margin: 0;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(50, 40, 30, .10);
+  }
+
+  .brand-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+}
+
+
+/* =========================================
+   小手機
+========================================= */
+
+@media (max-width: 480px) {
+
+  .brand-section {
+    padding: 55px 18px 60px;
+  }
+
+  .brand-heading {
+    margin-bottom: 42px;
+    padding: 0 32px;
+  }
+
+  .brand-heading .brand-title {
+    gap: 0;
+    font-size: 24px;
+    line-height: 1.55;
+    letter-spacing: .05em;
+    white-space: nowrap;
+  }
+
+  .brand-title-icon {
+    width: 21px;
+    height: 21px;
+    margin: 0 1px;
+  }
+
+  .brand-heading p {
+    font-size: 10.5px;
+  }
+
+  .brand-heading p .brand-subtitle-highlight {
+    color: var(--gold2);
+    font-size: 10.5px;
+    letter-spacing: .05em;
+  }
+
+  .brand-heading-icon {
+    width: 24px;
+    height: 24px;
+    opacity: .5;
+  }
+
+  .brand-heading-icon-left {
+    top: -4px;
+    left: 3px;
+  }
+
+  .brand-heading-icon-right {
+    right: 3px;
+    bottom: -4px;
+  }
+
+  .brand-grid {
+    gap: 32px;
+  }
+
+  .brand-copy h2,
+  .brand-copy h3 {
+    font-size: 24px;
+    line-height: 1.55;
+  }
+
+  .brand-copy p {
+    font-size: 12.5px;
+    line-height: 2;
+  }
+
+  .brand-line {
+    width: 130px;
+    height: 80px;
+    margin-top: 22px;
+  }
+
+  /* 小手機照片 */
+
+  .brand-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .brand-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+}
+
+
+
+
+
+/* 品牌核心｜Brand Essence */
+
+.core-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: 100%;
+  padding: 60px 0;
+
+  background-color: var(--core-bg);
+
+  border-top: 1px solid rgba(179, 154, 117, 0.28);
+  border-bottom: 1px solid rgba(179, 154, 117, 0.28);
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   左右背景裝飾圖片
+========================================= */
+
+/* .core-section::before {
+  content: "";
+
+  position: absolute;
+  z-index: 0;
+
+  top: 75%;
+  left: -20px;
+
+  width: 220px;
+  height: 190px;
+
+  background-image: url("../images/ar-ul/icon-4.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left center;
+
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  opacity: 0.4;
+}
+
+.core-section::after {
+  content: "";
+
+  position: absolute;
+  z-index: 0;
+
+  top: 40%;
+  right: -60px;
+
+  width: 170px;
+  height: 150px;
+
+  background-image: url("../images/ar-ul/icon-5.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right center;
+
+  transform: translateY(-50%);
+  pointer-events: none;
+
+  opacity: 0.4;
+} */
+
+
+/* =========================================
+   內容容器
+========================================= */
+
+.core-wrap {
+  position: relative;
+  z-index: 2;
+
+  width: calc(100% - 48px);
+  max-width: 1050px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 24px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   品牌標題區｜往左微調
+========================================= */
+
+.core-title {
+  position: relative;
+
+  flex: 0 0 125px;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  text-align: center;
+  box-sizing: border-box;
+
+  /* 品牌標題往左移 */
+  transform: translateX(-45px);
+}
+
+
+/* 品牌標題文字 */
+
+.core-title-text {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  min-width: 120px;
+
+  padding: 8px 0;
+
+  background-color: var(--core-bg);
+
+  text-align: left;
+}
+
+
+/* 中文標題 */
+
+.core-title-cn {
+  display: block;
+
+  color: var(--core-text);
+
+  font-family: var(--serif, "Noto Serif TC", serif);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.8;
+
+  white-space: nowrap;
+}
+
+
+/* 英文副標 */
+
+.core-title-text small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--core-muted);
+
+  font-family: var(--serif, Georgia, serif);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+
+  white-space: nowrap;
+}
+
+
+/* 標題裝飾線 */
+
+.core-title-line {
+  display: none;
+}
+
+
+/* =========================================
+   四大品牌卡片排列
+========================================= */
+
+.core-cards {
+  flex: 0 1 auto;
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: repeat(4, 180px);
+
+  justify-content: center;
+  gap: 16px;
+}
+
+
+/* 品牌特色卡片 */
+
+.core-card {
+  position: relative;
+  z-index: 0;
+
+  width: 180px;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 145px;
+
+  padding: 11px 5px 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background-color: #FFFCF7;
+
+  border: 1px solid #9C8366;
+  border-radius: 10px 25px 10px 25px;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+
+/* 卡片立體陰影 */
+
+.core-card::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+
+  right: -5px;
+  bottom: -5px;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 11px;
+
+  background: rgba(203, 181, 148, 0.15);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   Icon 圖片外框｜桌機
+========================================= */
+
+.core-icon {
+  flex: 0 0 auto;
+
+  width: 88px;
+  height: 88px;
+
+  margin-bottom: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+
+/* Icon 圖片 */
+
+.core-icon img {
+  display: block;
+
+  width: 80px;
+  height: 80px;
+
+  max-width: none;
+
+  object-fit: contain;
+  object-position: center;
+}
+
+
+/* =========================================
+   卡片中文標題
+========================================= */
+
+.core-card strong {
+  display: block;
+  max-width: 100%;
+
+  color: var(--core-text);
+
+  font-family: var(--serif, "Noto Serif TC", serif);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+
+  white-space: nowrap;
+}
+
+
+/* 卡片英文副標 */
+
+.core-card > small {
+  display: block;
+  max-width: 100%;
+
+  margin-top: -3px;
+  margin-bottom: 4px;
+
+  color: var(--core-muted);
+
+  font-family: var(--serif, Georgia, serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.035em;
+  line-height: 1.5;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   桌機 Hover
+========================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  .core-card:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--core-gold-dark);
+
+    box-shadow: 5px 8px 0 rgba(179, 154, 117, 0.2);
+
+    background-color: #fffefb;
+  }
+}
+
+
+/* =========================================
+   1400px 以上
+========================================= */
+
+@media (min-width: 1400px) {
+
+  .core-section::before {
+    top: 75%;
+    left: 0;
+
+    width: 260px;
+    height: 190px;
+  }
+
+  .core-section::after {
+    top: 40%;
+    right: 0;
+
+    width: 190px;
+    height: 150px;
+  }
+
+
+  /* 內容容器 */
+
+  .core-wrap {
+    max-width: 1050px;
+    gap: 80px;
+  }
+
+
+  /* 品牌標題 */
+
+  .core-title {
+    flex: 0 0 125px;
+
+    /* 桌機版往左移 */
+    transform: translateX(-90px);
+  }
+
+
+  /* 四大卡片 */
+
+  .core-cards {
+    grid-template-columns: repeat(4, 180px);
+    justify-content: center;
+    gap: 35px;
+  }
+
+  .core-card {
+    width: 180px;
+  }
+}
+
+
+/* =========================================
+   1600px 以上｜背景裝飾
+========================================= */
+
+@media (min-width: 1600px) {
+
+  .core-section::before {
+    top: 75%;
+    left: 0;
+
+    width: 580px;
+    height: 190px;
+  }
+
+  .core-section::after {
+    top: 40%;
+    right: 0;
+
+    width: 360px;
+    height: 150px;
+  }
+}
+
+
+/* =========================================
+   992px 以下｜平板
+========================================= */
+
+@media (max-width: 991px) {
+
+  .core-section {
+    padding: 22px 0;
+  }
+
+  .core-wrap {
+    width: calc(100% - 36px);
+    max-width: 850px;
+
+    gap: 14px;
+  }
+
+
+  /* 平板標題｜取消大幅左移 */
+
+  .core-title {
+    flex: 0 0 115px;
+    transform: translateX(-10px);
+  }
+
+  .core-title-text {
+    min-width: 112px;
+  }
+
+
+  /* 四欄排列 */
+
+  .core-cards {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    justify-content: center;
+    gap: 10px;
+  }
+
+
+  /* 卡片 */
+
+  .core-card {
+    width: 100%;
+    min-height: 130px;
+
+    padding: 10px 3px;
+  }
+
+
+  /* Icon 外框 */
+
+  .core-icon {
+    width: 64px;
+    height: 64px;
+
+    margin-bottom: 5px;
+  }
+
+
+  /* Icon 圖片 */
+
+  .core-icon img {
+    width: 58px;
+    height: 58px;
+  }
+
+
+  /* 卡片文字 */
+
+  .core-card strong {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .core-card > small {
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+
+  /* 背景裝飾 */
+
+  .core-section::before,
+  .core-section::after {
+    width: 130px;
+    height: 120px;
+
+    opacity: 0.32;
+  }
+}
+
+
+/* =========================================
+   767px 以下｜手機
+========================================= */
+
+@media (max-width: 767px) {
+
+  .core-section {
+    padding: 22px 0 24px;
+  }
+
+  .core-wrap {
+    width: calc(100% - 30px);
+    max-width: 520px;
+
+    flex-direction: column;
+    align-items: center;
+
+    gap: 18px;
+  }
+
+
+  /* 手機標題 */
+
+  .core-title {
+    flex: none;
+
+    width: 100%;
+    min-height: 42px;
+
+    justify-content: center;
+
+    /* 手機版不偏移 */
+    transform: none;
+  }
+
+  .core-title-text {
+    min-width: 120px;
+
+    padding: 2px 8px;
+
+    background-color: var(--core-bg);
+  }
+
+  .core-title-cn {
+    font-size: 15px;
+  }
+
+
+  /* 四欄排列 */
+
+  .core-cards {
+    width: 100%;
+    flex: none;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    justify-content: center;
+    gap: 9px;
+  }
+
+
+  /* 卡片 */
+
+  .core-card {
+    width: 100%;
+    min-height: 115px;
+
+    padding: 9px 2px 8px;
+
+    border-radius: 8px;
+
+    box-shadow: 3px 3px 0 rgba(179, 154, 117, 0.2);
+  }
+
+  .core-card::after {
+    right: -3px;
+    bottom: -3px;
+
+    border-radius: 8px;
+  }
+
+
+  /* Icon 外框 */
+
+  .core-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 5px;
+  }
+
+
+  /* Icon 圖片 */
+
+  .core-icon img {
+    width: 46px;
+    height: 46px;
+  }
+
+
+  /* 卡片文字 */
+
+  .core-card strong {
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 1.6;
+  }
+
+  .core-card > small {
+    font-size: 7px;
+    letter-spacing: -0.02em;
+    line-height: 1.45;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* 左右背景裝飾 */
+
+  .core-section::before,
+  .core-section::after {
+    top: auto;
+    bottom: 0;
+
+    width: 80px;
+    height: 80px;
+
+    opacity: 0.2;
+
+    transform: none;
+  }
+
+  .core-section::before {
+    left: -15px;
+    background-position: left bottom;
+  }
+
+  .core-section::after {
+    right: -15px;
+    background-position: right bottom;
+  }
+}
+
+
+/* =========================================
+   480px 以下｜小手機
+========================================= */
+
+@media (max-width: 480px) {
+
+  .core-section {
+    padding: 20px 0 23px;
+  }
+
+  .core-wrap {
+    width: calc(100% - 32px);
+    max-width: 400px;
+
+    gap: 17px;
+  }
+
+
+  /* 兩欄卡片 */
+
+  .core-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 12px;
+    row-gap: 13px;
+  }
+
+
+  /* 卡片 */
+
+  .core-card {
+    width: 100%;
+    min-height: 125px;
+
+    padding: 10px 5px 9px;
+  }
+
+
+  /* Icon 外框 */
+
+  .core-icon {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 5px;
+  }
+
+
+  /* Icon 圖片 */
+
+  .core-icon img {
+    width: 54px;
+    height: 54px;
+  }
+
+
+  /* 卡片文字 */
+
+  .core-card strong {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .core-card > small {
+    font-size: 9px;
+    letter-spacing: 0.015em;
+
+    white-space: nowrap;
+  }
+
+
+  /* 背景裝飾 */
+
+  .core-section::before,
+  .core-section::after {
+    width: 70px;
+    height: 70px;
+
+    opacity: 0.2;
+  }
+}
+
+
+/* =========================================
+   360px 以下｜窄螢幕
+========================================= */
+
+@media (max-width: 360px) {
+
+  .core-wrap {
+    width: calc(100% - 24px);
+  }
+
+  .core-cards {
+    gap: 10px;
+  }
+
+  .core-card {
+    min-height: 120px;
+  }
+
+  .core-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .core-icon img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .core-card strong {
+    font-size: 13px;
+  }
+
+  .core-card > small {
+    font-size: 8px;
+  }
+}
+
+
+/* =========================================
+   減少動態效果設定
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .core-card {
+    transition: none;
+  }
+}
+
+
+
+
+
+/* 精選行程 */
+
+.featured-section {
+  position: relative;
+  padding: 95px 0 105px;
+  overflow: hidden;
+}
+
+.featured-heading {
+  margin-bottom: 34px;
+}
+
+
+/* =========================================================
+   主版面：左側箭頭＋右側輪播
+========================================================= */
+
+.featured-layout {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+
+  width: 100%;
+  overflow: visible;
+}
+
+
+/* =========================================================
+   左側箭頭固定
+========================================================= */
+
+.featured-left-controls {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+
+/* 精選行程箭頭 */
+
+.featured-left-controls .circle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 28px;
+  padding: 0;
+
+  border: 1px solid rgba(142, 117, 84, 0.55);
+  border-radius: 20px;
+
+  background: transparent;
+  color: var(--gold-dark);
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.featured-left-controls .circle-btn:hover {
+  background: var(--gold-dark);
+  color: #fff;
+  border-color: var(--gold-dark);
+}
+
+
+/* =========================================================
+   輪播視窗
+   從原本內容區域延伸至瀏覽器右側
+========================================================= */
+
+.featured-slider {
+  position: relative;
+
+  /*
+    將輪播右側延伸至瀏覽器邊緣。
+    搭配置中的 .section-inner 使用。
+  */
+  width: calc(50vw + 50%);
+  margin-right: calc(50% - 50vw);
+
+  min-width: 0;
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  padding: 28px 0 30px;
+}
+
+
+/* =========================================================
+   行程軌道
+========================================================= */
+
+.featured-track {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  width: max-content;
+  max-width: none;
+
+  transform: translate3d(0, 0, 0);
+
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0.75, 0.25, 1);
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   每一張行程卡片｜桌機放大
+========================================================= */
+
+.featured-item {
+  position: relative;
+
+  flex: 0 0 460px;
+  width: 460px;
+  min-width: 0;
+
+  opacity: 0.78;
+  transform: scale(0.96);
+  transform-origin: center center;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+
+  box-sizing: border-box;
+}
+
+
+/* 當前行程 */
+
+.featured-item.is-active {
+  z-index: 2;
+
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+
+/* =========================================================
+   非當前行程隱藏文字
+========================================================= */
+
+.featured-item:not(.is-active) .featured-info {
+  visibility: hidden;
+  opacity: 0;
+
+  height: 0;
+  overflow: hidden;
+
+  padding-top: 0;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   行程圖片
+========================================================= */
+
+.featured-photo {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 4 / 3;
+
+  background: var(--bg) center / cover no-repeat;
+  overflow: hidden;
+}
+
+
+/* 如果行程圖片使用 img 標籤 */
+
+.featured-photo img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* =========================================================
+   行程資訊
+========================================================= */
+
+.featured-info {
+  padding: 14px 3px 0;
+
+  visibility: visible;
+  opacity: 1;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+
+  box-sizing: border-box;
+}
+
+
+/* 國家英文／行程天數 */
+
+.featured-info > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--gold-dark);
+
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+}
+
+
+/* 行程標題 */
+
+.featured-info h3 {
+  margin: 5px 0;
+
+  color: var(--ink);
+
+  font-family: var(--serif);
+  font-weight: 400;
+
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  line-height: 1.55;
+
+  overflow-wrap: break-word;
+}
+
+
+/* 出發日期 */
+
+.featured-info time {
+  display: block;
+
+  color: var(--gold-dark);
+
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+
+/* 行程介紹 */
+
+.featured-info p {
+  margin: 8px 0 0;
+
+  color: #776c62;
+
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   行程介紹按鈕
+   對應 HTML：.featured-detail-btn
+========================================================= */
+
+.featured-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  min-width: 132px;
+  margin-top: 18px;
+  padding: 10px 16px;
+
+  border: 1px solid rgba(142, 117, 84, 0.65);
+  border-radius: 0;
+
+  background: transparent;
+  color: var(--gold-dark);
+
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.featured-detail-btn::after {
+  content: "→";
+
+  display: inline-block;
+
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+
+  transition: transform 0.25s ease;
+}
+
+.featured-detail-btn:hover {
+  background: var(--gold-dark);
+  border-color: var(--gold-dark);
+  color: #fff;
+}
+
+.featured-detail-btn:hover::after {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   共用標題
+========================================================= */
+
+.section-heading,
+.classic-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+
+  transform: translateX(-15px);
+
+}
+
+.section-heading h2,
+.classic-heading h2 {
+  display: block;
+  color: var(--core-text);
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.8;
+  white-space: nowrap;
+
+  margin-top: 10px;
+}
+
+
+/* =========================================================
+   共用箭頭
+========================================================= */
+
+.slider-controls,
+.classic-arrows {
+  display: flex;
+  gap: 8px;
+}
+
+.circle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: 1px solid rgba(142, 117, 84, 0.55);
+  background: transparent;
+
+  border-radius: 50%;
+  color: var(--ink);
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.circle-btn:hover {
+  background: var(--gold-dark);
+  color: #fff;
+  border-color: var(--gold-dark);
+}
+
+
+/* =========================================================
+   精選行程圓點
+========================================================= */
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: 22px;
+}
+
+.slider-dots button {
+  display: block;
+
+  flex: 0 0 auto;
+
+  width: 5px;
+  height: 5px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: #cfc2b4;
+
+  cursor: pointer;
+
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.slider-dots button.is-active {
+  width: 18px;
+
+  border-radius: 10px;
+  background: var(--gold-dark);
+}
+
+
+/* =========================================================
+   大尺寸桌機｜圖片再放大
+========================================================= */
+
+@media (min-width: 1440px) {
+  .featured-item {
+    flex-basis: 500px;
+    width: 500px;
+  }
+
+  .featured-track {
+    gap: 34px;
+  }
+
+  .featured-slider {
+    padding-top: 32px;
+    padding-bottom: 34px;
+  }
+
+  .featured-info h3 {
+    font-size: 20px;
+  }
+}
+
+
+/* =========================================================
+   平板｜保留右側滿版延伸
+========================================================= */
+
+@media (max-width: 991px) {
+  .featured-section {
+    padding: 75px 0 85px;
+  }
+
+  .featured-heading {
+    margin-bottom: 28px;
+  }
+
+  .featured-layout {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .featured-left-controls {
+    gap: 10px;
+  }
+
+  .featured-left-controls .circle-btn {
+    width: 36px;
+    height: 27px;
+
+    font-size: 15px;
+  }
+
+  .featured-slider {
+    padding: 22px 0 24px;
+  }
+
+  .featured-track {
+    gap: 22px;
+  }
+
+  .featured-item {
+    flex-basis: 360px;
+    width: 360px;
+  }
+
+  .featured-item.is-active {
+    transform: scale(1);
+  }
+
+  .featured-info h3 {
+    font-size: 17px;
+  }
+
+  .featured-detail-btn {
+    margin-top: 15px;
+  }
+}
+
+
+/* =========================================================
+   手機｜大圖輪播，右側延伸至螢幕邊緣
+========================================================= */
+
+@media (max-width: 767px) {
+  .featured-section {
+    padding: 58px 0 65px;
+  }
+
+  .featured-heading {
+    margin-bottom: 22px;
+  }
+
+  .featured-layout {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .featured-left-controls {
+    align-self: center;
+
+    gap: 10px;
+  }
+
+  .featured-left-controls .circle-btn {
+    width: 31px;
+    height: 25px;
+
+    font-size: 14px;
+  }
+
+  .featured-slider {
+    width: calc(50vw + 50%);
+    margin-right: calc(50% - 50vw);
+
+    padding: 16px 0 20px;
+  }
+
+  .featured-track {
+    gap: 16px;
+  }
+
+  .featured-item {
+    flex-basis: 78vw;
+    width: 78vw;
+
+    opacity: 0.82;
+    transform: scale(0.98);
+  }
+
+  .featured-item.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .featured-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .featured-info {
+    padding: 10px 2px 0;
+  }
+
+  .featured-info > span {
+    font-size: 9px;
+  }
+
+  .featured-info h3 {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .featured-info time {
+    font-size: 11px;
+  }
+
+  .featured-info p {
+    font-size: 11px;
+    line-height: 1.8;
+  }
+
+  .featured-detail-btn {
+    min-width: 120px;
+    margin-top: 13px;
+    padding: 9px 13px;
+
+    font-size: 11px;
+  }
+
+  .slider-dots {
+    margin-top: 14px;
+  }
+}
+
+
+/* =========================================================
+   小手機
+========================================================= */
+
+@media (max-width: 390px) {
+  .featured-section {
+    padding: 48px 0 55px;
+  }
+
+  .featured-layout {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .featured-left-controls .circle-btn {
+    width: 27px;
+    height: 23px;
+
+    font-size: 12px;
+  }
+
+  .featured-item {
+    flex-basis: 78vw;
+    width: 78vw;
+  }
+
+  .featured-track {
+    gap: 13px;
+  }
+
+  .featured-info h3 {
+    font-size: 14px;
+  }
+
+  .featured-info p {
+    font-size: 11px;
+  }
+
+  .featured-detail-btn {
+    min-width: 112px;
+    padding: 8px 11px;
+  }
+}
+
+
+
+/* 歐洲 */
+/* Region */
+.region-section {
+  position: relative;
+  padding: 90px 0;
+  overflow: hidden;
+}
+
+.europe-region {
+  background:
+    radial-gradient(circle at 82% 60%, rgba(179,154,117,.16), transparent 26%),
+    linear-gradient(135deg, #f3e8dd, #fbf5ed);
+}
+
+.oceania-region {
+  background:
+    radial-gradient(circle at 18% 60%, rgba(179,154,117,.14), transparent 28%),
+    linear-gradient(135deg, #f0dfd1, #f9f0e8);
+}
+
+.region-slider {
+  position: relative;
+  min-height: 430px;
+}
+
+/*
+  區域輪播改成「中央主卡＋左右前後景」：
+  - 中間：放大、清楚
+  - 左右：縮小、上下錯開、降低透明度
+  - 切換時以 transform / opacity / scale 做滑動效果
+*/
+.region-track {
+  position: relative;
+  width: 100%;
+  height: 430px;
+}
+
+.region-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  align-items: center;
+  gap: 75px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(105%, 22px, 0) scale(.82);
+  filter: blur(1px);
+  transition:
+    transform .75s cubic-bezier(.22,.72,.2,1),
+    opacity .55s ease,
+    filter .55s ease;
+  z-index: 1;
+}
+
+.region-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+  z-index: 3;
+}
+
+.region-slide.is-prev {
+  opacity: .28;
+  transform: translate3d(-72%, -24px, 0) scale(.80);
+  z-index: 2;
+}
+
+.region-slide.is-next {
+  opacity: .28;
+  transform: translate3d(72%, 24px, 0) scale(.80);
+  z-index: 2;
+}
+
+.region-slide.is-prev .region-image,
+.region-slide.is-next .region-image {
+  box-shadow: 8px 8px 0 rgba(255,255,255,.35);
+}
+
+.region-image {
+  min-height: 390px;
+  background: var(--bg) center / cover no-repeat;
+  border: 1px solid rgba(142,117,84,.40);
+  box-shadow: 12px 12px 0 rgba(255,255,255,.62);
+  transition: box-shadow .55s ease;
+}
+
+.region-slide.is-active .region-image {
+  box-shadow: 12px 12px 0 rgba(255,255,255,.72), 0 20px 42px rgba(75,58,43,.08);
+}
+
+.region-copy {
+  max-width: 410px;
+  transition: transform .65s cubic-bezier(.22,.72,.2,1), opacity .5s ease;
+}
+
+.region-slide.is-prev .region-copy {
+  transform: translateY(-12px);
+}
+
+.region-slide.is-next .region-copy {
+  transform: translateY(12px);
+}
+
+.region-copy > span {
+  color: var(--gold-dark);
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: .25em;
+}
+
+.region-copy h2 {
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(42px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: .10em;
+}
+
+.region-en {
+  margin: -8px 0 17px;
+  font-family: var(--serif);
+  color: #6f6358;
+  letter-spacing: .09em;
+}
+
+.thin-line {
+  width: 90px;
+  height: 1px;
+  background: var(--gold);
+  margin: 0 0 18px;
+}
+
+.region-copy p:last-child {
+  color: #786c61;
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: .06em;
+}
+
+/* 箭頭放在「圖片與文字中間的下方」，符合提供的設計圖 */
+.region-arrows {
+  position: absolute;
+  left: 51.8%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  z-index: 20;
+}
+
+.region-arrow {
+  position: static;
+  width: 42px;
+  height: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(142,117,84,.50);
+  background: rgba(255,253,249,.88);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: 12px;
+  line-height: 1;
+  transition: transform .25s ease, background .25s ease, color .25s ease;
+}
+
+.region-arrow:hover {
+  background: var(--gold-dark);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.region-dots {
+  position: absolute;
+  left: 28%;
+  bottom: 2px;
+  margin: 0;
+  z-index: 20;
+  transform: translateX(-50%);
+}
