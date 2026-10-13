@@ -2,17 +2,19 @@
   "use strict";
 
   /* =========================================================
-     巨匠・典藏｜完整互動 JS (含滿版 3D 區域輪播置中)
+     巨匠・典藏｜完整互動 JS
 
      1. Header 捲動效果
      2. 手機選單
      3. Reveal 淡入動畫
      4. 精選旅程：無限循環＋中央定位＋圓點＋觸控
-     5. 歐洲／紐澳區域圖片輪播（已修正滿版置中滑動）
-     6. 歐洲經典行程
-     7. 紐澳經典行程
+     5. 歐洲／紐澳區域圖片輪播
+     6. 歐洲經典行程：直接讀取 HTML
+     7. 紐澳經典行程：JavaScript 資料產生
      8. 響應式重新定位
-  ======================================================== */
+     9. 經典行程左右切換與觸控拖曳
+    10. 推薦行程展開／收合：平順高度動畫
+  ========================================================= */
 
   const $ = (selector, scope = document) =>
     scope ? scope.querySelector(selector) : null;
@@ -20,10 +22,103 @@
   const $$ = (selector, scope = document) =>
     scope ? [...scope.querySelectorAll(selector)] : [];
 
+  const reducedMotionQuery = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+
+  /* =========================================================
+     0. 推薦行程｜歐洲與紐澳共用展開／收合
+  ========================================================= */
+
+  function setTripMoreHeight(more, height) {
+    if (!more) return;
+    more.style.height = `${Math.max(0, height)}px`;
+  }
+
+  function openTripMore(card, toggle, more) {
+    card.classList.add("is-open");
+    toggle.setAttribute("aria-expanded", "true");
+
+    more.style.opacity = "1";
+
+    if (reducedMotionQuery.matches) {
+      more.style.height = "auto";
+      return;
+    }
+
+    more.style.height = "0px";
+
+    requestAnimationFrame(() => {
+      if (!card.classList.contains("is-open")) return;
+      setTripMoreHeight(more, more.scrollHeight);
+    });
+
+    const onTransitionEnd = event => {
+      if (
+        event.target !== more ||
+        event.propertyName !== "height"
+      ) {
+        return;
+      }
+
+      more.removeEventListener("transitionend", onTransitionEnd);
+
+      if (card.classList.contains("is-open")) {
+        more.style.height = "auto";
+      }
+    };
+
+    more.addEventListener("transitionend", onTransitionEnd);
+  }
+
+  function closeTripMore(card, toggle, more) {
+    const currentHeight = more.getBoundingClientRect().height;
+
+    card.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+
+    if (reducedMotionQuery.matches) {
+      more.style.height = "0px";
+      more.style.opacity = "0";
+      return;
+    }
+
+    more.style.height = `${currentHeight}px`;
+    more.style.opacity = "0";
+
+    void more.offsetHeight;
+
+    more.style.height = "0px";
+  }
+
+  document.addEventListener("click", event => {
+    const target = event.target instanceof Element
+      ? event.target
+      : event.target?.parentElement;
+
+    const toggle = target?.closest(
+      ".classic-card .trip-toggle, .trip-card .trip-toggle"
+    );
+
+    if (!toggle) return;
+
+    const card = toggle.closest(".classic-card, .trip-card");
+    const more = card?.querySelector(".trip-more");
+
+    if (!card || !more) return;
+
+    if (card.classList.contains("is-open")) {
+      closeTripMore(card, toggle, more);
+    } else {
+      openTripMore(card, toggle, more);
+    }
+  });
+
 
   /* =========================================================
      1. Header 捲動效果
-  ======================================================== */
+  ========================================================= */
 
   const header = $("#siteHeader");
   const menuToggle = $(".menu-toggle");
@@ -49,15 +144,15 @@
 
   /* =========================================================
      2. 手機選單
-  ======================================================== */
+  ========================================================= */
 
   if (menuToggle && mainNav) {
     menuToggle.addEventListener("click", () => {
-      const open = mainNav.classList.toggle("is-open");
+      const isOpen = mainNav.classList.toggle("is-open");
 
       menuToggle.setAttribute(
         "aria-expanded",
-        String(open)
+        String(isOpen)
       );
     });
   }
@@ -65,18 +160,14 @@
   $$(".main-nav a").forEach(link => {
     link.addEventListener("click", () => {
       mainNav?.classList.remove("is-open");
-
-      menuToggle?.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+      menuToggle?.setAttribute("aria-expanded", "false");
     });
   });
 
 
   /* =========================================================
      3. Reveal 淡入動畫
-  ======================================================== */
+  ========================================================= */
 
   const revealItems = $$(".reveal");
 
@@ -84,50 +175,39 @@
     const revealObserver = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+          if (!entry.isIntersecting) return;
 
-            revealObserver.unobserve(entry.target);
-          }
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.15
-      }
+      { threshold: 0.15 }
     );
 
-    revealItems.forEach(el => {
-      revealObserver.observe(el);
-    });
-
+    revealItems.forEach(el => revealObserver.observe(el));
   } else {
-    revealItems.forEach(el => {
-      el.classList.add("is-visible");
-    });
+    revealItems.forEach(el => el.classList.add("is-visible"));
   }
 
 
   /* =========================================================
      4. 精選旅程｜無限循環輪播
-  ======================================================== */
+  ========================================================= */
 
   const featuredRoot = $("#featuredSlider");
 
   const featured = {
     root: featuredRoot,
-
     track: featuredRoot
       ? $(".featured-track", featuredRoot)
       : null,
-
     items: featuredRoot
       ? $$(".featured-track > .featured-item", featuredRoot)
       : [],
-
     renderedItems: [],
     index: 0,
     position: 0,
-    dots: null,
+    dots: $('[data-dots-for="featuredSlider"]'),
     initialized: false
   };
 
@@ -143,20 +223,15 @@
     ? $(".next", featuredControls)
     : null;
 
-  featured.dots = $(
-    '[data-dots-for="featuredSlider"]'
-  );
-
 
   /* =========================================================
-     4-1. 建立三組行程卡片
-  ======================================================== */
+     4-1. 建立精選旅程無限循環卡片
+  ========================================================= */
 
   function setupFeaturedInfinite() {
     const { track, items } = featured;
 
-    if (!track || !items.length) return;
-    if (featured.initialized) return;
+    if (!track || !items.length || featured.initialized) return;
 
     const originalItems = items.slice();
     const total = originalItems.length;
@@ -175,36 +250,31 @@
 
     track.innerHTML = "";
 
-    [...previousSet, ...middleSet, ...nextSet].forEach(
-      item => {
-        item.classList.remove("is-active");
-        item.removeAttribute("aria-current");
+    [
+      ...previousSet,
+      ...middleSet,
+      ...nextSet
+    ].forEach(item => {
+      item.classList.remove("is-active");
+      item.removeAttribute("aria-current");
+      track.appendChild(item);
+    });
 
-        track.appendChild(item);
-      }
-    );
-
-    featured.renderedItems = [
-      ...track.children
-    ];
+    featured.renderedItems = [...track.children];
 
     const activeIndex = originalItems.findIndex(item =>
       item.classList.contains("is-active")
     );
 
-    featured.index = activeIndex >= 0
-      ? activeIndex
-      : 0;
-
+    featured.index = activeIndex >= 0 ? activeIndex : 0;
     featured.position = total + featured.index;
-
     featured.initialized = true;
   }
 
 
   /* =========================================================
      4-2. 建立精選旅程圓點
-  ======================================================== */
+  ========================================================= */
 
   function renderFeaturedDots() {
     const dotWrap = featured.dots;
@@ -217,7 +287,6 @@
       const button = document.createElement("button");
 
       button.type = "button";
-
       button.setAttribute(
         "aria-label",
         `切換到第 ${index + 1} 個行程`
@@ -234,7 +303,7 @@
 
   /* =========================================================
      4-3. 更新精選旅程顯示狀態
-  ======================================================== */
+  ========================================================= */
 
   function updateFeaturedActive() {
     const { renderedItems } = featured;
@@ -242,11 +311,11 @@
     if (!renderedItems.length) return;
 
     renderedItems.forEach((item, index) => {
-      const active = index === featured.position;
+      const isActive = index === featured.position;
 
-      item.classList.toggle("is-active", active);
+      item.classList.toggle("is-active", isActive);
 
-      if (active) {
+      if (isActive) {
         item.setAttribute("aria-current", "true");
       } else {
         item.removeAttribute("aria-current");
@@ -255,13 +324,12 @@
 
     if (featured.dots) {
       [...featured.dots.children].forEach((dot, index) => {
-        const active = index === featured.index;
+        const isActive = index === featured.index;
 
-        dot.classList.toggle("is-active", active);
-
+        dot.classList.toggle("is-active", isActive);
         dot.setAttribute(
           "aria-current",
-          active ? "true" : "false"
+          isActive ? "true" : "false"
         );
       });
     }
@@ -270,27 +338,19 @@
 
   /* =========================================================
      4-4. 精選旅程中央定位
-  ======================================================== */
+  ========================================================= */
 
   function renderFeatured(animate = true) {
-    const {
-      root,
-      track,
-      renderedItems
-    } = featured;
+    const { root, track, renderedItems } = featured;
 
     if (!root || !track || !renderedItems.length) return;
 
     const total = featured.items.length;
-
     if (!total) return;
 
     featured.position = Math.max(
       0,
-      Math.min(
-        featured.position,
-        renderedItems.length - 1
-      )
+      Math.min(featured.position, renderedItems.length - 1)
     );
 
     featured.index =
@@ -298,40 +358,27 @@
 
     updateFeaturedActive();
 
-    const activeItem =
-      renderedItems[featured.position];
-
+    const activeItem = renderedItems[featured.position];
     if (!activeItem) return;
 
     const viewportWidth = root.clientWidth;
 
     const itemCenter =
-      activeItem.offsetLeft +
-      activeItem.offsetWidth / 2;
+      activeItem.offsetLeft + activeItem.offsetWidth / 2;
 
-    const offset =
-      viewportWidth / 2 - itemCenter;
+    const offset = viewportWidth / 2 - itemCenter;
 
     track.style.transition = animate
       ? "transform .65s cubic-bezier(.22, .75, .25, 1)"
       : "none";
 
-    track.style.transform =
-      `translate3d(${offset}px, 0, 0)`;
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
 
-    featuredPrev?.setAttribute(
-      "aria-label",
-      "上一個行程"
-    );
-
-    featuredNext?.setAttribute(
-      "aria-label",
-      "下一個行程"
-    );
+    featuredPrev?.setAttribute("aria-label", "上一個行程");
+    featuredNext?.setAttribute("aria-label", "下一個行程");
 
     if (!animate) {
       track.getBoundingClientRect();
-
       track.style.transition =
         "transform .65s cubic-bezier(.22, .75, .25, 1)";
     }
@@ -339,16 +386,14 @@
 
 
   /* =========================================================
-     4-5. 切換至指定行程
-  ======================================================== */
+     4-5. 切換至指定精選旅程
+  ========================================================= */
 
   function goToFeatured(index) {
     const total = featured.items.length;
-
     if (!total) return;
 
-    const normalizedIndex =
-      ((index % total) + total) % total;
+    const normalizedIndex = ((index % total) + total) % total;
 
     featured.index = normalizedIndex;
     featured.position = total + normalizedIndex;
@@ -358,68 +403,50 @@
 
 
   /* =========================================================
-     4-6. 左右無限循環切換
-  ======================================================== */
+     4-6. 精選旅程左右無限循環
+  ========================================================= */
 
   function featuredMove(step) {
     if (!featured.items.length) return;
 
     featured.position += step;
-
-    const total = featured.items.length;
-
-    featured.index =
-      ((featured.position - total) % total + total) % total;
-
     renderFeatured(true);
   }
 
-  featuredPrev?.addEventListener("click", () => {
-    featuredMove(-1);
-  });
-
-  featuredNext?.addEventListener("click", () => {
-    featuredMove(1);
-  });
+  featuredPrev?.addEventListener("click", () => featuredMove(-1));
+  featuredNext?.addEventListener("click", () => featuredMove(1));
 
 
   /* =========================================================
      4-7. 動畫結束後無縫歸位
-  ======================================================== */
+  ========================================================= */
 
   if (featured.track) {
-    featured.track.addEventListener(
-      "transitionend",
-      event => {
-        if (
-          event.target !== featured.track ||
-          event.propertyName !== "transform"
-        ) {
-          return;
-        }
-
-        const total = featured.items.length;
-
-        if (!total) return;
-
-        if (featured.position < total) {
-          featured.position += total;
-          featured.index = featured.position - total;
-          renderFeatured(false);
-
-        } else if (featured.position >= total * 2) {
-          featured.position -= total;
-          featured.index = featured.position - total;
-          renderFeatured(false);
-        }
+    featured.track.addEventListener("transitionend", event => {
+      if (
+        event.target !== featured.track ||
+        event.propertyName !== "transform"
+      ) {
+        return;
       }
-    );
+
+      const total = featured.items.length;
+      if (!total) return;
+
+      if (featured.position < total) {
+        featured.position += total;
+        renderFeatured(false);
+      } else if (featured.position >= total * 2) {
+        featured.position -= total;
+        renderFeatured(false);
+      }
+    });
   }
 
 
   /* =========================================================
      4-8. 精選旅程觸控滑動
-  ======================================================== */
+  ========================================================= */
 
   let featuredStartX = null;
   let featuredStartY = null;
@@ -428,6 +455,7 @@
     "touchstart",
     event => {
       if (!event.touches.length) return;
+
       featuredStartX = event.touches[0].clientX;
       featuredStartY = event.touches[0].clientY;
     },
@@ -447,6 +475,7 @@
 
       const deltaX =
         event.changedTouches[0].clientX - featuredStartX;
+
       const deltaY =
         event.changedTouches[0].clientY - featuredStartY;
 
@@ -466,7 +495,7 @@
 
   /* =========================================================
      4-9. 精選旅程初始化
-  ======================================================== */
+  ========================================================= */
 
   function refreshFeaturedPosition() {
     if (!featured.items.length) return;
@@ -484,279 +513,181 @@
       const featuredResizeObserver = new ResizeObserver(() => {
         refreshFeaturedPosition();
       });
+
       featuredResizeObserver.observe(featured.root);
     }
   }
 
 
-/* =========================================================
-   5. 歐洲／紐澳區域圖片輪播
-   左側照片｜中間照片＋文字｜右側照片
-======================================================== */
+  /* =========================================================
+     5. 歐洲／紐澳區域圖片輪播
+     左側照片｜中間照片＋文字｜右側照片
+  ========================================================= */
 
-function setupRegionSlider(id) {
-  const root = document.getElementById(id);
-  if (!root) return null;
+  function setupRegionSlider(id) {
+    const root = document.getElementById(id);
+    if (!root) return null;
 
-  const track = $(".region-track", root);
-  const prev = $(".region-prev", root);
-  const next = $(".region-next", root);
-  const dots = $(".region-dots", root);    if (!track) return null; if (root.dataset.regionInitialized === "true") return null;    root.dataset.regionInitialized = "true";    const slides = $$(".region-slide", track);
-  const total = slides.length;
+    const track = $(".region-track", root);
+    const prev = $(".region-prev", root);
+    const next = $(".region-next", root);
+    const dots = $(".region-dots", root);
 
-  if (!total) return null;
+    if (!track || root.dataset.regionInitialized === "true") {
+      return null;
+    }
 
-  let index = 0;
-  let timer = null;
-  let resizeTimer = null;
-  let touchStartX = null;
-  let touchStartY = null;
+    root.dataset.regionInitialized = "true";
 
-  /*
-   * 將目前卡片設為主卡片，
-   * 左右卡片依索引循環設定。
-   */
-  function updateSlides() {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("is-active", "is-prev", "is-next");
+    const slides = $$(".region-slide", track);
+    const total = slides.length;
 
-      if (i === index) {
-        slide.classList.add("is-active");
-      } else if (i === (index - 1 + total) % total) {
-        slide.classList.add("is-prev");
-      } else if (i === (index + 1) % total) {
-        slide.classList.add("is-next");
+    if (!total) return null;
+
+    let index = 0;
+    let timer = null;
+    let resizeTimer = null;
+    let touchStartX = null;
+    let touchStartY = null;
+
+    function updateSlides() {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("is-active", "is-prev", "is-next");
+
+        if (i === index) {
+          slide.classList.add("is-active");
+        } else if (i === (index - 1 + total) % total) {
+          slide.classList.add("is-prev");
+        } else if (i === (index + 1) % total) {
+          slide.classList.add("is-next");
+        }
+
+        const copy = $(".region-copy", slide);
+
+        if (copy) {
+          copy.style.display = i === index ? "" : "none";
+        }
+      });
+
+      if (dots) {
+        $$("button", dots).forEach((button, i) => {
+          const active = i === index;
+
+          button.classList.toggle("is-active", active);
+          button.classList.toggle("active", active);
+          button.setAttribute(
+            "aria-current",
+            active ? "true" : "false"
+          );
+        });
       }
+    }
 
-      // 確保只有中間卡片顯示文字
-      const copy = $(".region-copy", slide); if (copy) { copy.style.display = i === index ? "" : "none"; } });      if (dots) { const buttons = $$("button", dots);
+    function render() {
+      updateSlides();
+    }
 
-      buttons.forEach((button, i) => {
-        button.classList.toggle("is-active", i === index);
-        button.classList.toggle("active", i === index);
+    function restart() {
+      clearInterval(timer);
+
+      if (total > 1) {
+        timer = setInterval(() => move(1), 6000);
+      }
+    }
+
+    function goTo(target) {
+      index = (target + total) % total;
+      render();
+      restart();
+    }
+
+    function move(step) {
+      goTo(index + step);
+    }
+
+    function buildDots() {
+      if (!dots) return;
+
+      dots.innerHTML = "";
+
+      slides.forEach((slide, i) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
         button.setAttribute(
-          "aria-current",
-          i === index ? "true" : "false"
+          "aria-label",
+          `切換到第 ${i + 1} 張`
         );
+
+        button.addEventListener("click", () => goTo(i));
+        dots.appendChild(button);
       });
     }
-  }
 
-  /*
-   * 3D 絕對定位模式下，由 CSS 負責樣式與排列，
-   * JS 只需要更新狀態即可，避免畫面亂跑。
-   */
-  function render() {
-    updateSlides();
-  }
+    prev?.addEventListener("click", () => move(-1));
+    next?.addEventListener("click", () => move(1));
 
-  function goTo(target) {
-    index = (target + total) % total;
+    root.addEventListener("mouseenter", () => clearInterval(timer));
+    root.addEventListener("mouseleave", restart);
+
+    root.addEventListener(
+      "touchstart",
+      event => {
+        if (!event.touches.length) return;
+
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+      },
+      { passive: true }
+    );
+
+    root.addEventListener(
+      "touchend",
+      event => {
+        if (
+          touchStartX === null ||
+          touchStartY === null ||
+          !event.changedTouches.length
+        ) {
+          return;
+        }
+
+        const dx =
+          event.changedTouches[0].clientX - touchStartX;
+
+        const dy =
+          event.changedTouches[0].clientY - touchStartY;
+
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+          move(dx < 0 ? 1 : -1);
+        }
+
+        touchStartX = null;
+        touchStartY = null;
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(render, 120);
+    });
+
+    buildDots();
     render();
     restart();
+
+    return { root, track, render, move };
   }
 
-  function move(step) {
-    goTo(index + step);
-  }
-
-  function buildDots() {
-    if (!dots) return;
-
-    dots.innerHTML = "";
-
-    slides.forEach((slide, i) => {
-      const button = document.createElement("button");
-
-      button.type = "button";
-      button.setAttribute("aria-label", `切換到第 ${i + 1} 張`);
-      button.addEventListener("click", () => goTo(i));
-
-      dots.appendChild(button);
-    });
-  }
-
-  function restart() {
-    clearInterval(timer);
-
-    if (total > 1) {
-      timer = setInterval(() => move(1), 6000);
-    }
-  }
-
-  prev?.addEventListener("click", () => move(-1));
-  next?.addEventListener("click", () => move(1));
-
-  root.addEventListener("mouseenter", () => clearInterval(timer));
-  root.addEventListener("mouseleave", restart);
-
-  root.addEventListener("touchstart", event => {
-    if (!event.touches.length) return;
-
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-  }, { passive: true });
-
-  root.addEventListener("touchend", event => {
-    if (
-      touchStartX === null ||
-      touchStartY === null ||
-      !event.changedTouches.length
-    ) return;
-
-    const dx = event.changedTouches[0].clientX - touchStartX;
-    const dy = event.changedTouches[0].clientY - touchStartY;
-
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-      move(dx < 0 ? 1 : -1);
-    }
-
-    touchStartX = null;
-    touchStartY = null;
-  }, { passive: true });
-
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(render, 120);
-  });
-
-  buildDots();
-  render();
-  restart();
-
-  return { root, track, render, move };
-}
-
-setupRegionSlider("europeRegion");
-setupRegionSlider("oceaniaRegion");
+  setupRegionSlider("europeRegion");
+  setupRegionSlider("oceaniaRegion");
 
 
   /* =========================================================
-     6. 歐洲經典行程資料
-  ======================================================== */
-
-  const europeTrips = {
-    western: [
-      {
-        tag: "FRANCE · 10 DAYS",
-        title: "法國深度・巴黎城堡典藏十日",
-        meta: "巴黎 × 羅亞爾河 × 南法",
-        image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85",
-        desc: "以巴黎為起點，串聯古堡、葡萄酒與南法風光，留足時間感受法式生活。",
-        more: "安排巴黎市區經典景點、羅亞爾河城堡與南法小鎮，搭配精選餐食與舒適住宿，讓旅程保有從容節奏。"
-      },
-      {
-        tag: "ITALY · 11 DAYS",
-        title: "義大利藝術・美食典藏十一日",
-        meta: "羅馬 × 佛羅倫斯 × 威尼斯",
-        image: "https://images.unsplash.com/photo-1531572753322-ad063cecc140?auto=format&fit=crop&w=900&q=85",
-        desc: "古羅馬遺跡、文藝復興與威尼斯水都，串起義大利最值得收藏的經典。",
-        more: "從羅馬古蹟到佛羅倫斯美術館，再到威尼斯運河，將藝術史與餐桌文化一次收藏。"
-      },
-      {
-        tag: "UNITED KINGDOM · 16 DAYS",
-        title: "英國愛爾蘭・四遊船典藏十六日",
-        meta: "愛丁堡 × 湖區 × 倫敦",
-        image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=85",
-        desc: "四大遊船、經典古堡與自然景致，深入英倫與愛爾蘭最迷人的風景。",
-        more: "包含尼斯湖遊船、劍橋撐篙、湖區遊船、泰晤士河遊船，並安排愛丁堡城堡、西敏寺等經典門票。"
-      },
-      {
-        tag: "NETHERLANDS · 10 DAYS",
-        title: "新春飛羊・法比荷花季十日",
-        meta: "巴黎 × 比利時 × 荷蘭",
-        image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=900&q=85",
-        desc: "花季限定路線，走訪鬱金香花海、運河城市與歐洲經典名城。",
-        more: "搭配中華航空、巴黎市區連泊與荷蘭花季，將鬱金香、運河與法比荷經典風景一次串聯。"
-      }
-    ],
-
-    eastern: [
-      {
-        tag: "CZECHIA · 9 DAYS",
-        title: "布拉格・波希米亞古城典藏九日",
-        meta: "布拉格 × 庫倫洛夫 × 維也納",
-        image: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=900&q=85",
-        desc: "漫步紅瓦屋頂與古典廣場，感受東歐城市的歷史層次。",
-        more: "安排布拉格城堡區、查理大橋與世界文化遺產小鎮，搭配維也納古典音樂與咖啡文化。"
-      },
-      {
-        tag: "AUSTRIA · 10 DAYS",
-        title: "奧地利・湖區與音樂之旅",
-        meta: "維也納 × 薩爾茲堡 × 哈修塔特",
-        image: "https://images.unsplash.com/photo-1609856878074-6d4b9d0f3b1a?auto=format&fit=crop&w=900&q=85",
-        desc: "古典樂章、湖區山色與宮殿建築，描繪奧地利的優雅。",
-        more: "走訪維也納皇宮、薩爾茲堡與湖區小鎮，讓自然與文化在同一趟旅程裡交會。"
-      },
-      {
-        tag: "CROATIA · 10 DAYS",
-        title: "克羅埃西亞・亞得里亞海典藏十日",
-        meta: "杜布羅夫尼克 × 斯普利特",
-        image: "https://images.unsplash.com/photo-1555990538-1e7b0d7b2a0b?auto=format&fit=crop&w=900&q=85",
-        desc: "石造古城、湛藍海岸與地中海餐桌，收藏亞得里亞海的光。",
-        more: "深入杜布羅夫尼克與沿岸古城，搭配海岸景觀與在地餐食，呈現東歐南境的另一種優雅。"
-      }
-    ],
-
-    southern: [
-      {
-        tag: "GREECE · 9 DAYS",
-        title: "希臘愛琴海・聖托里尼典藏九日",
-        meta: "雅典 × 聖托里尼 × 米克諾斯",
-        image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=85",
-        desc: "藍白島嶼、愛琴海夕陽與希臘神話，將南歐最純粹的浪漫收進旅程。",
-        more: "以雅典古文明為起點，安排島嶼慢旅與海景時光，適合喜愛風景、美食與生活感的旅人。"
-      },
-      {
-        tag: "SPAIN · 10 DAYS",
-        title: "西班牙・建築與美食美學十日",
-        meta: "巴塞隆納 × 馬德里 × 塞維亞",
-        image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=900&q=85",
-        desc: "高第建築、弗拉明哥與西班牙餐桌，感受熱情而細膩的南歐風格。",
-        more: "精選巴塞隆納與安達魯西亞城市，搭配市場、tapas 與建築巡禮，完整體驗西班牙文化。"
-      },
-      {
-        tag: "PORTUGAL · 9 DAYS",
-        title: "葡萄牙・大西洋光影九日",
-        meta: "里斯本 × 波多 × 辛特拉",
-        image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=85",
-        desc: "電車、瓷磚、海岸與葡萄酒，探索葡萄牙溫柔而明亮的旅行風景。",
-        more: "走訪里斯本舊城、辛特拉宮殿與波多酒窖，以悠閒節奏享受大西洋沿岸。"
-      }
-    ],
-
-    northern: [
-      {
-        tag: "NORWAY · 10 DAYS",
-        title: "挪威峽灣・極光典藏十日",
-        meta: "奧斯陸 × 峽灣 × 卑爾根",
-        image: "https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=85",
-        desc: "峽灣、山岳與北境光影，走進北歐最壯闊的自然。",
-        more: "安排峽灣遊船與山景鐵路，依季節搭配極光或午夜太陽，留下北境難忘的自然記憶。"
-      },
-      {
-        tag: "FINLAND · 9 DAYS",
-        title: "芬蘭・玻璃屋極光之旅",
-        meta: "赫爾辛基 × 拉普蘭",
-        image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85",
-        desc: "雪地森林、玻璃屋與北極光，感受北境冬夜的靜謐。",
-        more: "入住特色玻璃屋，搭配雪地活動與拉普蘭自然體驗，適合想遠離城市喧囂的旅人。"
-      },
-      {
-        tag: "ICELAND · 9 DAYS",
-        title: "冰島・火山冰川環島九日",
-        meta: "雷克雅維克 × 南岸 × 冰河湖",
-        image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=85",
-        desc: "冰川、黑沙灘、瀑布與地熱，探索世界最奇幻的自然地景。",
-        more: "串聯冰島南岸、冰河湖與經典地熱景觀，依季節安排極光觀賞或夏季長日體驗。"
-      }
-    ]
-  };
-
-
-  /* =========================================================
-     7. 紐澳經典行程資料
-  ======================================================== */
+     6. 紐澳經典行程資料
+     保留 JavaScript 資料來源
+  ========================================================= */
 
   const oceaniaTrips = {
     newzealand: [
@@ -832,15 +763,14 @@ setupRegionSlider("oceaniaRegion");
 
 
   /* =========================================================
-     8. 經典行程狀態
-  ======================================================== */
+     7. 經典行程狀態
+  ========================================================= */
 
   const classicState = {
     europe: {
       category: "western",
       offset: 0
     },
-
     oceania: {
       category: "newzealand",
       offset: 0
@@ -849,8 +779,8 @@ setupRegionSlider("oceaniaRegion");
 
 
   /* =========================================================
-     9. 建立經典行程卡片
-  ======================================================== */
+     8. 紐澳行程卡片建立
+  ========================================================= */
 
   function makeTripCard(trip) {
     const card = document.createElement("article");
@@ -881,7 +811,7 @@ setupRegionSlider("oceaniaRegion");
           <span class="plus">＋</span>
         </button>
 
-        <div class="trip-more">
+        <div class="trip-more" style="height:0;opacity:0">
           <div class="trip-more-inner">
             <p>${trip.more}</p>
 
@@ -895,26 +825,13 @@ setupRegionSlider("oceaniaRegion");
       </div>
     `;
 
-    const toggle = $(".trip-toggle", card);
-
-    if (toggle) {
-      toggle.addEventListener("click", () => {
-        const open = card.classList.toggle("is-open");
-
-        toggle.setAttribute(
-          "aria-expanded",
-          String(open)
-        );
-      });
-    }
-
     return card;
   }
 
 
   /* =========================================================
-     10. 經典行程可見卡片數量
-  ======================================================== */
+     9. 經典行程可見卡片數量
+  ========================================================= */
 
   function cardsVisible() {
     if (window.innerWidth <= 720) return 1;
@@ -924,62 +841,56 @@ setupRegionSlider("oceaniaRegion");
 
 
   /* =========================================================
-     11. 更新經典行程位置
-  ======================================================== */
+     10. 取得經典行程容器
+  ========================================================= */
 
-  function updateClassicPosition(type) {
-    const track = document.getElementById(
+  function getClassicTrack(type) {
+    return document.getElementById(
       type === "europe"
         ? "europeClassicTrack"
         : "oceaniaClassicTrack"
     );
-
-    if (!track || !track.children.length) return;
-
-    const card = track.children[0];
-    const cardWidth = card.getBoundingClientRect().width;
-    const gap = parseFloat(getComputedStyle(track).gap) || 0;
-
-    const state = classicState[type];
-    if (!state) return;
-
-    const offset = state.offset * (cardWidth + gap);
-
-    track.style.transform = `translateX(${-offset}px)`;
   }
 
 
   /* =========================================================
-     12. 顯示經典行程
-  ======================================================== */
+     11. 取得目前顯示的經典行程卡片
+  ========================================================= */
 
-  function renderClassic(type) {
-    const isEurope = type === "europe";
+  function getClassicCards(type) {
+    const track = getClassicTrack(type);
+    if (!track) return [];
 
-    const track = document.getElementById(
-      isEurope
-        ? "europeClassicTrack"
-        : "oceaniaClassicTrack"
-    );
+    if (type === "europe") {
+      return $$(".classic-card", track).filter(card => {
+        return getComputedStyle(card).display !== "none";
+      });
+    }
 
-    if (!track) return;
+    return $$(".trip-card", track);
+  }
 
-    const data = isEurope ? europeTrips : oceaniaTrips;
+
+  /* =========================================================
+     12. 更新經典行程位置
+  ========================================================= */
+
+  function updateClassicPosition(type) {
+    const track = getClassicTrack(type);
     const state = classicState[type];
 
-    if (!state) return;
+    if (!track || !state) return;
 
-    const list = data[state.category] || [];
+    const cards = getClassicCards(type);
 
-    track.innerHTML = "";
-
-    list.forEach(trip => {
-      track.appendChild(makeTripCard(trip));
-    });
+    if (!cards.length) {
+      track.style.transform = "translate3d(0, 0, 0)";
+      return;
+    }
 
     const maxOffset = Math.max(
       0,
-      list.length - cardsVisible()
+      cards.length - cardsVisible()
     );
 
     state.offset = Math.max(
@@ -987,25 +898,82 @@ setupRegionSlider("oceaniaRegion");
       Math.min(state.offset, maxOffset)
     );
 
-    updateClassicPosition(type);
+    const firstCard = cards[0];
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const trackStyle = window.getComputedStyle(track);
+
+    const gap =
+      parseFloat(trackStyle.columnGap) ||
+      parseFloat(trackStyle.gap) ||
+      0;
+
+    const offset = state.offset * (cardWidth + gap);
+
+    track.style.transform =
+      `translate3d(${-offset}px, 0, 0)`;
   }
 
 
   /* =========================================================
-     13. 經典行程左右切換
-  ======================================================== */
+     13. 歐洲經典行程篩選
+     直接控制 HTML 卡片，不建立、不刪除卡片
+  ========================================================= */
+
+  function filterEuropeCards(category) {
+    const track = document.getElementById("europeClassicTrack");
+    if (!track) return;
+
+    $$(".classic-card", track).forEach(card => {
+      card.style.display =
+        card.dataset.region === category ? "" : "none";
+    });
+
+    classicState.europe.category = category;
+    classicState.europe.offset = 0;
+
+    updateClassicPosition("europe");
+  }
+
+
+  /* =========================================================
+     14. 紐澳經典行程渲染
+     HTML 使用 #oceaniaClassicTrack 作為空容器
+  ========================================================= */
+
+  function renderOceaniaClassic() {
+    const track = document.getElementById("oceaniaClassicTrack");
+    if (!track) return;
+
+    const state = classicState.oceania;
+    const list = oceaniaTrips[state.category] || [];
+
+    track.innerHTML = "";
+
+    list.forEach(trip => {
+      track.appendChild(makeTripCard(trip));
+    });
+
+    state.offset = 0;
+    updateClassicPosition("oceania");
+  }
+
+
+  /* =========================================================
+     15. 經典行程左右切換
+  ========================================================= */
 
   function changeClassic(type, step) {
-    const isEurope = type === "europe";
-    const data = isEurope ? europeTrips : oceaniaTrips;
     const state = classicState[type];
-
     if (!state) return;
 
-    const total = (data[state.category] || []).length;
-    const max = Math.max(0, total - cardsVisible());
+    const cards = getClassicCards(type);
 
-    if (max === 0) {
+    const maxOffset = Math.max(
+      0,
+      cards.length - cardsVisible()
+    );
+
+    if (maxOffset <= 0) {
       state.offset = 0;
       updateClassicPosition(type);
       return;
@@ -1013,12 +981,12 @@ setupRegionSlider("oceaniaRegion");
 
     state.offset += step;
 
-    if (state.offset < 0) {
-      state.offset = max;
+    if (state.offset > maxOffset) {
+      state.offset = 0;
     }
 
-    if (state.offset > max) {
-      state.offset = 0;
+    if (state.offset < 0) {
+      state.offset = maxOffset;
     }
 
     updateClassicPosition(type);
@@ -1026,93 +994,91 @@ setupRegionSlider("oceaniaRegion");
 
 
   /* =========================================================
-     14. 地區篩選按鈕
-  ======================================================== */
+     16. 區域篩選按鈕
+     支援：
+     data-filter-group="europe"
+     data-filter-group="oceania"
+  ========================================================= */
 
   $$("[data-filter-group]").forEach(group => {
     const type = group.dataset.filterGroup;
 
     if (!classicState[type]) return;
 
-    $$(".filter-btn", group).forEach(btn => { btn.addEventListener("click", () => { $$
-(".filter-btn", group).forEach(button => {
-          button.classList.remove("is-active");
+    $$(".filter-btn", group).forEach(button => {
+      button.addEventListener("click", () => {
+        const category = button.dataset.filter;
+
+        const validCategory = type === "europe"
+          ? ["western", "eastern", "southern", "northern"].includes(category)
+          : Object.prototype.hasOwnProperty.call(oceaniaTrips, category);
+
+        if (!validCategory) return;
+
+        $$(".filter-btn", group).forEach(item => {
+          item.classList.remove("is-active");
+          item.setAttribute("aria-pressed", "false");
         });
 
-        btn.classList.add("is-active");
+        button.classList.add("is-active");
+        button.setAttribute("aria-pressed", "true");
 
-        const category = btn.dataset.filter;
-        const data = type === "europe" ? europeTrips : oceaniaTrips;
-
-        if (!Object.prototype.hasOwnProperty.call(data, category)) {
+        if (type === "europe") {
+          filterEuropeCards(category);
           return;
         }
 
-        classicState[type].category = category;
-        classicState[type].offset = 0;
+        classicState.oceania.category = category;
+        classicState.oceania.offset = 0;
 
-        renderClassic(type);
+        renderOceaniaClassic();
       });
     });
   });
 
 
   /* =========================================================
-     15. 經典行程左右按鈕
-  ======================================================== */
+     17. 經典行程左右箭頭
+     HTML：
+     data-classic-prev="europe" / "oceania"
+     data-classic-next="europe" / "oceania"
+  ========================================================= */
 
-  $$("[data-classic-prev]").forEach(button => { button.addEventListener("click", () => { const type = button.dataset.classicPrev; if (!classicState[type]) return; changeClassic(type, -1); }); });    $$
-("[data-classic-next]").forEach(button => {
+  $$("[data-classic-prev]").forEach(button => {
+    button.addEventListener("click", () => {
+      const type = button.dataset.classicPrev;
+
+      if (!classicState[type]) return;
+
+      changeClassic(type, -1);
+    });
+  });
+
+  $$("[data-classic-next]").forEach(button => {
     button.addEventListener("click", () => {
       const type = button.dataset.classicNext;
+
       if (!classicState[type]) return;
+
       changeClassic(type, 1);
     });
   });
 
 
   /* =========================================================
-     16. 初始化經典行程
-  ======================================================== */
+     18. 初始化經典行程
+  ========================================================= */
 
-  renderClassic("europe");
-  renderClassic("oceania");
+  // 歐洲：直接讀取 HTML 卡片，預設顯示中西歐
+  filterEuropeCards("western");
 
-
-  /* =========================================================
-     17. 視窗尺寸變更
-  ======================================================== */
-
-  let resizeTimer = null;
-
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-
-    resizeTimer = setTimeout(() => {
-      renderFeatured(false);
-
-      ["europe", "oceania"].forEach(type => {
-        const isEurope = type === "europe";
-        const data = isEurope ? europeTrips : oceaniaTrips;
-        const state = classicState[type];
-
-        const total = (data[state.category] || []).length;
-        const maxOffset = Math.max(0, total - cardsVisible());
-
-        state.offset = Math.max(
-          0,
-          Math.min(state.offset, maxOffset)
-        );
-
-        updateClassicPosition(type);
-      });
-    }, 120);
-  });
+  // 紐澳：保留 JavaScript 資料產生卡片的方式
+  renderOceaniaClassic();
 
 
   /* =========================================================
-     18. 經典行程觸控拖曳
-  ======================================================== */
+     19. 經典行程觸控／滑鼠拖曳
+  ========================================================= */
 
   function enableDrag(track, type) {
     if (!track) return;
@@ -1126,7 +1092,10 @@ setupRegionSlider("oceaniaRegion");
         return;
       }
 
-      if (event.target.closest("button, a, input, textarea, select")) {
+      if (
+        event.target instanceof Element &&
+        event.target.closest("button, a, input, textarea, select")
+      ) {
         return;
       }
 
@@ -1137,6 +1106,7 @@ setupRegionSlider("oceaniaRegion");
 
     track.addEventListener("pointerup", event => {
       if (!dragging) return;
+
       dragging = false;
 
       const dx = event.clientX - startX;
@@ -1156,13 +1126,43 @@ setupRegionSlider("oceaniaRegion");
     });
   }
 
-  enableDrag($("#europeClassicTrack"), "europe");
-  enableDrag($("#oceaniaClassicTrack"), "oceania");
+  enableDrag(
+    document.getElementById("europeClassicTrack"),
+    "europe"
+  );
+
+  enableDrag(
+    document.getElementById("oceaniaClassicTrack"),
+    "oceania"
+  );
 
 
   /* =========================================================
-     19. 初始化完成
-  ======================================================== */
+     20. 視窗尺寸變更
+  ========================================================= */
+
+  let classicResizeTimer = null;
+
+  window.addEventListener("resize", () => {
+    clearTimeout(classicResizeTimer);
+
+    classicResizeTimer = setTimeout(() => {
+      renderFeatured(false);
+
+      updateClassicPosition("europe");
+      updateClassicPosition("oceania");
+
+      $$(".classic-card.is-open .trip-more, .trip-card.is-open .trip-more")
+        .forEach(more => {
+          more.style.height = "auto";
+        });
+    }, 120);
+  });
+
+
+  /* =========================================================
+     21. 初始化完成
+  ========================================================= */
 
   if (featured.items.length) {
     renderFeatured(false);
