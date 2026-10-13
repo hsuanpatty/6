@@ -1,3 +1,4 @@
+
 (() => {
   "use strict";
 
@@ -10,10 +11,10 @@
      4. 精選旅程：無限循環＋中央定位＋圓點＋觸控
      5. 歐洲／紐澳區域圖片輪播
      6. 歐洲經典行程：直接讀取 HTML
-     7. 紐澳經典行程：JavaScript 資料產生
+     7. 紐澳經典行程：直接讀取 HTML
      8. 響應式重新定位
      9. 經典行程左右切換與觸控拖曳
-    10. 推薦行程展開／收合：平順高度動畫
+    10. 推薦行程展開／收合
   ========================================================= */
 
   const $ = (selector, scope = document) =>
@@ -127,10 +128,7 @@
   function handleHeader() {
     if (!header) return;
 
-    header.classList.toggle(
-      "scrolled",
-      window.scrollY > 70
-    );
+    header.classList.toggle("scrolled", window.scrollY > 70);
   }
 
   if (header) {
@@ -150,10 +148,7 @@
     menuToggle.addEventListener("click", () => {
       const isOpen = mainNav.classList.toggle("is-open");
 
-      menuToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
     });
   }
 
@@ -224,10 +219,6 @@
     : null;
 
 
-  /* =========================================================
-     4-1. 建立精選旅程無限循環卡片
-  ========================================================= */
-
   function setupFeaturedInfinite() {
     const { track, items } = featured;
 
@@ -272,10 +263,6 @@
   }
 
 
-  /* =========================================================
-     4-2. 建立精選旅程圓點
-  ========================================================= */
-
   function renderFeaturedDots() {
     const dotWrap = featured.dots;
 
@@ -292,18 +279,12 @@
         `切換到第 ${index + 1} 個行程`
       );
 
-      button.addEventListener("click", () => {
-        goToFeatured(index);
-      });
+      button.addEventListener("click", () => goToFeatured(index));
 
       dotWrap.appendChild(button);
     });
   }
 
-
-  /* =========================================================
-     4-3. 更新精選旅程顯示狀態
-  ========================================================= */
 
   function updateFeaturedActive() {
     const { renderedItems } = featured;
@@ -335,10 +316,6 @@
     }
   }
 
-
-  /* =========================================================
-     4-4. 精選旅程中央定位
-  ========================================================= */
 
   function renderFeatured(animate = true) {
     const { root, track, renderedItems } = featured;
@@ -385,10 +362,6 @@
   }
 
 
-  /* =========================================================
-     4-5. 切換至指定精選旅程
-  ========================================================= */
-
   function goToFeatured(index) {
     const total = featured.items.length;
     if (!total) return;
@@ -402,10 +375,6 @@
   }
 
 
-  /* =========================================================
-     4-6. 精選旅程左右無限循環
-  ========================================================= */
-
   function featuredMove(step) {
     if (!featured.items.length) return;
 
@@ -416,10 +385,6 @@
   featuredPrev?.addEventListener("click", () => featuredMove(-1));
   featuredNext?.addEventListener("click", () => featuredMove(1));
 
-
-  /* =========================================================
-     4-7. 動畫結束後無縫歸位
-  ========================================================= */
 
   if (featured.track) {
     featured.track.addEventListener("transitionend", event => {
@@ -443,10 +408,6 @@
     });
   }
 
-
-  /* =========================================================
-     4-8. 精選旅程觸控滑動
-  ========================================================= */
 
   let featuredStartX = null;
   let featuredStartY = null;
@@ -493,10 +454,6 @@
   );
 
 
-  /* =========================================================
-     4-9. 精選旅程初始化
-  ========================================================= */
-
   function refreshFeaturedPosition() {
     if (!featured.items.length) return;
     renderFeatured(false);
@@ -521,7 +478,6 @@
 
   /* =========================================================
      5. 歐洲／紐澳區域圖片輪播
-     左側照片｜中間照片＋文字｜右側照片
   ========================================================= */
 
   function setupRegionSlider(id) {
@@ -549,6 +505,12 @@
     let resizeTimer = null;
     let touchStartX = null;
     let touchStartY = null;
+
+    const initialIndex = slides.findIndex(slide =>
+      slide.classList.contains("is-active")
+    );
+
+    index = initialIndex >= 0 ? initialIndex : 0;
 
     function updateSlides() {
       slides.forEach((slide, i) => {
@@ -590,7 +552,7 @@
     function restart() {
       clearInterval(timer);
 
-      if (total > 1) {
+      if (total > 1 && !reducedMotionQuery.matches) {
         timer = setInterval(() => move(1), 6000);
       }
     }
@@ -658,7 +620,10 @@
         const dy =
           event.changedTouches[0].clientY - touchStartY;
 
-        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        if (
+          Math.abs(dx) > 45 &&
+          Math.abs(dx) > Math.abs(dy) * 1.2
+        ) {
           move(dx < 0 ? 1 : -1);
         }
 
@@ -685,85 +650,8 @@
 
 
   /* =========================================================
-     6. 紐澳經典行程資料
-     保留 JavaScript 資料來源
-  ========================================================= */
-
-  const oceaniaTrips = {
-    newzealand: [
-      {
-        tag: "NEW ZEALAND · 10 DAYS",
-        title: "紐西蘭南島・湖光山色十日",
-        meta: "皇后鎮 × 米佛峽灣 × 蒂卡波",
-        image: "https://images.unsplash.com/photo-1469521669194-babb45599def?auto=format&fit=crop&w=900&q=85",
-        desc: "湖泊、雪山、峽灣與星空，收藏南島最經典的自然風景。",
-        more: "安排米佛峽灣遊船、蒂卡波湖與皇后鎮，搭配舒適住宿，讓山海風景成為旅程主角。"
-      },
-      {
-        tag: "NEW ZEALAND · 12 DAYS",
-        title: "紐西蘭雙島・自然極致十二日",
-        meta: "奧克蘭 × 羅托魯瓦 × 皇后鎮",
-        image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?auto=format&fit=crop&w=900&q=85",
-        desc: "北島地熱文化與南島山海景致一次收藏。",
-        more: "串聯雙島經典景點，以自然、毛利文化與美食為主題，打造完整的新西蘭深度旅程。"
-      },
-      {
-        tag: "NEW ZEALAND · 9 DAYS",
-        title: "南島慢旅・峽灣與牧場九日",
-        meta: "基督城 × 瓦納卡 × 皇后鎮",
-        image: "https://images.unsplash.com/photo-1469521669194-babb45599def?auto=format&fit=crop&w=900&q=85",
-        desc: "以較慢的節奏感受湖區、牧場與山谷，享受南島純粹風景。",
-        more: "適合喜歡攝影與自然景色的旅人，保留充裕時間在湖畔與山城散步。"
-      },
-      {
-        tag: "NEW ZEALAND · 11 DAYS",
-        title: "紐西蘭・花園城市與冰河十一日",
-        meta: "基督城 × 福克斯冰河 × 皇后鎮",
-        image: "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=900&q=85",
-        desc: "城市花園、湖泊與冰河景觀交織出南島的多重風貌。",
-        more: "以基督城為起點，深入冰河與湖區，搭配精選景觀住宿。"
-      }
-    ],
-
-    australia: [
-      {
-        tag: "AUSTRALIA · 10 DAYS",
-        title: "澳洲東岸・城市與大堡礁十日",
-        meta: "雪梨 × 布里斯本 × 凱恩斯",
-        image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d0?auto=format&fit=crop&w=900&q=85",
-        desc: "城市天際線、大堡礁與海岸生活，一次感受澳洲東岸魅力。",
-        more: "安排雪梨港灣、藍山與大堡礁體驗，結合城市、美食與自然景觀。"
-      },
-      {
-        tag: "AUSTRALIA · 9 DAYS",
-        title: "墨爾本・大洋路與酒鄉九日",
-        meta: "墨爾本 × 大洋路 × 雅拉河谷",
-        image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=900&q=85",
-        desc: "藝術城市、海岸公路與酒莊，體驗澳洲南方的生活美學。",
-        more: "大洋路沿岸景觀搭配雅拉河谷酒莊，適合喜歡城市與自然兼具的旅人。"
-      },
-      {
-        tag: "AUSTRALIA · 11 DAYS",
-        title: "澳洲南北・自然與城市十一日",
-        meta: "雪梨 × 愛麗絲泉 × 烏魯魯",
-        image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85",
-        desc: "從海岸城市深入紅土中心，探索澳洲最具代表性的地景。",
-        more: "串聯雪梨與烏魯魯，感受原住民文化、星空與澳洲內陸景觀。"
-      },
-      {
-        tag: "AUSTRALIA · 10 DAYS",
-        title: "塔斯馬尼亞・荒野與海岸十日",
-        meta: "霍巴特 × 搖籃山 × 酒杯灣",
-        image: "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=900&q=85",
-        desc: "原始荒野、森林與海灣，探索澳洲最純粹的一面。",
-        more: "以霍巴特為起點，深入國家公園與海岸線，適合自然系旅人。"
-      }
-    ]
-  };
-
-
-  /* =========================================================
-     7. 經典行程狀態
+     6. 經典行程狀態
+     歐洲與紐澳都直接讀取 HTML
   ========================================================= */
 
   const classicState = {
@@ -779,58 +667,7 @@
 
 
   /* =========================================================
-     8. 紐澳行程卡片建立
-  ========================================================= */
-
-  function makeTripCard(trip) {
-    const card = document.createElement("article");
-
-    card.className = "trip-card";
-
-    card.innerHTML = `
-      <div
-        class="trip-photo"
-        style="--bg:url('${trip.image}')"
-      ></div>
-
-      <div class="trip-body">
-        <span class="trip-tag">${trip.tag}</span>
-
-        <h3 class="trip-title">${trip.title}</h3>
-
-        <div class="trip-meta">${trip.meta}</div>
-
-        <p class="trip-desc">${trip.desc}</p>
-
-        <button
-          class="trip-toggle"
-          type="button"
-          aria-expanded="false"
-        >
-          <span>推薦行程</span>
-          <span class="plus">＋</span>
-        </button>
-
-        <div class="trip-more" style="height:0;opacity:0">
-          <div class="trip-more-inner">
-            <p>${trip.more}</p>
-
-            <ul>
-              <li>精選景點與舒適旅遊節奏</li>
-              <li>專業團隊行程規劃與品質把關</li>
-              <li>依季節安排最適合的旅行體驗</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    `;
-
-    return card;
-  }
-
-
-  /* =========================================================
-     9. 經典行程可見卡片數量
+     7. 可見卡片數量
   ========================================================= */
 
   function cardsVisible() {
@@ -841,7 +678,7 @@
 
 
   /* =========================================================
-     10. 取得經典行程容器
+     8. 取得經典行程容器
   ========================================================= */
 
   function getClassicTrack(type) {
@@ -854,25 +691,22 @@
 
 
   /* =========================================================
-     11. 取得目前顯示的經典行程卡片
+     9. 取得目前顯示的經典行程卡片
+     歐洲與紐澳統一使用 .classic-card
   ========================================================= */
 
   function getClassicCards(type) {
     const track = getClassicTrack(type);
     if (!track) return [];
 
-    if (type === "europe") {
-      return $$(".classic-card", track).filter(card => {
-        return getComputedStyle(card).display !== "none";
-      });
-    }
-
-    return $$(".trip-card", track);
+    return $$(".classic-card", track).filter(card =>
+      getComputedStyle(card).display !== "none"
+    );
   }
 
 
   /* =========================================================
-     12. 更新經典行程位置
+     10. 更新經典行程位置
   ========================================================= */
 
   function updateClassicPosition(type) {
@@ -915,7 +749,7 @@
 
 
   /* =========================================================
-     13. 歐洲經典行程篩選
+     11. 歐洲經典行程篩選
      直接控制 HTML 卡片，不建立、不刪除卡片
   ========================================================= */
 
@@ -931,35 +765,54 @@
     classicState.europe.category = category;
     classicState.europe.offset = 0;
 
+    track.style.transform = "translate3d(0, 0, 0)";
     updateClassicPosition("europe");
   }
 
 
   /* =========================================================
-     14. 紐澳經典行程渲染
-     HTML 使用 #oceaniaClassicTrack 作為空容器
+     12. 紐澳經典行程篩選
+     直接控制 HTML 卡片，不建立、不刪除卡片
+     HTML 必須設定：
+     data-country="newzealand"
+     data-country="australia"
   ========================================================= */
 
-  function renderOceaniaClassic() {
+  function filterOceaniaCards(category) {
     const track = document.getElementById("oceaniaClassicTrack");
     if (!track) return;
 
-    const state = classicState.oceania;
-    const list = oceaniaTrips[state.category] || [];
+    $$(".classic-card", track).forEach(card => {
+      const isMatch = card.dataset.country === category;
 
-    track.innerHTML = "";
+      card.style.display = isMatch ? "" : "none";
 
-    list.forEach(trip => {
-      track.appendChild(makeTripCard(trip));
+      // 切換分類時收合推薦行程
+      card.classList.remove("is-open");
+
+      const toggle = $(".trip-toggle", card);
+      const more = $(".trip-more", card);
+
+      if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      if (more) {
+        more.style.height = "0px";
+        more.style.opacity = "0";
+      }
     });
 
-    state.offset = 0;
+    classicState.oceania.category = category;
+    classicState.oceania.offset = 0;
+
+    track.style.transform = "translate3d(0, 0, 0)";
     updateClassicPosition("oceania");
   }
 
 
   /* =========================================================
-     15. 經典行程左右切換
+     13. 經典行程左右切換
   ========================================================= */
 
   function changeClassic(type, step) {
@@ -994,10 +847,9 @@
 
 
   /* =========================================================
-     16. 區域篩選按鈕
-     支援：
-     data-filter-group="europe"
-     data-filter-group="oceania"
+     14. 區域篩選按鈕
+     歐洲：western / eastern / southern / northern
+     紐澳：newzealand / australia
   ========================================================= */
 
   $$("[data-filter-group]").forEach(group => {
@@ -1011,7 +863,7 @@
 
         const validCategory = type === "europe"
           ? ["western", "eastern", "southern", "northern"].includes(category)
-          : Object.prototype.hasOwnProperty.call(oceaniaTrips, category);
+          : ["newzealand", "australia"].includes(category);
 
         if (!validCategory) return;
 
@@ -1025,23 +877,16 @@
 
         if (type === "europe") {
           filterEuropeCards(category);
-          return;
+        } else if (type === "oceania") {
+          filterOceaniaCards(category);
         }
-
-        classicState.oceania.category = category;
-        classicState.oceania.offset = 0;
-
-        renderOceaniaClassic();
       });
     });
   });
 
 
   /* =========================================================
-     17. 經典行程左右箭頭
-     HTML：
-     data-classic-prev="europe" / "oceania"
-     data-classic-next="europe" / "oceania"
+     15. 經典行程左右箭頭
   ========================================================= */
 
   $$("[data-classic-prev]").forEach(button => {
@@ -1066,18 +911,46 @@
 
 
   /* =========================================================
-     18. 初始化經典行程
+     16. 初始化經典行程
+     不產生、不刪除任何行程卡片
   ========================================================= */
 
-  // 歐洲：直接讀取 HTML 卡片，預設顯示中西歐
-  filterEuropeCards("western");
+  function initializeClassicFilters() {
+    const europeTrack = document.getElementById("europeClassicTrack");
+    const oceaniaTrack = document.getElementById("oceaniaClassicTrack");
 
-  // 紐澳：保留 JavaScript 資料產生卡片的方式
-  renderOceaniaClassic();
+    if (europeTrack) {
+      filterEuropeCards("western");
+
+      const europeGroup = $('[data-filter-group="europe"]');
+
+      $$(".filter-btn", europeGroup).forEach(button => {
+        const active = button.dataset.filter === "western";
+
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    if (oceaniaTrack) {
+      filterOceaniaCards("newzealand");
+
+      const oceaniaGroup = $('[data-filter-group="oceania"]');
+
+      $$(".filter-btn", oceaniaGroup).forEach(button => {
+        const active = button.dataset.filter === "newzealand";
+
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+  }
+
+  initializeClassicFilters();
 
 
   /* =========================================================
-     19. 經典行程觸控／滑鼠拖曳
+     17. 經典行程觸控／滑鼠拖曳
   ========================================================= */
 
   function enableDrag(track, type) {
@@ -1094,7 +967,9 @@
 
       if (
         event.target instanceof Element &&
-        event.target.closest("button, a, input, textarea, select")
+        event.target.closest(
+          "button, a, input, textarea, select, summary"
+        )
       ) {
         return;
       }
@@ -1138,7 +1013,7 @@
 
 
   /* =========================================================
-     20. 視窗尺寸變更
+     18. 視窗尺寸變更
   ========================================================= */
 
   let classicResizeTimer = null;
@@ -1161,7 +1036,7 @@
 
 
   /* =========================================================
-     21. 初始化完成
+     19. 初始化完成
   ========================================================= */
 
   if (featured.items.length) {
