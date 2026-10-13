@@ -2407,187 +2407,573 @@ header .container{
 
 
 /* 歐洲 */
-/* Region */
-.region-section {
-  position: relative;
-  padding: 90px 0;
-  overflow: hidden;
+
+/* ========================================
+   歐洲區域輪播｜滿版放大版
+   Full-width 3D Coverflow
+======================================== */
+
+.europe-region,
+.europe-region * {
+  box-sizing: border-box;
 }
 
 .europe-region {
-  background:
-    radial-gradient(circle at 82% 60%, rgba(179,154,117,.16), transparent 26%),
-    linear-gradient(135deg, #f3e8dd, #fbf5ed);
-}
+  --europe-bg: #4a3c33;
+  --europe-gold: #cbb593;
+  --europe-text: #f3efe6;
+  --europe-muted: rgba(243, 239, 230, 0.76);
 
-.oceania-region {
-  background:
-    radial-gradient(circle at 18% 60%, rgba(179,154,117,.14), transparent 28%),
-    linear-gradient(135deg, #f0dfd1, #f9f0e8);
-}
-
-.region-slider {
   position: relative;
-  min-height: 430px;
+  isolation: isolate;
+  width: 100vw;
+  max-width: 100%;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 85px 0 70px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(154, 131, 110, 0.22) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(90, 72, 60, 0.28) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at center,
+      #635043 0%,
+      #3e3129 100%
+    );
 }
 
-/*
-  區域輪播改成「中央主卡＋左右前後景」：
-  - 中間：放大、清楚
-  - 左右：縮小、上下錯開、降低透明度
-  - 切換時以 transform / opacity / scale 做滑動效果
-*/
-.region-track {
-  position: relative;
-  width: 100%;
-  height: 430px;
-}
-
-.region-slide {
+/* 背景裝飾 */
+.europe-region::before {
+  content: "";
   position: absolute;
   inset: 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.25fr .75fr;
-  align-items: center;
-  gap: 75px;
-  opacity: 0;
+  z-index: -1;
   pointer-events: none;
-  transform: translate3d(105%, 22px, 0) scale(.82);
-  filter: blur(1px);
-  transition:
-    transform .75s cubic-bezier(.22,.72,.2,1),
-    opacity .55s ease,
-    filter .55s ease;
-  z-index: 1;
+
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.02) 50%,
+    transparent 85%
+  );
 }
 
-.region-slide.is-active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate3d(0, 0, 0) scale(1);
-  filter: blur(0);
-  z-index: 3;
+/* ========================================
+   滿版內容容器
+======================================== */
+
+.europe-region .section-inner {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
 }
 
-.region-slide.is-prev {
-  opacity: .28;
-  transform: translate3d(-72%, -24px, 0) scale(.80);
-  z-index: 2;
+/* 輪播容器 */
+.europe-region .region-slider {
+  position: relative;
+  width: 100%;
+  overflow: visible;
 }
 
-.region-slide.is-next {
-  opacity: .28;
-  transform: translate3d(72%, 24px, 0) scale(.80);
-  z-index: 2;
+/* ========================================
+   3D 軌道
+======================================== */
+
+.europe-region .region-track {
+  position: relative;
+  width: 100%;
+  height: 500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  perspective: 1600px;
+  will-change: transform;
 }
 
-.region-slide.is-prev .region-image,
-.region-slide.is-next .region-image {
-  box-shadow: 8px 8px 0 rgba(255,255,255,.35);
-}
+/* ========================================
+   卡片
+======================================== */
 
-.region-image {
-  min-height: 390px;
-  background: var(--bg) center / cover no-repeat;
-  border: 1px solid rgba(142,117,84,.40);
-  box-shadow: 12px 12px 0 rgba(255,255,255,.62);
-  transition: box-shadow .55s ease;
-}
-
-.region-slide.is-active .region-image {
-  box-shadow: 12px 12px 0 rgba(255,255,255,.72), 0 20px 42px rgba(75,58,43,.08);
-}
-
-.region-copy {
-  max-width: 410px;
-  transition: transform .65s cubic-bezier(.22,.72,.2,1), opacity .5s ease;
-}
-
-.region-slide.is-prev .region-copy {
-  transform: translateY(-12px);
-}
-
-.region-slide.is-next .region-copy {
-  transform: translateY(12px);
-}
-
-.region-copy > span {
-  color: var(--gold-dark);
-  font-family: var(--serif);
-  font-size: 10px;
-  letter-spacing: .25em;
-}
-
-.region-copy h2 {
-  margin: 6px 0 0;
-  font-family: var(--serif);
-  font-size: clamp(42px, 5vw, 64px);
-  font-weight: 400;
-  letter-spacing: .10em;
-}
-
-.region-en {
-  margin: -8px 0 17px;
-  font-family: var(--serif);
-  color: #6f6358;
-  letter-spacing: .09em;
-}
-
-.thin-line {
-  width: 90px;
-  height: 1px;
-  background: var(--gold);
-  margin: 0 0 18px;
-}
-
-.region-copy p:last-child {
-  color: #786c61;
-  font-size: 12px;
-  line-height: 2;
-  letter-spacing: .06em;
-}
-
-/* 箭頭放在「圖片與文字中間的下方」，符合提供的設計圖 */
-.region-arrows {
+.europe-region .region-slide {
   position: absolute;
-  left: 51.8%;
-  top: 70%;
-  transform: translate(-50%, -50%);
+
+  width:  min(1180px, 88vw);
+  max-width: none;
+  height: 450px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(36px, 4vw, 76px);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.7s ease,
+    filter 0.7s ease,
+    visibility 0s linear 0.7s;
+}
+
+/* ========================================
+   左側預覽卡片
+   往左延伸
+======================================== */
+
+.europe-region .region-slide.is-prev {
+  opacity: 0.5;
+  visibility: visible;
+
+  transform:
+    translateX(-78%)
+    translateZ(-180px)
+    rotateY(16deg)
+    scale(0.86);
+
+  transform-origin: center center;
+  filter: brightness(0.68) saturate(0.58);
+  z-index: 1;
+
+  transition:
+    transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.7s ease,
+    filter 0.7s ease;
+}
+
+/* ========================================
+   右側預覽卡片
+   往右延伸
+======================================== */
+
+.europe-region .region-slide.is-next {
+  opacity: 0.5;
+  visibility: visible;
+
+  transform:
+    translateX(78%)
+    translateZ(-180px)
+    rotateY(-16deg)
+    scale(0.86);
+
+  transform-origin: center center;
+  filter: brightness(0.68) saturate(0.58);
+  z-index: 1;
+
+  transition:
+    transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.7s ease,
+    filter 0.7s ease;
+}
+
+/* ========================================
+   中間主卡片
+======================================== */
+
+.europe-region .region-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translateX(0)
+    translateZ(0)
+    rotateY(0deg)
+    scale(1);
+
+  transform-origin: center center;
+  pointer-events: auto;
+  filter: brightness(1) saturate(1);
+  z-index: 10;
+
+  transition:
+    transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.7s ease,
+    filter 0.7s ease;
+}
+
+/* ========================================
+   主圖與左右預覽圖
+======================================== */
+
+.europe-region .region-image {
+  position: relative;
+  flex: 0 0 52%;
+  height: 420px;
+  min-width: 0;
+
+  overflow: hidden;
+  border-radius: 2px;
+  border: 5px solid rgba(255, 255, 255, 0.95);
+
+  background-color: #3e3129;
+  background-image: var(--bg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+
+  transition:
+    box-shadow 0.6s ease,
+    border-color 0.5s ease;
+}
+
+/* 中間主圖 */
+.europe-region .region-slide.is-active .region-image {
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  border-color: #ffffff;
+}
+
+/* ========================================
+   主卡片文字
+======================================== */
+
+.europe-region .region-copy {
+  flex: 1;
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  z-index: 20;
+  justify-content: center;
+  text-align: left;
+
+  color: var(--europe-text);
+  background: transparent;
+  padding: 0;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateX(20px);
+
+  transition:
+    opacity 0.5s ease 0.15s,
+    transform 0.5s ease 0.15s,
+    visibility 0s linear 0.5s;
 }
 
-.region-arrow {
-  position: static;
-  width: 42px;
-  height: 24px;
-  border-radius: 20px;
-  border: 1px solid rgba(142,117,84,.50);
-  background: rgba(255,253,249,.88);
-  color: var(--ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
+.europe-region .region-slide.is-active .region-copy {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+
+  transition:
+    opacity 0.5s ease 0.15s,
+    transform 0.5s ease 0.15s,
+    visibility 0s;
+}
+
+/* 左右卡片不顯示文字 */
+.europe-region .region-slide.is-prev .region-copy,
+.europe-region .region-slide.is-next .region-copy {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 英文眉標 */
+.europe-region .region-copy > span {
+  display: block;
+  margin: 0 0 12px;
+
+  color: var(--europe-gold);
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+/* 中文主標題 */
+.europe-region .region-copy h2 {
+  margin: 0 0 10px;
+  padding: 0;
+
+  color: #ffffff;
+  font-size: clamp(42px, 4.2vw, 60px);
   font-family: var(--serif);
-  font-size: 12px;
-  line-height: 1;
-  transition: transform .25s ease, background .25s ease, color .25s ease;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
 }
 
-.region-arrow:hover {
-  background: var(--gold-dark);
-  color: #fff;
-  transform: translateX(3px);
+/* 英文副標 */
+.europe-region .region-copy .region-en {
+  margin: 0 0 24px;
+
+  color: #d1c7b7;
+  font-family: serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
 }
 
-.region-dots {
-  position: absolute;
-  left: 28%;
-  bottom: 2px;
+/* 金色分隔線 */
+.europe-region .region-copy .thin-line {
+  width: 55px;
+  height: 1px;
+  margin: 0 0 22px;
+
+  background: var(--europe-gold);
+  opacity: 0.9;
+
+  transition: width 0.45s ease;
+}
+
+.europe-region .region-slide.is-active .thin-line {
+  width: 80px;
+}
+
+/* 中文介紹 */
+.europe-region .region-copy > p:last-child {
   margin: 0;
+  color: var(--europe-muted);
+  font-size: 16px;
+  line-height: 2.1;
+  letter-spacing: 0.07em;
+  line-height: 2.1;
+  max-width: 460px;
+}
+
+/* ========================================
+   左右箭頭
+======================================== */
+
+.europe-region .region-arrows {
+  position: relative;
   z-index: 20;
-  transform: translateX(-50%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+
+  width: 100%;
+  margin: 28px auto 0;
+}
+
+.europe-region .region-arrow {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+
+  font-size: 18px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.europe-region .region-arrow:hover {
+  color: #3e3129;
+  background: var(--europe-gold);
+  border-color: var(--europe-gold);
+  transform: translateY(-3px);
+}
+
+/* ========================================
+   輪播圓點
+======================================== */
+
+.europe-region .region-dots {
+  position: relative;
+  z-index: 20;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  margin: 18px auto 0;
+}
+
+.europe-region .region-dots button {
+  display: block;
+
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+
+  transition: all 0.35s ease;
+}
+
+.europe-region .region-dots button.is-active,
+.europe-region .region-dots button.active {
+  width: 24px;
+  border-radius: 5px;
+  background: var(--europe-gold);
+}
+
+/* ========================================
+   平板版
+======================================== */
+
+@media (max-width: 991px) {
+  .europe-region {
+    padding: 65px 0 55px;
+  }
+
+  .europe-region .region-track {
+    height: 540px;
+  }
+
+  .europe-region .region-slide {
+    width: 90%;
+    height: 500px;
+
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* 平板隱藏左右預覽卡片 */
+  .europe-region .region-slide.is-prev,
+  .europe-region .region-slide.is-next {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: scale(0.8) translateZ(-200px);
+  }
+
+  .europe-region .region-image {
+    width: 100%;
+    max-width: 620px;
+    height: 300px;
+    flex: 0 0 auto;
+  }
+
+  .europe-region .region-copy {
+    width: 90%;
+    flex: 0 0 auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .europe-region .region-copy h2 {
+    font-size: clamp(34px, 5vw, 46px);
+  }
+
+  .europe-region .region-copy .region-en {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .europe-region .region-copy .thin-line {
+    margin: 0 auto 16px;
+  }
+
+  .europe-region .region-copy > p:last-child {
+    max-width: 520px;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .europe-region .region-arrows {
+    margin-top: 24px;
+  }
+}
+
+/* ========================================
+   手機版
+======================================== */
+
+@media (max-width: 575px) {
+  .europe-region {
+    padding: 48px 0 42px;
+  }
+
+  .europe-region .region-track {
+    height: 460px;
+  }
+
+  .europe-region .region-slide {
+    width: 92%;
+    height: 430px;
+    gap: 20px;
+  }
+
+  .europe-region .region-image {
+    width: 100%;
+    max-width: none;
+    height: 230px;
+    border-width: 4px;
+  }
+
+  .europe-region .region-copy {
+    width: 100%;
+  }
+
+  .europe-region .region-copy > span {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+  }
+
+  .europe-region .region-copy h2 {
+    font-size: 32px;
+    letter-spacing: 0.1em;
+  }
+
+  .europe-region .region-copy .region-en {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .europe-region .region-copy .thin-line {
+    margin-bottom: 12px;
+  }
+
+  .europe-region .region-copy > p:last-child {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .europe-region .region-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .europe-region .region-dots {
+    margin-top: 14px;
+  }
 }
