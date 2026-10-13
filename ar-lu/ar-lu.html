@@ -189,6 +189,103 @@
           <span class="core-title-line core-title-line-right"></span>
         </section>
 
+        <!-- 精選行程 -->
+        <section class="featured-section section-white" id="featured">
+          <div class="section-inner section-w">
+            <!-- 區塊標題 -->
+            <div class="section-heading featured-heading">
+              <div>
+                <span class="section-kicker">Curated Journey</span>
+                <h2>精選旅程</h2>
+              </div>
+            </div>
+
+            <!-- 輪播主區域 -->
+            <div class="featured-layout">
+              <!-- 左側切換箭頭 -->
+              <div class="featured-left-controls" data-slider-controls="featuredSlider">
+                <button class="circle-btn prev" type="button" aria-label="上一個行程">←</button>
+
+                <button class="circle-btn next" type="button" aria-label="下一個行程">→</button>
+              </div>
+
+              <!-- 輪播視窗 -->
+              <div class="featured-slider" id="featuredSlider">
+                <div class="featured-track">
+                  <!-- 行程一｜希臘 -->
+                  <article class="featured-item" data-link="/tour/greece.html">
+                    <div
+                      class="featured-photo"
+                      style="--bg: url(&quot;https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85&quot;)"
+                      role="img"
+                      aria-label="希臘愛琴海旅遊風景"
+                    ></div>
+
+                    <div class="featured-info">
+                      <!-- <span>GREECE · 9 DAYS</span> -->
+
+                      <h3>希臘愛琴海・聖托里尼典藏之旅</h3>
+
+                      <time datetime="2027-04-18"> 2027 / 04 / 18 出發 </time>
+
+                      <p>漫步藍白小鎮、欣賞愛琴海夕陽與經典島嶼風景， 將希臘最動人的色彩收進一趟旅程。</p>
+
+                      <a class="featured-detail-btn" href="/tour/greece.html" aria-label="查看希臘愛琴海典藏之旅行程介紹"> 行程介紹 </a>
+                    </div>
+                  </article>
+
+                  <!-- 行程二｜義大利 -->
+                  <article class="featured-item is-active" data-link="/tour/italy.html" aria-current="true">
+                    <div
+                      class="featured-photo"
+                      style="--bg: url(&quot;https://images.unsplash.com/photo-1513735492246-483525079686?auto=format&fit=crop&w=1600&q=85&quot;)"
+                      role="img"
+                      aria-label="義大利古城旅遊風景"
+                    ></div>
+
+                    <div class="featured-info">
+                      <!-- <span>ITALY · 10 DAYS</span> -->
+
+                      <h3>義大利・古城美學典藏十日</h3>
+
+                      <time datetime="2027-05-06">出發日期 2026/10/16</time>
+
+                      <p>羅馬、佛羅倫斯與威尼斯，串起藝術、建築與餐桌文化， 走進義大利最經典的時光。</p>
+
+                      <a class="featured-detail-btn" href="/tour/italy.html" aria-label="查看義大利古城美學典藏十日行程介紹"> 行程介紹 </a>
+                    </div>
+                  </article>
+
+                  <!-- 行程三｜法國 -->
+                  <article class="featured-item" data-link="/tour/france.html">
+                    <div
+                      class="featured-photo"
+                      style="--bg: url(&quot;https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?auto=format&fit=crop&w=1400&q=85&quot;)"
+                      role="img"
+                      aria-label="法國巴黎城市旅遊風景"
+                    ></div>
+
+                    <div class="featured-info">
+                      <!-- <span>FRANCE · 10 DAYS</span> -->
+
+                      <h3>法國・巴黎光影與城堡之旅</h3>
+
+                      <time datetime="2027-06-12"> 2027 / 06 / 12 出發 </time>
+
+                      <p>從巴黎街角到羅亞爾河谷，以藝術、美食與古堡景致， 描繪一幅法式生活美學。</p>
+
+                      <a class="featured-detail-btn" href="/tour/france.html" aria-label="查看法國巴黎光影與城堡之旅行程介紹"> 行程介紹 </a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <!-- 下方輪播圓點：由 JavaScript 自動建立 -->
+            <div class="slider-dots" data-dots-for="featuredSlider" aria-label="選擇精選旅程"></div>
+          </div>
+        </section>
+
         <!-- 歐洲 -->
         <section class="region-section europe-region" id="europe">
           <div class="section-inner">
@@ -245,107 +342,490 @@
           </div>
         </section>
 
-        <!-- 精選行程 -->
-        <section class="featured-section section-white" id="featured">
+        <!-- 歐洲行程 -->
+        <section class="classic-section" id="europeClassic">
           <div class="section-inner">
             <!-- 區塊標題 -->
-            <div class="section-heading featured-heading">
+            <div class="classic-heading">
               <div>
-                <span class="section-kicker">Curated Journey</span>
-                <h2>精選旅程</h2>
+                <span class="section-kicker">Europe</span>
+                <h2>歐洲經典行程</h2>
+              </div>
+
+              <!-- 區域篩選 -->
+              <div class="filter-group" data-filter-group="europe">
+                <button class="filter-btn is-active" type="button" data-filter="western" aria-pressed="true">中西歐</button>
+                <button class="filter-btn" type="button" data-filter="eastern" aria-pressed="false">東歐</button>
+                <button class="filter-btn" type="button" data-filter="southern" aria-pressed="false">南歐</button>
+                <button class="filter-btn" type="button" data-filter="northern" aria-pressed="false">北歐</button>
+              </div>
+
+              <!-- 左右輪播箭頭 -->
+              <div class="classic-arrows">
+                <button class="circle-btn" type="button" data-classic-prev="europe" aria-label="上一個行程">←</button>
+                <button class="circle-btn" type="button" data-classic-next="europe" aria-label="下一個行程">→</button>
               </div>
             </div>
 
-            <!-- 輪播主區域 -->
-            <div class="featured-layout">
-              <!-- 左側切換箭頭 -->
-              <div class="featured-left-controls" data-slider-controls="featuredSlider">
-                <button class="circle-btn prev" type="button" aria-label="上一個行程">←</button>
+            <!-- 行程輪播 -->
+            <div class="classic-viewport">
+              <div class="classic-track" id="europeClassicTrack">
+                <!-- ================= 中西歐 ================= -->
 
-                <button class="circle-btn next" type="button" aria-label="下一個行程">→</button>
+                <article class="classic-card" data-region="western">
+                  <img
+                    src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=85"
+                    alt="法國巴黎城市景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>法國深度・巴黎城堡典藏十日</h3>
+                    <p class="classic-meta">巴黎 × 羅亞爾河 × 南法</p>
+                    <p class="classic-desc">以巴黎為起點，串聯古堡、葡萄酒與南法風光，留足時間感受法式生活。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">安排巴黎市區經典景點、羅亞爾河城堡與南法小鎮，搭配精選餐食與舒適住宿，讓旅程保有從容節奏。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="western">
+                  <img
+                    src="https://images.unsplash.com/photo-1531572753322-ad063cecc140?auto=format&fit=crop&w=900&q=85"
+                    alt="義大利歷史城市景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>義大利藝術・美食典藏十一日</h3>
+                    <p class="classic-meta">羅馬 × 佛羅倫斯 × 威尼斯</p>
+                    <p class="classic-desc">古羅馬遺跡、文藝復興與威尼斯水都，串起義大利最值得收藏的經典。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">從羅馬古蹟到佛羅倫斯美術館，再到威尼斯運河，將藝術史與餐桌文化一次收藏。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="western">
+                  <img
+                    src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=85"
+                    alt="英國倫敦城市景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>英國愛爾蘭・四遊船典藏十六日</h3>
+                    <p class="classic-meta">愛丁堡 × 湖區 × 倫敦</p>
+                    <p class="classic-desc">四大遊船、經典古堡與自然景致，深入英倫與愛爾蘭最迷人的風景。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">包含尼斯湖遊船、劍橋撐篙、湖區遊船、泰晤士河遊船，並安排愛丁堡城堡、西敏寺等經典門票。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="western">
+                  <img
+                    src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=900&q=85"
+                    alt="荷蘭運河與歐洲城市風景"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>新春飛羊・法比荷花季十日</h3>
+                    <p class="classic-meta">巴黎 × 比利時 × 荷蘭</p>
+                    <p class="classic-desc">花季限定路線，走訪鬱金香花海、運河城市與歐洲經典名城。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">搭配中華航空、巴黎市區連泊與荷蘭花季，將鬱金香、運河與法比荷經典風景一次串聯。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- ================= 東歐 ================= -->
+
+                <article class="classic-card" data-region="eastern">
+                  <img
+                    src="https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=900&q=85"
+                    alt="捷克布拉格古城景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>布拉格・波希米亞古城典藏九日</h3>
+                    <p class="classic-meta">布拉格 × 庫倫洛夫 × 維也納</p>
+                    <p class="classic-desc">漫步紅瓦屋頂與古典廣場，感受東歐城市的歷史層次。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">安排布拉格城堡區、查理大橋與世界文化遺產小鎮，搭配維也納古典音樂與咖啡文化。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="eastern">
+                  <img
+                    src="https://images.unsplash.com/photo-1609856878074-6d4b9d0f3b1a?auto=format&fit=crop&w=900&q=85"
+                    alt="奧地利湖區與山景"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>奧地利・湖區與音樂之旅</h3>
+                    <p class="classic-meta">維也納 × 薩爾茲堡 × 哈修塔特</p>
+                    <p class="classic-desc">古典樂章、湖區山色與宮殿建築，描繪奧地利的優雅。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">走訪維也納皇宮、薩爾茲堡與湖區小鎮，讓自然與文化在同一趟旅程裡交會。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="eastern">
+                  <img
+                    src="https://images.unsplash.com/photo-1555990538-1e7b0d7b2a0b?auto=format&fit=crop&w=900&q=85"
+                    alt="克羅埃西亞亞得里亞海沿岸"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>克羅埃西亞・亞得里亞海典藏十日</h3>
+                    <p class="classic-meta">杜布羅夫尼克 × 斯普利特</p>
+                    <p class="classic-desc">石造古城、湛藍海岸與地中海餐桌，收藏亞得里亞海的光。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">深入杜布羅夫尼克與沿岸古城，搭配海岸景觀與在地餐食，呈現東歐南境的另一種優雅。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- ================= 南歐 ================= -->
+
+                <article class="classic-card" data-region="southern">
+                  <img
+                    src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=900&q=85"
+                    alt="希臘愛琴海藍白島嶼"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>希臘愛琴海・聖托里尼典藏九日</h3>
+                    <p class="classic-meta">雅典 × 聖托里尼 × 米克諾斯</p>
+                    <p class="classic-desc">藍白島嶼、愛琴海夕陽與希臘神話，將南歐最純粹的浪漫收進旅程。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">以雅典古文明為起點，安排島嶼慢旅與海景時光，適合喜愛風景、美食與生活感的旅人。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="southern">
+                  <img
+                    src="https://images.unsplash.com/photo-1539037116277-4db20889f2d4?auto=format&fit=crop&w=900&q=85"
+                    alt="西班牙城市與歷史建築"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>西班牙・建築與美食美學十日</h3>
+                    <p class="classic-meta">巴塞隆納 × 馬德里 × 塞維亞</p>
+                    <p class="classic-desc">高第建築、弗拉明哥與西班牙餐桌，感受熱情而細膩的南歐風格。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">精選巴塞隆納與安達魯西亞城市，搭配市場、tapas 與建築巡禮，完整體驗西班牙文化。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="southern">
+                  <img
+                    src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=900&q=85"
+                    alt="葡萄牙里斯本城市景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>葡萄牙・大西洋光影九日</h3>
+                    <p class="classic-meta">里斯本 × 波多 × 辛特拉</p>
+                    <p class="classic-desc">電車、瓷磚、海岸與葡萄酒，探索葡萄牙溫柔而明亮的旅行風景。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">走訪里斯本舊城、辛特拉宮殿與波多酒窖，以悠閒節奏享受大西洋沿岸。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- ================= 北歐 ================= -->
+
+                <article class="classic-card" data-region="northern">
+                  <img
+                    src="https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=85"
+                    alt="挪威峽灣與北歐自然景觀"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>挪威峽灣・極光典藏十日</h3>
+                    <p class="classic-meta">奧斯陸 × 峽灣 × 卑爾根</p>
+                    <p class="classic-desc">峽灣、山岳與北境光影，走進北歐最壯闊的自然。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">安排峽灣遊船與山景鐵路，依季節搭配極光或午夜太陽，留下北境難忘的自然記憶。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="northern">
+                  <img
+                    src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85"
+                    alt="芬蘭拉普蘭冬季星空"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>芬蘭・玻璃屋極光之旅</h3>
+                    <p class="classic-meta">赫爾辛基 × 拉普蘭</p>
+                    <p class="classic-desc">雪地森林、玻璃屋與北極光，感受北境冬夜的靜謐。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">入住特色玻璃屋，搭配雪地活動與拉普蘭自然體驗，適合想遠離城市喧囂的旅人。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="classic-card" data-region="northern">
+                  <img
+                    src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=85"
+                    alt="冰島冰川與自然地景"
+                    loading="lazy"
+                  />
+
+                  <div class="classic-content">
+                    <span class="classic-tag">出發日期 2026/10/16</span>
+                    <h3>冰島・火山冰川環島九日</h3>
+                    <p class="classic-meta">雷克雅維克 × 南岸 × 冰河湖</p>
+                    <p class="classic-desc">冰川、黑沙灘、瀑布與地熱，探索世界最奇幻的自然地景。</p>
+
+                    <button class="trip-toggle" type="button" aria-expanded="false">
+                      <span>推薦行程</span>
+                      <span class="plus">＋</span>
+                    </button>
+
+                    <div class="trip-more">
+                      <div class="trip-more-inner">
+                        <p class="classic-more">串聯冰島南岸、冰河湖與經典地熱景觀，依季節安排極光觀賞或夏季長日體驗。</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 紐澳 -->
+        <section class="region-section oceania-region" id="oceania">
+          <div class="section-inner">
+            <div class="region-slider" id="oceaniaRegion">
+              <div class="region-track">
+                <!-- 第一張：紐澳 -->
+                <article class="region-slide is-active">
+                  <div
+                    class="region-image"
+                    style="--bg: url(&quot;https://images.unsplash.com/photo-1507699622108-4be3abd695ad?auto=format&fit=crop&w=1500&q=88&quot;)"
+                  ></div>
+                  <div class="region-copy">
+                    <span>NEW ZEALAND · AUSTRALIA</span>
+                    <h2>紐．澳</h2>
+                    <p class="region-en">New Zealand & Australia Collection</p>
+                    <div class="thin-line"></div>
+                    <p>從紐西蘭山海到澳洲城市，以遼闊自然與慢旅行節奏，展開南半球的經典篇章。</p>
+                  </div>
+                </article>
+
+                <!-- 第二張：紐西蘭 -->
+                <article class="region-slide">
+                  <div class="region-image" style="--bg: url(&quot;../images/ar-ul/anz-1.jpg&quot;)"></div>
+
+                  <div class="region-copy">
+                    <span>NEW ZEALAND</span>
+                    <h2>紐西蘭</h2>
+                    <p class="region-en">New Zealand Collection</p>
+                    <div class="thin-line"></div>
+                    <p>冰河、湖泊、山谷與牧場，將純粹的自然景色串成一幅壯闊畫卷。</p>
+                  </div>
+                </article>
+
+                <!-- 第三張：澳洲 -->
+                <article class="region-slide">
+                  <div
+                    class="region-image"
+                    style="--bg: url(&quot;https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1500&q=88&quot;)"
+                  ></div>
+                  <div class="region-copy">
+                    <span>AUSTRALIA</span>
+                    <h2>澳洲</h2>
+                    <p class="region-en">Australia Collection</p>
+                    <div class="thin-line"></div>
+                    <p>城市、美酒、海岸與原野，享受澳洲從容而豐富的旅行風景。</p>
+                  </div>
+                </article>
               </div>
 
-              <!-- 輪播視窗 -->
-              <div class="featured-slider" id="featuredSlider">
-                <div class="featured-track">
-                  <!-- =================================================
-               行程一｜希臘
-          ================================================== -->
-                  <article class="featured-item" data-link="/tour/greece.html">
-                    <div
-                      class="featured-photo"
-                      style="--bg: url(&quot;https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1400&q=85&quot;)"
-                      role="img"
-                      aria-label="希臘愛琴海旅遊風景"
-                    ></div>
+              <!-- 左右切換箭頭 -->
+              <div class="region-arrows">
+                <button class="region-arrow region-prev" type="button" aria-label="紐澳上一張">←</button>
 
-                    <div class="featured-info">
-                      <span>GREECE · 9 DAYS</span>
+                <button class="region-arrow region-next" type="button" aria-label="紐澳下一張">→</button>
+              </div>
 
-                      <h3>希臘愛琴海・聖托里尼典藏之旅</h3>
+              <!-- 輪播圓點 -->
+              <div class="region-dots slider-dots" data-dots-for="oceaniaRegion"></div>
+            </div>
+          </div>
+        </section>
 
-                      <time datetime="2027-04-18"> 2027 / 04 / 18 出發 </time>
+        <!-- 紐澳行程 -->
 
-                      <p>漫步藍白小鎮、欣賞愛琴海夕陽與經典島嶼風景， 將希臘最動人的色彩收進一趟旅程。</p>
+        <section class="classic-section oceania-classic-section" id="oceaniaClassic">
+          <div class="section-inner">
+            <!-- =========================
+         區塊標題
+    ========================== -->
+            <div class="classic-heading">
+              <div>
+                <span class="section-kicker">Oceania</span>
+                <h2>紐澳經典行程</h2>
+              </div>
 
-                      <a class="featured-detail-btn" href="/tour/greece.html" aria-label="查看希臘愛琴海典藏之旅行程介紹"> 行程介紹 </a>
-                    </div>
-                  </article>
+              <!-- =========================
+           紐澳區域篩選
+      ========================== -->
+              <div class="filter-group" data-filter-group="oceania" aria-label="紐澳行程區域篩選">
+                <button class="filter-btn is-active" type="button" data-filter="newzealand" aria-pressed="true">紐西蘭</button>
 
-                  <!-- =================================================
-               行程二｜義大利
-               預設顯示在中央
-          ================================================== -->
-                  <article class="featured-item is-active" data-link="/tour/italy.html" aria-current="true">
-                    <div
-                      class="featured-photo"
-                      style="--bg: url(&quot;https://images.unsplash.com/photo-1513735492246-483525079686?auto=format&fit=crop&w=1600&q=85&quot;)"
-                      role="img"
-                      aria-label="義大利古城旅遊風景"
-                    ></div>
+                <button class="filter-btn" type="button" data-filter="australia" aria-pressed="false">澳洲</button>
+              </div>
 
-                    <div class="featured-info">
-                      <span>ITALY · 10 DAYS</span>
+              <!-- =========================
+           左右輪播箭頭
+      ========================== -->
+              <div class="classic-arrows">
+                <button class="circle-btn" type="button" data-classic-prev="oceania" aria-label="上一個紐澳行程">←</button>
 
-                      <h3>義大利・古城美學典藏十日</h3>
-
-                      <time datetime="2027-05-06"> 2027 / 05 / 06 出發 </time>
-
-                      <p>羅馬、佛羅倫斯與威尼斯，串起藝術、建築與餐桌文化， 走進義大利最經典的時光。</p>
-
-                      <a class="featured-detail-btn" href="/tour/italy.html" aria-label="查看義大利古城美學典藏十日行程介紹"> 行程介紹 </a>
-                    </div>
-                  </article>
-
-                  <!-- =================================================
-               行程三｜法國
-          ================================================== -->
-                  <article class="featured-item" data-link="/tour/france.html">
-                    <div
-                      class="featured-photo"
-                      style="--bg: url(&quot;https://images.unsplash.com/photo-1528909514045-2fa4ac7a08ba?auto=format&fit=crop&w=1400&q=85&quot;)"
-                      role="img"
-                      aria-label="法國巴黎城市旅遊風景"
-                    ></div>
-
-                    <div class="featured-info">
-                      <span>FRANCE · 10 DAYS</span>
-
-                      <h3>法國・巴黎光影與城堡之旅</h3>
-
-                      <time datetime="2027-06-12"> 2027 / 06 / 12 出發 </time>
-
-                      <p>從巴黎街角到羅亞爾河谷，以藝術、美食與古堡景致， 描繪一幅法式生活美學。</p>
-
-                      <a class="featured-detail-btn" href="/tour/france.html" aria-label="查看法國巴黎光影與城堡之旅行程介紹"> 行程介紹 </a>
-                    </div>
-                  </article>
-                </div>
+                <button class="circle-btn" type="button" data-classic-next="oceania" aria-label="下一個紐澳行程">→</button>
               </div>
             </div>
 
-            <!-- 下方輪播圓點：由 JavaScript 自動建立 -->
-            <div class="slider-dots" data-dots-for="featuredSlider" aria-label="選擇精選旅程"></div>
+            <!-- =========================
+         紐澳行程輪播視窗
+    ========================== -->
+            <div class="classic-viewport">
+              <!--
+        注意：
+        不需要在這裡手動寫 article。
+        JavaScript 會從 oceaniaTrips 讀取資料，
+        並自動建立紐西蘭或澳洲的行程卡片。
+      -->
+              <div class="classic-track" id="oceaniaClassicTrack"></div>
+            </div>
           </div>
         </section>
       </main>
