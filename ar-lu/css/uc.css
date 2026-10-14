@@ -1,23 +1,36 @@
 @charset "UTF-8";
 
+/* =========================================================
+   1. 全域變數與基礎設定 (Root & Base Settings)
+   ========================================================= */
 :root {
   --ink: #4b4038;
   --ink2: rgb(36, 32, 29);
   --muted: #88796c;
   --gold: #b39a75;
-  --gold2:#9E7557;
+  --gold2: #9E7557;
   --gold-dark: #8e7554;
   --paper: #f8f2eb;
   --paper-2: #efe3d6;
   --white: #fffdf9;
   --line: rgba(142, 117, 84, .38);
-  --core-bg: #fffaf3;
-  --core-card-bg: #f3efe4;
+  
+  /* 品牌核心色系 */
+  --core-bg: #faf6ef;
+  --core-card-bg: #f4eee5;
   --core-gold: #b49a72;
-  --core-gold-dark: #8c6940;
-  --core-text: #3E1010;
-  --core-muted: #9E7557;
-  --shadow: 0 18px 45px rgba(68, 53, 40, .10);
+  --core-gold-dark: #927653;
+  --core-text: #493b30;
+  --core-muted: #927653;
+  
+  /* 典藏質感強化色系 */
+  --lux-gold: #b89a6a;
+  --lux-gold-light: #dfc9a3;
+  --lux-brown: #463329;
+  --lux-rose: #8c6558;
+  --lux-ivory: #fcf8f1;
+
+  --shadow: 0 14px 38px rgba(68, 53, 40, .08);
   --serif: "Times New Roman", "Noto Serif TC", serif;
   --sans: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
   --max: 1180px;
@@ -34,7 +47,7 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background: var(--white);
+  background: var(--lux-ivory);
   font-family: var(--sans);
   font-weight: 400;
   line-height: 1.8;
@@ -76,61 +89,71 @@ img {
   background: #fffdfa;
 }
 
-/* header */
-header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030;
 
-    background: white;
-    height: 66px;
-    border-bottom: 1px solid #e6e6e6;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+/* =========================================================
+   2. 導覽列與標誌 (Header & Logo)
+   ========================================================= */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  background: rgba(255, 253, 248, .97);
+  height: 66px;
+  border-bottom: 1px solid rgba(184, 154, 106, .38);
+  box-shadow: 0 5px 24px rgba(65, 44, 30, .055);
 }
 
-header .container{
-    max-width: 1200px;
-    height: 66px;
-    margin: 0 auto;
-    padding: 0 12px;
+header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(223,201,163,.8), rgba(184,154,106,.55), transparent);
+  pointer-events: none;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+header .container {
+  width: 90vw;
+  max-width: 1650px;
+  height: 66px;
+  margin: 0 auto;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 45px;
+  width: auto;
+  display: block;
 }
 
 @media (max-width: 575.98px) {
   header {
     height: 55px;
   }
-
   header .container {
     height: 55px;
   }
-}
-
-/* ===== Logo ===== */
-.logo{
-    display: flex;
-    align-items: center;
-}
-
-.logo img{
-    height: 45px;
-    width: auto;
-    display: block;
-}
-
-@media (max-width: 575.98px) {
   .logo img {
     height: 35px;
   }
 }
 
 
-/* Hero */
+/* =========================================================
+   3. 頂部主視覺 (Hero Section)
+   ========================================================= */
 .hero {
   position: relative;
   width: 100%;
@@ -148,8 +171,7 @@ header .container{
   height: 100%;
   background:
     linear-gradient(90deg, rgba(54,37,20,.15), transparent 55%),
-    url("../images/ar-ul/banner-1.jpg")
-    center center / cover no-repeat;
+    url("../images/ar-ul/banner-1.jpg") center center / cover no-repeat;
   transform: scale(1.02);
 }
 
@@ -197,76 +219,57 @@ header .container{
   letter-spacing: 0.08rem;
 }
 
-
-/* 平板 */
 @media (max-width: 991px) {
-
   .hero {
     height: 360px;
   }
-
   .hero-content {
     padding-top: 90px;
   }
-
 }
 
-
-/* 手機 */
 @media (max-width: 767px) {
-
   .hero {
     height: 280px;
   }
-
   .hero-content {
     padding: 55px 20px 0;
   }
-
   .hero-content .eyebrow {
     margin-bottom: 6px;
     font-size: 8px;
     letter-spacing: .28em;
   }
-
   .hero-content h1 {
     font-size: clamp(28px, 8vw, 40px);
     letter-spacing: .12em;
   }
-
   .hero-content p:last-child {
     margin-top: 6px;
     font-size: 10px;
     letter-spacing: .12em;
   }
-
 }
 
-
-/* 小手機 */
 @media (max-width: 575px) {
-
   .hero {
     height: 300px;
   }
-
   .hero-content {
     padding-top: 85px;
   }
-
   .hero-content h1 {
     font-size: 29px;
   }
-
   .hero-content p:last-child {
     font-size: 9px;
   }
-
 }
 
 
-/* 起源｜整體區塊 */
-
+/* =========================================================
+   4. 品牌起源與介紹 (Brand Origin Section)
+   ========================================================= */
 .brand-section {
   padding: 105px 0 60px;
 }
@@ -274,11 +277,6 @@ header .container{
 .origin-section {
   padding: 10px 0;
 }
-
-
-/* =========================================
-   起源｜上方中央品牌標題
-========================================= */
 
 .brand-heading {
   position: relative;
@@ -288,21 +286,17 @@ header .container{
   text-align: center;
 }
 
-
-/* The Art of Travel */
-
-.brand-heading .section-kicker {
-  display: block;
-  margin-bottom: 14px;
-  color: var(--gold-dark);
+.brand-heading .section-kicker,
+.section-kicker,
+.classic-heading .section-kicker {
+  color: var(--lux-rose);
   font-family: var(--serif);
   font-size: 12px;
-  letter-spacing: .28em;
+  letter-spacing: .22em;
   text-transform: uppercase;
+  display: block;
+  margin-bottom: 14px;
 }
-
-
-/* 巨匠｜Icon｜典藏 */
 
 .brand-heading .brand-title {
   display: flex;
@@ -311,25 +305,20 @@ header .container{
   flex-wrap: nowrap;
   white-space: nowrap;
   margin: 0;
-  color: #3f3934;
+  color: var(--lux-brown);
   font-family: var(--serif);
   font-size: clamp(28px, 3vw, 42px);
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: .12em;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
 }
-
-
-/* 巨匠 / 典藏文字 */
 
 .brand-title-word {
   display: inline-block;
   flex: 0 0 auto;
   white-space: nowrap;
 }
-
-
-/* 巨匠與典藏中間 Icon */
 
 .brand-title-icon {
   display: inline-flex;
@@ -348,9 +337,6 @@ header .container{
   object-fit: contain;
 }
 
-
-/* 品牌副標 */
-
 .brand-heading p {
   margin: 18px auto 0;
   color: #20201f;
@@ -360,19 +346,11 @@ header .container{
   letter-spacing: .12em;
 }
 
-
-/* 品牌副標｜英文 */
-
 .brand-heading p .brand-subtitle-highlight {
   color: var(--gold2);
   font-size: 20px;
   letter-spacing: .1rem;
 }
-
-
-/* =========================================
-   左上／右下裝飾 Icon
-========================================= */
 
 .brand-heading-icon {
   position: absolute;
@@ -388,25 +366,14 @@ header .container{
   object-fit: contain;
 }
 
-
-/* 左上 Icon */
-
 .brand-heading-icon-left {
   left: 90px;
 }
-
-
-/* 右下 Icon */
 
 .brand-heading-icon-right {
   right: 90px;
   bottom: -8px;
 }
-
-
-/* =========================================
-   起源｜左右內容版面
-========================================= */
 
 .brand-grid {
   display: grid;
@@ -415,31 +382,11 @@ header .container{
   align-items: center;
 }
 
-
-/* =========================================
-   左側文字
-========================================= */
-
 .brand-copy {
   width: 100%;
   max-width: 480px;
   padding-left: 50px;
 }
-
-
-/* 區塊英文小標 */
-
-.section-kicker {
-  display: block;
-  color: var(--gold-dark);
-  font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: .20em;
-  text-transform: uppercase;
-}
-
-
-/* 左側標題 */
 
 .brand-copy h2,
 .brand-copy h3 {
@@ -449,10 +396,8 @@ header .container{
   font-size: clamp(27px, 3vw, 40px);
   line-height: 1.45;
   letter-spacing: .08em;
+  color: var(--lux-brown);
 }
-
-
-/* 引號 */
 
 .brand-copy .ornament {
   font-family: Georgia, serif;
@@ -462,9 +407,6 @@ header .container{
   height: 28px;
 }
 
-
-/* 左側內文 */
-
 .brand-copy p {
   margin: 18px 0 30px;
   max-width: 430px;
@@ -473,11 +415,6 @@ header .container{
   line-height: 2.1;
   letter-spacing: .07em;
 }
-
-
-/* =========================================
-   左側底部照片
-========================================= */
 
 .brand-line {
   position: relative;
@@ -499,12 +436,6 @@ header .container{
 .brand-line:hover img {
   transform: scale(1.03);
 }
-
-
-/* =========================================
-   右側主視覺照片
-   桌機：寬度 80%，高度 100%
-========================================= */
 
 .brand-photo {
   position: relative;
@@ -534,1410 +465,573 @@ header .container{
   transform: scale(1.01);
 }
 
-
-/* =========================================
-   大螢幕
-========================================= */
-
 @media (min-width: 1400px) {
-
   .brand-grid {
     max-width: 1300px;
     margin: 0 auto;
     gap: 30px;
   }
-
   .origin-section .section-inner {
     width: min(calc(100% - 80px), 1300px);
     margin: 0 auto;
   }
-
   .brand-photo {
     width: 85%;
     height: 100%;
     margin: 0 auto;
   }
-
 }
 
-
-/* =========================================
-   平板
-========================================= */
-
 @media (max-width: 991px) {
-
-  .brand-section {
-    padding: 80px 0 85px;
-  }
-
+  .brand-section,
   .origin-section {
     padding: 80px 0 85px;
   }
-
-  /* 上方標題 */
-
   .brand-heading {
     margin-bottom: 0;
     padding: 0 55px;
   }
-
-  .brand-heading h2 {
-    font-size: 32px;
-  }
-
+  .brand-heading h2,
   .brand-heading .brand-title {
-    gap: 0;
     font-size: 32px;
     white-space: nowrap;
+    gap: 0;
   }
-
   .brand-title-icon {
     width: 30px;
     height: 30px;
     margin: 0 2px;
   }
-
-  .brand-title-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  /* 副標 */
-
   .brand-heading p {
     font-size: 12px;
   }
-
   .brand-heading p .brand-subtitle-highlight {
     color: var(--gold2);
     font-size: 12px;
   }
-
-  /* 裝飾 Icon */
-
   .brand-heading-icon {
     width: 38px;
     height: 38px;
     opacity: .6;
   }
-
-  /* 左右內容 */
-
   .brand-grid {
     grid-template-columns: 0.82fr 1.18fr;
     gap: 40px;
   }
-
-  /* 左側文字 */
-
   .brand-copy {
     width: 100%;
     padding-left: 20px;
     max-width: none;
   }
-
   .brand-copy h2,
   .brand-copy h3 {
     font-size: 30px;
     letter-spacing: .06em;
   }
-
   .brand-copy p {
     max-width: 100%;
     font-size: 13px;
     line-height: 2;
   }
-
-  /* 左側底部照片 */
-
   .brand-line {
     width: 160px;
     height: 100px;
     margin-top: 28px;
   }
-
-  /* 平板照片：維持 80% 寬度 */
-
   .brand-photo {
     width: 80%;
     height: 100%;
-    min-width: 0;
     margin: 0 auto;
   }
-
-  .brand-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-
 }
 
-
-/* =========================================
-   手機
-========================================= */
-
 @media (max-width: 767px) {
-
-  .brand-section {
-    padding: 65px 20px 70px;
-  }
-
+  .brand-section,
   .origin-section {
     padding: 65px 20px 70px;
   }
-
-  /* 上方中央標題 */
-
   .brand-heading {
     padding: 0 42px;
   }
-
   .brand-heading .section-kicker {
     margin-bottom: 10px;
     font-size: 10px;
     letter-spacing: .20em;
   }
-
   .brand-heading .brand-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    white-space: nowrap;
     font-size: 26px;
     line-height: 1.5;
     letter-spacing: .06em;
   }
-
-  /* 中間 Icon */
-
   .brand-title-icon {
     width: 24px;
     height: 24px;
     margin: 0 1px;
   }
-
-  .brand-title-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  /* 副標 */
-
   .brand-heading p {
     margin-top: 14px;
     font-size: 11px;
     line-height: 1.9;
     letter-spacing: .06em;
   }
-
-  .brand-heading p .brand-subtitle-highlight {
-    color: var(--gold2);
-    font-size: 11px;
-    letter-spacing: .06em;
-  }
-
-  /* 裝飾 Icon */
-
   .brand-heading-icon {
     width: 30px;
     height: 30px;
     opacity: .55;
   }
-
   .brand-heading-icon-left {
     top: -5px;
     left: 5px;
   }
-
   .brand-heading-icon-right {
     right: 5px;
     bottom: -5px;
   }
-
-  .brand-heading-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  /* 左右內容改為上下排列 */
-
   .brand-grid {
     display: flex;
     flex-direction: column;
     gap: 38px;
     align-items: stretch;
   }
-
-  /* 左側文字 */
-
   .brand-copy {
     width: 100%;
     padding-left: 0;
     max-width: none;
   }
-
-  .section-kicker {
-    font-size: 12px;
-    letter-spacing: .16em;
-  }
-
   .brand-copy h2,
   .brand-copy h3 {
     margin: 15px 0 22px;
     font-size: 26px;
     line-height: 1.55;
-    letter-spacing: .05em;
   }
-
   .brand-copy .ornament {
     font-size: 42px;
     height: 24px;
   }
-
   .brand-copy p {
     margin: 16px 0;
-    max-width: none;
     font-size: 13px;
     line-height: 2;
-    letter-spacing: .04em;
   }
-
-  /* 左側底部照片 */
-
   .brand-line {
     width: 150px;
     height: 90px;
     margin-top: 25px;
   }
-
-  .brand-line img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-
-  /* 手機照片：滿版寬度，16:10 比例 */
-
   .brand-photo {
     display: block;
     width: 100%;
     height: auto;
     margin: 0;
-    overflow: hidden;
   }
-
-  .brand-photo img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center center;
-  }
-
 }
 
-
-/* =========================================
-   小手機
-========================================= */
-
 @media (max-width: 480px) {
-
   .origin-section {
-    padding: 40px 10px ;
+    padding: 40px 10px;
   }
-
   .brand-section {
     padding: 55px 18px 0;
   }
-
   .brand-heading {
     padding: 0 32px;
   }
-
   .brand-heading .brand-title {
-    gap: 0;
     font-size: 30px;
     line-height: 1.55;
-    letter-spacing: .05em;
-    white-space: nowrap;
   }
-
   .brand-title-word {
     padding: 0 4px;
   }
-
   .brand-title-icon {
     width: 21px;
     height: 21px;
-    margin: 0 1px;
   }
-
   .brand-heading p {
     font-size: 16px;
   }
-
   .brand-heading p .brand-subtitle-highlight {
-    color: var(--gold2);
     font-size: 16px;
-    letter-spacing: .05em;
   }
-
   .brand-heading-icon {
     width: 24px;
     height: 24px;
-    opacity: .5;
   }
-
-  .brand-heading-icon-left {
-    top: -4px;
-    left: 3px;
-  }
-
-  .brand-heading-icon-right {
-    right: 3px;
-    bottom: -4px;
-  }
-
   .brand-grid {
     gap: 32px;
   }
-
   .section-inner {
     width: min(calc(100% - 15px), var(--max));
   }
-
   .brand-copy h2,
   .brand-copy h3 {
     font-size: 24px;
-    line-height: 1.55;
   }
-
   .brand-copy p {
     font-size: 12.5px;
-    line-height: 2;
   }
-
   .brand-line {
     width: 130px;
     height: 80px;
     margin-top: 22px;
   }
-
-  /* 小手機照片 */
-
-  .brand-photo {
-    width: 100%;
-    height: auto;
-  }
-
-  .brand-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-
 }
 
 
-
-
-
-/* 品牌核心｜Brand Essence */
-
-
-/* =========================================
-   品牌核心 Core Section
-   電腦版：左側品牌標題，右側四張卡片
-   平板版：標題置頂，四張卡片排列下方
-   手機版：標題置頂，小手機卡片兩欄
-   保留原本字體、顏色、卡片造型及陰影
-========================================= */
-
+/* =========================================================
+   5. 品牌核心 (Brand Essence Section)
+   ========================================================= */
 .core-section {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-
   width: 100%;
   padding: 60px 0;
-
-  background-color: var(--core-bg);
-
+  background:
+    radial-gradient(ellipse at 90% 10%, rgba(184,154,106,.12), transparent 34%),
+    linear-gradient(135deg, #f8f1e7 0%, #fffaf2 52%, #f1e6d9 100%);
   border-top: 1px solid rgba(179, 154, 117, 0.28);
   border-bottom: 1px solid rgba(179, 154, 117, 0.28);
-
   box-sizing: border-box;
 }
-
-
-/* =========================================
-   左右背景裝飾圖片
-========================================= */
-
-/* .core-section::before {
-  content: "";
-
-  position: absolute;
-  z-index: 0;
-
-  top: 75%;
-  left: -20px;
-
-  width: 220px;
-  height: 190px;
-
-  background-image: url("../images/ar-ul/icon-4.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: left center;
-
-  transform: translateY(-50%);
-  pointer-events: none;
-
-  opacity: 0.4;
-}
-
-.core-section::after {
-  content: "";
-
-  position: absolute;
-  z-index: 0;
-
-  top: 40%;
-  right: -60px;
-
-  width: 170px;
-  height: 150px;
-
-  background-image: url("../images/ar-ul/icon-5.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right center;
-
-  transform: translateY(-50%);
-  pointer-events: none;
-
-  opacity: 0.4;
-} */
-
-
-/* =========================================
-   內容容器
-========================================= */
 
 .core-wrap {
   position: relative;
   z-index: 2;
-
   width: calc(100% - 48px);
   max-width: 1050px;
-
   margin: 0 auto;
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
   gap: 24px;
-
   box-sizing: border-box;
 }
-
-
-/* =========================================
-   品牌標題區｜電腦版左側
-========================================= */
 
 .core-title {
   position: relative;
-
   order: 1;
-
   flex: 0 0 125px;
   min-width: 0;
-
   display: flex;
   align-items: center;
-  justify-content: center;
-
+  justify-content: flex-start;
   padding: 0;
-
-  text-align: center;
-  box-sizing: border-box;
-
+  text-align: left;
   transform: translateX(-45px);
 }
-
-
-/* 品牌標題文字 */
 
 .core-title-text {
   position: relative;
   z-index: 2;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
   min-width: 120px;
-
   padding: 8px 0;
-
   background-color: var(--core-bg);
-
   text-align: left;
 }
 
-
-/* 中文標題 */
-
 .core-title-cn {
   display: block;
-
   color: var(--core-text);
-
   font-family: var(--serif, "Noto Serif TC", serif);
   font-size: 32px;
   font-weight: 500;
   letter-spacing: 0.18em;
   line-height: 1.8;
-
   white-space: nowrap;
 }
-
-
-/* 英文副標 */
 
 .core-title-text small {
   display: block;
-
   margin-top: 2px;
-
-  color: var(--core-muted);
-
+  color: var(--lux-rose);
   font-family: var(--serif, Georgia, serif);
   font-size: 15px;
   font-weight: 400;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   line-height: 1.6;
-
   white-space: nowrap;
 }
 
-
-/* 標題裝飾線 */
-
-.core-title-line {
-  display: none;
-}
-
-
-/* =========================================
-   四大品牌卡片排列｜電腦版右側
-========================================= */
-
 .core-cards {
   order: 2;
-
   flex: 0 1 auto;
   min-width: 0;
-
   display: grid;
   grid-template-columns: repeat(4, 180px);
-
   justify-content: center;
   gap: 16px;
 }
 
-
-/* 品牌特色卡片 */
-
 .core-card {
   position: relative;
   z-index: 0;
-
   width: 180px;
   max-width: 100%;
   min-width: 0;
   min-height: 145px;
-
   padding: 11px 5px 10px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   text-align: center;
-
-  background-color: #FFFCF7;
-
-  border: 1px solid #9C8366;
+  border: 1px solid rgba(184,154,106,.48);
+  background: linear-gradient(145deg, rgba(255,254,250,.96), rgba(246,237,224,.92));
   border-radius: 10px 25px 10px 25px;
-
+  box-shadow: 0 10px 26px rgba(68,53,40,.065), inset 0 0 0 3px rgba(255,255,255,.42);
   box-sizing: border-box;
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease,
-    background-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
-
-/* 卡片立體陰影 */
 
 .core-card::after {
   content: "";
-
   position: absolute;
   z-index: -1;
-
   right: -5px;
   bottom: -5px;
-
   width: 100%;
   height: 100%;
-
   border-radius: 11px;
-
   background: rgba(203, 181, 148, 0.15);
-
   pointer-events: none;
 }
 
-
-/* =========================================
-   Icon 圖片外框｜電腦版
-========================================= */
-
 .core-icon {
   flex: 0 0 auto;
-
   width: 88px;
   height: 88px;
-
   margin-bottom: 5px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   box-sizing: border-box;
 }
 
-
-/* Icon 圖片 */
-
 .core-icon img {
   display: block;
-
   width: 80px;
   height: 80px;
-
   max-width: none;
-
   object-fit: contain;
   object-position: center;
 }
 
-
-/* =========================================
-   卡片中文標題
-========================================= */
-
 .core-card strong {
   display: block;
   max-width: 100%;
-
   color: var(--core-text);
-
   font-family: var(--serif, "Noto Serif TC", serif);
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.7;
-
   white-space: nowrap;
 }
-
-
-/* 卡片英文副標 */
 
 .core-card > small {
   display: block;
   max-width: 100%;
-
   margin-top: -3px;
   margin-bottom: 4px;
-
   color: var(--core-muted);
-
   font-family: var(--serif, Georgia, serif);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.035em;
   line-height: 1.5;
-
   white-space: nowrap;
 }
 
-
-/* =========================================
-   電腦版 Hover
-========================================= */
-
 @media (hover: hover) and (pointer: fine) {
   .core-card:hover {
-    transform: translateY(-3px);
-
-    border-color: var(--core-gold-dark);
-
-    box-shadow: 5px 8px 0 rgba(179, 154, 117, 0.2);
-
+    transform: translateY(-4px);
+    border-color: rgba(168,133,86,.78);
+    box-shadow: 0 16px 34px rgba(68,53,40,.12), inset 0 0 0 3px rgba(255,255,255,.55);
     background-color: #fffefb;
   }
 }
 
-
-/* =========================================
-   1400px 以上
-========================================= */
-
 @media (min-width: 1400px) {
-
-  .core-section::before {
-    top: 75%;
-    left: 0;
-
-    width: 260px;
-    height: 190px;
-  }
-
-  .core-section::after {
-    top: 40%;
-    right: 0;
-
-    width: 190px;
-    height: 150px;
-  }
-
   .core-wrap {
     max-width: 1250px;
     gap: 35px;
   }
-
-  /* 品牌標題維持左側 */
-
   .core-title {
     order: 1;
     flex: 0 0 125px;
-
     transform: translateX(-90px);
   }
-
-  /* 四張卡片維持右側 */
-
   .core-cards {
     order: 2;
-
     grid-template-columns: repeat(4, 180px);
     justify-content: center;
     gap: 40px;
   }
-
   .core-card {
     width: 180px;
   }
 }
 
-
-/* =========================================
-   1600px 以上｜背景裝飾
-========================================= */
-
-@media (min-width: 1600px) {
-
-  .core-section::before {
-    top: 75%;
-    left: 0;
-
-    width: 580px;
-    height: 190px;
-  }
-
-  .core-section::after {
-    top: 40%;
-    right: 0;
-
-    width: 360px;
-    height: 150px;
-  }
-}
-
-
-/* =========================================
-   1201px–1399px｜電腦版
-   卡片固定 180px，不撐滿欄位
-========================================= */
-
 @media (min-width: 1201px) and (max-width: 1399px) {
-
   .core-wrap {
     width: calc(100% - 40px);
     max-width: 1200px;
-
     gap: 18px;
   }
-
-  /* 品牌標題維持左側 */
-
   .core-title {
     order: 1;
-
     flex: 0 0 115px;
-
     transform: translateX(-45px);
   }
-
   .core-title-cn {
     font-size: 28px;
   }
-
   .core-title-text small {
     font-size: 14px;
   }
-
-  /* 四大品牌卡片：固定寬度 */
-
   .core-cards {
     order: 2;
-
-    flex: 0 1 auto;
-    min-width: 0;
-
-    display: grid;
     grid-template-columns: repeat(4, 180px);
-
-    justify-content: center;
     gap: 16px;
   }
-
-  /* 卡片 */
-
   .core-card {
     width: 180px;
-    max-width: 100%;
-    min-width: 0;
     min-height: 145px;
-
-    padding: 11px 5px 10px;
-  }
-
-  /* Icon */
-
-  .core-icon {
-    width: 88px;
-    height: 88px;
-  }
-
-  .core-icon img {
-    width: 80px;
-    height: 80px;
-  }
-
-  /* 卡片文字 */
-
-  .core-card strong {
-    font-size: 20px;
-    letter-spacing: 0.08em;
-  }
-
-  .core-card > small {
-    font-size: 14px;
-    letter-spacing: 0.035em;
   }
 }
 
-
-/* =========================================
-   1200px 以下｜標題置頂、卡片在下方
-========================================= */
-
 @media (max-width: 1200px) {
-
   .core-section {
     padding: 22px 0;
   }
-
   .core-wrap {
     width: calc(100% - 32px);
     max-width: 960px;
-
-    margin: 0 auto;
-
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-
     gap: 14px;
   }
-
-  /* 標題置頂 */
-
   .core-title {
-    order: 0;
-
-    flex: none;
-
-    width: 100%;
-    min-height: 42px;
-
     justify-content: center;
-
-    transform: none;
+    text-align: center;
   }
-
   .core-title-text {
-    min-width: 112px;
     align-items: center;
   }
-
-  /* 標題字體 */
-
   .core-title-cn {
     font-size: 30px;
   }
-
   .core-title-text small {
     font-size: 15px;
   }
-
-  /* 四張卡片在標題下方 */
-
   .core-cards {
     order: 1;
-
     width: 100%;
-    flex: 1 1 auto;
-    min-width: 0;
-
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    justify-content: center;
     gap: 8px;
   }
-
   .core-card {
     width: 100%;
-    min-width: 0;
     min-height: 145px;
-
     padding: 12px 2px;
   }
-
   .core-icon {
     width: 64px;
     height: 64px;
-
     margin-bottom: 6px;
   }
-
   .core-icon img {
     width: 60px;
     height: 60px;
-
-    object-fit: contain;
   }
-
   .core-card strong {
     font-size: 20px;
     letter-spacing: 0.02em;
-    line-height: 1.6;
   }
-
   .core-card > small {
     font-size: 16px;
-    letter-spacing: 0;
-    line-height: 1.5;
-  }
-
-  .core-section::before,
-  .core-section::after {
-    width: 130px;
-    height: 120px;
-
-    opacity: 0.32;
   }
 }
-
-
-/* =========================================
-   992px–1200px｜平板
-========================================= */
-
-@media (min-width: 992px) and (max-width: 1200px) {
-
-  .core-wrap {
-    width: calc(100% - 48px);
-    max-width: 800px;
-
-    gap: 16px;
-  }
-
-  .core-cards {
-    gap: 25px;
-  }
-
-  .core-card {
-    padding: 12px 4px;
-  }
-}
-
-
-/* =========================================
-   768px–991px｜小平板
-========================================= */
-
-@media (min-width: 768px) and (max-width: 991px) {
-
-  .core-section {
-    padding: 22px 0 42px;
-  }
-
-  .core-wrap {
-    width: calc(100% - 32px);
-    max-width: 730px;
-
-    gap: 14px;
-  }
-
-  .core-title {
-    min-height: 42px;
-    transform: none;
-  }
-
-  .core-cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .core-card {
-    min-height: 145px;
-    padding: 12px 2px;
-  }
-
-  .core-icon {
-    width: 64px;
-    height: 64px;
-
-    margin-bottom: 6px;
-  }
-
-  .core-icon img {
-    width: 60px;
-    height: 60px;
-  }
-
-
-  .core-section::before,
-  .core-section::after {
-    width: 130px;
-    height: 120px;
-
-    opacity: 0.32;
-  }
-}
-
-
-/* =========================================
-   767px 以下｜手機
-========================================= */
 
 @media (max-width: 767px) {
-
   .core-section {
     padding: 22px 0 24px;
   }
-
   .core-wrap {
     width: calc(100% - 20px);
     max-width: 600px;
-
-    margin: 0 auto;
-
     flex-direction: column;
     align-items: stretch;
-
     gap: 16px;
   }
-
-  /* 手機標題置頂 */
-
   .core-title {
     order: 0;
-
     flex: none;
-
     width: 100%;
     min-height: 42px;
-
     justify-content: center;
-
     transform: none;
   }
-
-  .core-title-text {
-    min-width: 120px;
-
-    padding: 2px 8px;
-
-    background-color: var(--core-bg);
-  }
-
-  /* 手機預設四欄 */
-
   .core-cards {
     order: 1;
-
     width: 100%;
-    flex: none;
-    min-width: 0;
-
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
-    justify-content: center;
     gap: 15px;
   }
-
-  .core-icon {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 0;
-    }
-
   .core-card {
     width: 100%;
-    min-width: 0;
     min-height: 125px;
     padding: 10px 1px 8px;
     box-shadow: 3px 3px 0 rgba(179, 154, 117, 0.2);
   }
-
-  .core-card::after {
-    right: -3px;
-    bottom: -3px;
-
-    border-radius: 8px;
-  }
-
-
-
   .core-card strong {
     font-size: 16px;
-    letter-spacing: 0;
-    line-height: 1.6;
   }
-
   .core-card > small {
     font-size: 14px;
-    letter-spacing: -0.02em;
-    line-height: 1.45;
-
     white-space: normal;
-    overflow-wrap: anywhere;
   }
-
-  /* 背景裝飾 */
-
-  .core-section::before,
-  .core-section::after {
-    top: auto;
-    bottom: 0;
-
-    width: 80px;
-    height: 80px;
-
-    opacity: 0.2;
-
-    transform: none;
-  }
-
-  .core-section::before {
-    left: -15px;
-    background-position: left bottom;
-  }
-
-  .core-section::after {
-    right: -15px;
-    background-position: right bottom;
-  }
-}
-
-
-/* =========================================
-   480px 以下｜小手機，卡片兩欄
-========================================= */
-
-@media (max-width: 575px) {
-
-  .core-section {
-    padding: 20px 0 42px;
-  }
-
-  .core-wrap {
-    width: calc(100% - 45px);
-    max-width: 400px;
-
-    gap: 17px;
-  }
-
-  /* 兩欄排列 */
-
-  .core-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    column-gap: 12px;
-    row-gap: 13px;
-  }
-
-  .core-card {
-    width: 100%;
-    min-height: 125px;
-
-    padding: 10px 5px 9px;
-  }
-
-  .core-icon {
-    width: 58px;
-    height: 58px;
-
-    margin-bottom: 5px;
-  }
-
-
-  .core-card strong {
-    font-size: 18px;
-    letter-spacing: 0.05em;
-  }
-
-  .core-card > small {
-    font-size: 14px;
-    letter-spacing: 0.015em;
-
-    white-space: nowrap;
-  }
-
-  .core-section::before,
-  .core-section::after {
-    width: 70px;
-    height: 70px;
-
-    opacity: 0.2;
-  }
-}
-
-
-/* =========================================
-   360px 以下｜窄螢幕
-========================================= */
-
-@media (max-width: 360px) {
-
-  .core-wrap {
-    width: calc(100% - 24px);
-  }
-
-  .core-cards {
-    gap: 10px;
-  }
-
-  .core-card {
-    min-height: 120px;
-  }
-
-  .core-icon {
-    width: 52px;
-    height: 52px;
-  }
-
-  .core-icon img {
-    width: 48px;
-    height: 48px;
-  }
-
-  .core-card strong {
-    font-size: 13px;
-  }
-
-  .core-card > small {
-    font-size: 8px;
-  }
-}
-
-
-/* =========================================
-   減少動態效果設定
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .core-card {
-    transition: none;
-  }
-
   .core-card:hover {
     transform: none;
   }
 }
 
-/* 精選行程 */
+@media (max-width: 575px) {
+  .core-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 13px;
+  }
+}
 
 
-/* ========================================
-   精選旅程 Featured Section
-   奶油米白 × 燕麥色 × 咖啡棕 × 焦糖霧金
-   整體放大、往左移、保留原本輪播效果
-======================================== */
-
+/* =========================================================
+   6. 精選旅程 (Featured Section)
+   ========================================================= */
 .featured-section {
   position: relative;
   padding: 95px 0 105px;
   overflow: hidden;
 }
 
-/* .featured-heading {
-  margin-bottom: 34px;
-} */
-
 /* ========================================
    整體版面
    桌機往左移 35px，版面加寬至 110%
 ======================================== */
-
 .featured-layout {
   position: relative;
   left: -35px;
-
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr);
   align-items: center;
   gap: 24px;
-
   width: 110%;
   overflow: visible;
 }
@@ -1946,36 +1040,21 @@ header .container{
    左側箭頭控制
 ======================================== */
 
-.featured-left-controls {
-  position: relative;
-  z-index: 3;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-/* 箭頭共用樣式 */
-.featured-left-controls .circle-btn {
+.classic-arrows .circle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 65px;
-  height: 30px;
-  padding: 0 0 5px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
 
   border: 1px solid rgba(142, 117, 84, 0.55);
-  border-radius: 20px;
+  border-radius: 50%;
 
   background: transparent;
   color: var(--gold-dark);
-
-  font-family: Arial, sans-serif;
-  font-size: 25px;
-  line-height: 1;
 
   cursor: pointer;
 
@@ -1983,39 +1062,39 @@ header .container{
     background 0.25s ease,
     color 0.25s ease,
     border-color 0.25s ease;
+
+  padding-bottom: 4px;
 }
 
 /* 左箭頭：透明背景 */
-.featured-left-controls .circle-btn.prev {
+.classic-arrows button[data-classic-prev] {
   background: transparent;
 }
 
-/* 右箭頭：奶油米白背景 */
-.featured-left-controls .circle-btn.next {
-  background: #f5eee3;
+/* 右箭頭：預設奶油米白背景 */
+.classic-arrows button[data-classic-next] {
+  background: #eee4d8;;
 }
 
-/* 滑過時轉為金棕色 */
-.featured-left-controls .circle-btn:hover {
+/* 滑過時：轉為金棕色 */
+.classic-arrows .circle-btn:hover {
   background: var(--gold-dark);
   color: #fff;
   border-color: var(--gold-dark);
 }
 
+
+
 /* ========================================
    輪播視窗
    桌機：限制顯示範圍，避免第四個行程露出
 ======================================== */
-
 .featured-slider {
   position: relative;
-
   width: calc(50vw + 50%);
   margin-right: calc(50% - 50vw);
-
   min-width: 0;
   box-sizing: border-box;
-
   overflow: hidden;
   padding: 28px 0 30px;
 }
@@ -2024,43 +1103,32 @@ header .container{
    輪播軌道
    保留原本 JS 控制的位移效果
 ======================================== */
-
 .featured-track {
   display: flex;
   align-items: center;
   gap: 30px;
-
   width: max-content;
   max-width: none;
-
   transform: translate3d(0, 0, 0);
-
   transition:
     transform 0.6s cubic-bezier(0.2, 0.75, 0.25, 1);
-
   will-change: transform;
 }
 
 /* ========================================
    行程卡片
-   原本 460px → 桌機 500px
 ======================================== */
-
 .featured-item {
   position: relative;
-
   flex: 0 0 500px;
   width: 500px;
   min-width: 0;
-
   opacity: 0.78;
   transform: scale(0.96);
   transform-origin: center center;
-
   transition:
     opacity 0.45s ease,
     transform 0.45s ease;
-
   box-sizing: border-box;
 }
 
@@ -2084,14 +1152,11 @@ header .container{
 /* ========================================
    行程圖片
 ======================================== */
-
 .featured-photo {
   display: block;
   width: 100%;
   height: auto;
-
   aspect-ratio: 4 / 3;
-
   background: var(--bg) center / cover no-repeat;
   overflow: hidden;
 }
@@ -2100,7 +1165,6 @@ header .container{
   display: block;
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: center;
 }
@@ -2108,24 +1172,19 @@ header .container{
 /* ========================================
    行程資訊
 ======================================== */
-
 .featured-info {
   padding: 14px 3px 0;
-
   visibility: visible;
   opacity: 1;
-
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
-
   box-sizing: border-box;
 }
 
 .featured-info > span {
   display: block;
   margin-bottom: 5px;
-
   color: var(--gold-dark);
   font-family: var(--serif);
   font-size: 10px;
@@ -2135,20 +1194,17 @@ header .container{
 
 .featured-info h3 {
   margin: 5px 0;
-
   color: var(--ink2);
   font-family: var(--serif);
   font-weight: 400;
   font-size: 20px;
   letter-spacing: 0.05em;
   line-height: 1.55;
-
   overflow-wrap: break-word;
 }
 
 .featured-info time {
   display: block;
-
   color: var(--gold-dark);
   font-size: 16px;
   letter-spacing: 0.07em;
@@ -2165,46 +1221,35 @@ header .container{
 /* ========================================
    行程詳細按鈕
 ======================================== */
-
 .featured-detail-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
-
   min-width: 132px;
   margin-top: 18px;
   padding: 10px 16px;
-
   border: 1px solid rgba(142, 117, 84, 0.65);
   border-radius: 0;
-
   background: transparent;
   color: var(--gold-dark);
-
   font-size: 14px;
   letter-spacing: 0.1em;
   line-height: 1.5;
   text-decoration: none;
-
   cursor: pointer;
-
   transition:
     color 0.25s ease,
     background 0.25s ease,
     border-color 0.25s ease;
-
-    float: right;
+  float: right;
 }
 
 .featured-detail-btn::after {
   content: "→";
-
   display: inline-block;
-
   font-family: Arial, sans-serif;
   font-size: 15px;
-
   transition: transform 0.25s ease;
 }
 
@@ -2221,20 +1266,17 @@ header .container{
 /* ========================================
    區塊標題
 ======================================== */
-
 .section-heading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
-
-  transform: translate(-15px, 70px);
+  transform: translate(0, 70px);
 }
 
 .section-heading h2,
 .classic-heading h2 {
   display: block;
-
   color: var(--core-text);
   font-family: var(--serif);
   font-size: 32px;
@@ -2242,14 +1284,12 @@ header .container{
   letter-spacing: 0.18em;
   line-height: 1.8;
   white-space: nowrap;
-
   margin-top: 10px;
 }
 
 /* ========================================
-   其他輪播控制
+   其他輪播控制與圓點
 ======================================== */
-
 .slider-controls,
 .classic-arrows {
   display: flex;
@@ -2257,25 +1297,43 @@ header .container{
 }
 
 .circle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 30px;
+    padding: 0 0 5px;
+    border: 1px solid rgba(142, 117, 84, 0.55);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--europe-gold);
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
 
-  width: 38px;
-  height: 38px;
-  padding: 0;
+.featured-left-controls {
+    position: relative;
+    z-index: 30;
 
-  border: 1px solid rgba(142, 117, 84, 0.55);
-  background: transparent;
-  border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    transform: none;
 
-  color: var(--ink);
-  cursor: pointer;
+    right: 20px;
+}
 
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease;
+.featured-left-controls .circle-btn.next {
+    background: #eee4d8;
 }
 
 .circle-btn:hover {
@@ -2284,33 +1342,24 @@ header .container{
   border-color: var(--gold-dark);
 }
 
-/* ========================================
-   輪播圓點
-======================================== */
-
 .slider-dots {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 7px;
-
   margin-top: 22px;
 }
 
 .slider-dots button {
   display: block;
   flex: 0 0 auto;
-
   width: 7px;
   height: 7px;
   padding: 0;
-
   border: 0;
   border-radius: 50%;
-
   background: #cfc2b4;
   cursor: pointer;
-
   transition:
     width 0.25s ease,
     background 0.25s ease;
@@ -2323,267 +1372,188 @@ header .container{
 }
 
 /* ========================================
-   桌機版
-   只調整輪播視窗，不改原本輪播 JS
-   三張卡片靠右排列，第四張不露出
+   桌面解析度微調
 ======================================== */
-
 @media (min-width: 992px) {
   .featured-layout {
     left: 20px;
     width: 100%;
   }
-
   .featured-slider {
     overflow: hidden;
   }
-
   .featured-track {
     gap: 30px;
   }
-
   .featured-item {
     flex: 0 0 500px;
     width: 500px;
   }
 }
 
-/* ========================================
-   大尺寸桌機
-======================================== */
-
 @media (min-width: 1440px) {
   .featured-layout {
     left: -35px;
     width: 110%;
   }
-
   .featured-item {
     flex-basis: 520px;
     width: 520px;
   }
-
   .featured-track {
     gap: 34px;
   }
-
   .featured-slider {
     padding-top: 32px;
     padding-bottom: 34px;
   }
-
-  .featured-info h3 {
-    font-size: 20px;
-  }
-}
-
-@media (min-width: 2000px) {
-  .featured-slider {
-    width: calc(45vw + 45%);
-    margin-right: calc(50% - 50vw);
-  }
 }
 
 /* ========================================
-   平板
+   平板 (修正標題重疊與箭頭裁切)
 ======================================== */
-
 @media (max-width: 991px) {
   .featured-section {
     padding: 75px 0 85px;
   }
-
-  .featured-heading {
-    margin-bottom: 28px;
+  .section-heading {
+    transform: none; /* 消除向下位移，避免遮擋照片 */
+    margin-bottom: 24px;
   }
-
   .featured-layout {
-    left: -20px;
-    width: 110%;
-
-    grid-template-columns: 42px minmax(0, 1fr);
+    left: 0;
+    width: 100%;
+    grid-template-columns: 1fr; /* 改為單欄排版 */
     gap: 16px;
   }
-
   .featured-left-controls {
-    gap: 10px;
+    position: relative;
+    right: auto;
+    flex-direction: row; /* 箭頭改為水平置中排列 */
+    justify-content: center;
+    gap: 16px;
+    order: 2; /* 放在輪播下方 */
+    margin-top: 14px;
   }
-
   .featured-left-controls .circle-btn {
-    width: 36px;
-    height: 27px;
-    font-size: 15px;
+    width: 48px;
+    height: 34px;
+    font-size: 16px;
   }
-
   .featured-slider {
+    width: 100%;
+    margin-right: 0;
     padding: 22px 0 24px;
+    order: 1;
   }
-
   .featured-track {
     gap: 22px;
   }
-
   .featured-item {
     flex-basis: 380px;
     width: 380px;
   }
-
   .featured-item.is-active {
     transform: scale(1);
-  }
-
-  .featured-info h3 {
-    font-size: 17px;
-  }
-
-  .featured-detail-btn {
-    margin-top: 15px;
   }
 }
 
 /* ========================================
-   手機
+   手機 (完美適應小螢幕)
 ======================================== */
-
 @media (max-width: 767px) {
   .featured-section {
-    padding: 58px 0 65px;
+    padding: 58px 15px 65px; /* 增加左右留白防貼邊 */
   }
-
-  .featured-heading {
-    margin-bottom: 22px;
+  .section-heading {
+    transform: none;
+    margin-bottom: 16px;
   }
-
+  .section-heading h2 {
+    font-size: 24px;
+    white-space: normal;
+  }
   .featured-layout {
-    left: -10px;
+    left: 0;
     width: 100%;
-
-    grid-template-columns: 32px minmax(0, 1fr);
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
-
-  .featured-left-controls {
-    align-self: center;
-    gap: 10px;
-  }
-
-  .featured-left-controls .circle-btn {
-    width: 31px;
-    height: 25px;
-    font-size: 14px;
-  }
-
   .featured-slider {
-    width: calc(50vw + 50%);
-    margin-right: calc(50% - 50vw);
-    padding: 16px 0 20px;
+    width: 100%;
+    margin-right: 0;
+    padding: 10px 0;
+    order: 1;
   }
-
+  .featured-left-controls {
+    position: relative;
+    right: auto;
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    order: 2;
+    margin-top: 10px;
+  }
+  .featured-left-controls .circle-btn {
+    width: 44px;
+    height: 32px;
+    font-size: 16px;
+  }
   .featured-track {
     gap: 16px;
   }
-
   .featured-item {
-    flex-basis: 78vw;
-    width: 78vw;
-
-    opacity: 0.82;
-    transform: scale(0.98);
+    flex-basis: 85vw;
+    width: 85vw;
+    opacity: 0.85;
+    transform: none;
   }
-
   .featured-item.is-active {
     opacity: 1;
-    transform: scale(1);
+    transform: none;
   }
-
   .featured-photo {
     aspect-ratio: 4 / 3;
   }
-
   .featured-info {
     padding: 10px 2px 0;
   }
-
-  .featured-info > span {
-    font-size: 9px;
-  }
-
   .featured-info h3 {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 16px;
   }
-
-  .featured-info time {
-    font-size: 11px;
-  }
-
   .featured-info p {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.8;
   }
-
   .featured-detail-btn {
     min-width: 120px;
     margin-top: 13px;
     padding: 9px 13px;
-    font-size: 11px;
-  }
-
-  .slider-dots {
-    margin-top: 14px;
+    font-size: 12px;
   }
 }
 
 /* ========================================
    小尺寸手機
 ======================================== */
-
 @media (max-width: 390px) {
   .featured-section {
-    padding: 48px 0 55px;
+    padding: 48px 10px 55px;
   }
-
-  .featured-layout {
-    left: -8px;
-    width: 100%;
-
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 8px;
+  .section-heading h2 {
+    font-size: 21px;
   }
-
-  .featured-left-controls .circle-btn {
-    width: 27px;
-    height: 23px;
-    font-size: 12px;
-  }
-
   .featured-item {
-    flex-basis: 78vw;
-    width: 78vw;
-  }
-
-  .featured-track {
-    gap: 13px;
-  }
-
-  .featured-info h3 {
-    font-size: 14px;
-  }
-
-  .featured-info p {
-    font-size: 11px;
-  }
-
-  .featured-detail-btn {
-    min-width: 112px;
-    padding: 8px 11px;
+    flex-basis: 90vw;
+    width: 90vw;
   }
 }
 
-
-
-/* 歐洲 */
-.europe-region,
+/* =========================================================
+   7. 歐洲與紐澳區塊 (Europe & Oceania Region Carousels)
+   ========================================================= */
+europe-region,
 .europe-region * {
   box-sizing: border-box;
 }
@@ -3151,10 +2121,10 @@ header .container{
     box-sizing: border-box;
   }
 
-  .section-heading,
+  /* .section-heading,
   .classic-heading {
-    transform: translate(20px, 70px);
-  }
+    transform: translate(20px, 0);
+  } */
 }
 
 /* ========================================
@@ -3328,7 +2298,7 @@ header .container{
   }
 
   .section-w {
-    width: calc(100% - 70px);
+    width: calc(100% - 10px);
   }
 
   .section-heading h2,
@@ -3340,859 +2310,6 @@ header .container{
     white-space: nowrap;
   }
 }
-
-
-
-/* =========================================================
-   歐洲／紐澳經典行程
-   奶油米白 × 燕麥色 × 咖啡棕 × 霧金
-   桌機 3 張｜平板 2 張｜手機 1 張
-   修正：單張展開、平順動畫、其他卡片不跟著變高
-========================================================= */
-
-/* 區塊設定 */
-.classic-section {
-  position: relative;
-  width: 100%;
-  padding: 95px 0 110px;
-  background: #fffdfa;
-  overflow: hidden;
-}
-
-.oceania-classic-section {
-  background: #fbf7f1;
-}
-
-/* 內容寬度 */
-.classic-section .section-inner {
-  width: min(1320px, calc(100% - 80px));
-  margin: 0 auto;
-}
-
-/* =========================================================
-   標題與篩選列
-========================================================= */
-
-.classic-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  width: 100%;
-  margin: 0;
-  transform: translate(-15px, 15px);
-}
-
-.classic-heading > div:first-child {
-  flex: 0 0 auto;
-  min-width: 0;
-}
-
-.classic-heading .section-kicker {
-  display: block;
-  margin-bottom: 10px;
-  color: #a58b66;
-  font-family: var(--serif);
-  font-size: 13px;
-  letter-spacing: .24em;
-  line-height: 1.5;
-  text-transform: uppercase;
-}
-
-.classic-heading h2 {
-  margin: 0;
-  color: var(--ink, #4b4038);
-  font-family: var(--serif);
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  line-height: 1.8;
-  white-space: nowrap;
-}
-
-/* =========================================================
-   分類篩選
-========================================================= */
-
-.filter-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 18px;
-  margin-left: auto;
-}
-
-.filter-btn {
-  position: relative;
-  flex: 0 0 auto;
-  border: 0;
-  border-bottom: 1px solid transparent;
-  padding: 7px 2px 8px;
-  background: transparent;
-  color: #8b7e72;
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: .10em;
-  line-height: 1.5;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color .25s ease, border-color .25s ease;
-}
-
-.filter-btn:hover {
-  color: #a58b66;
-}
-
-.filter-btn.is-active {
-  color: var(--ink, #4b4038);
-  border-bottom-color: var(--gold-dark, #a58b66);
-}
-
-/* =========================================================
-   左右箭頭
-========================================================= */
-
-.classic-arrows {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 0 0 auto;
-  gap: 10px;
-}
-
-.classic-arrows .circle-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  border: 1px solid rgba(165, 139, 102, .48);
-  border-radius: 50%;
-  background: transparent;
-  color: #8b7457;
-  font-size: 17px;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    color .25s ease,
-    background .25s ease,
-    border-color .25s ease,
-    transform .25s ease;
-}
-
-.classic-arrows .circle-btn:hover {
-  border-color: #a58b66;
-  background: #a58b66;
-  color: #fffdfa;
-  transform: translateY(-2px);
-}
-
-/* =========================================================
-   輪播視窗
-========================================================= */
-
-.classic-viewport {
-  position: relative;
-  width: 100%;
-  margin-top: 42px;
-  overflow-x: clip;
-  overflow-y: visible;
-  touch-action: pan-y;
-}
-
-/* 輪播軌道
-   改為 flex-start，避免同一排卡片被最高卡片撐高 */
-.classic-track {
-  display: flex;
-  align-items: flex-start;
-  gap: 25px;
-  width: 100%;
-  transform: translate3d(0, 0, 0);
-  transition: transform .55s cubic-bezier(.2, .75, .25, 1);
-  will-change: transform;
-}
-
-/* =========================================================
-   歐洲卡片
-========================================================= */
-
-.classic-card {
-  position: relative;
-  display: flex;
-  align-self: flex-start;
-  flex: 0 0 calc((100% - 50px) / 3);
-  flex-direction: column;
-  height: auto;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-  border: 1px solid rgba(179, 154, 117, .24);
-  background: #fff;
-  box-shadow: var(--shadow, 0 12px 35px rgba(68, 53, 40, .07));
-  transition:
-    transform .3s ease,
-    box-shadow .3s ease,
-    border-color .3s ease;
-}
-
-.classic-card:hover {
-  border-color: rgba(179, 154, 117, .48);
-  box-shadow: 0 24px 55px rgba(68, 53, 40, .14);
-}
-
-/* 歐洲卡片圖片 */
-.classic-card .classic-photo,
-.classic-card .classic-image,
-.classic-card .classic-card-image,
-.classic-card .trip-photo {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 330px;
-  flex: 0 0 330px;
-  overflow: hidden;
-  background-color: #e9e0d4;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-/* 卡片若使用 img */
-.classic-card img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform .65s cubic-bezier(.2, .75, .25, 1);
-}
-
-.classic-card:hover img {
-  transform: scale(1.045);
-}
-
-/* 圖片上方柔和漸層 */
-.classic-card .classic-photo::after,
-.classic-card .classic-image::after,
-.classic-card .classic-card-image::after {
-  position: absolute;
-  inset: 45% 0 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(35, 28, 21, 0),
-    rgba(35, 28, 21, .22)
-  );
-  content: "";
-  pointer-events: none;
-}
-
-/* 歐洲卡片內文 */
-.classic-card .classic-body,
-.classic-card .classic-content,
-.classic-card .classic-card-body {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-  padding: 20px 20px 22px;
-}
-
-.classic-card .classic-tag,
-.classic-card .classic-kicker,
-.classic-card .trip-tag {
-  display: block;
-  margin-bottom: 2px;
-  color: var(--gold-dark, #a58b66);
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: .16em;
-  line-height: 1.7;
-}
-
-.classic-card h3,
-.classic-card .classic-title,
-.classic-card .trip-title {
-  margin: 4px 0 0;
-  color: var(--ink, #4b4038);
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: .07em;
-  line-height: 1.55;
-  overflow-wrap: anywhere;
-}
-
-.classic-card p,
-.classic-card .classic-desc {
-  margin: 0 0 9px;
-  color: #776b61;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.1rem;
-  overflow-wrap: anywhere;
-}
-
-
-.classic-card .classic-desc {
-  margin: 0 0 9px;
-  color: #776b61;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.1rem;
-
-  /* 統一描述高度：固定兩行 */
-  height: 3em;
-  line-height: 1.5em;
-
-  /* 超出兩行時隱藏 */
-  overflow: hidden;
-  overflow-wrap: anywhere;
-
-  /* 保留相同的文字區塊高度 */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.classic-card .classic-meta {
-  margin-top: 4px;
-  color: #8a7d72;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: .07em;
-  line-height: 1.8;
-}
-
-/* =========================================================
-   紐澳卡片
-========================================================= */
-
-.trip-card {
-  display: flex;
-  align-self: flex-start;
-  flex: 0 0 calc((100% - 50px) / 3);
-  flex-direction: column;
-  height: auto;
-  min-width: 0;
-  min-height: 0;
-  border: 1px solid rgba(179, 154, 117, .24);
-  background: #fff;
-  box-shadow: var(--shadow, 0 12px 35px rgba(68, 53, 40, .07));
-  transition: box-shadow .3s ease;
-}
-
-.trip-card:hover {
-  box-shadow: 0 24px 55px rgba(68, 53, 40, .14);
-}
-
-.trip-photo {
-  width: 100%;
-  height: 330px;
-  flex: 0 0 330px;
-  background: var(--bg) center / cover no-repeat;
-}
-
-.trip-body {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-  padding: 18px 18px 0;
-}
-
-.trip-tag {
-  display: block;
-  margin-bottom: 2px;
-  color: var(--gold-dark, #a58b66);
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: .16em;
-  line-height: 1.7;
-}
-
-.trip-title {
-  margin: 4px 0 0;
-  color: var(--ink, #4b4038);
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: .07em;
-  line-height: 1.55;
-  overflow-wrap: anywhere;
-}
-
-.trip-meta {
-  margin-top: 4px;
-  color: #8a7d72;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: .07em;
-  line-height: 1.8;
-}
-
-
-.trip-desc {
-  margin: 0 0 9px;
-  color: #776b61;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.1rem;
-
-  /* 統一描述高度：固定兩行 */
-  height: 3em;
-  line-height: 1.5em;
-
-  /* 超出兩行時隱藏 */
-  overflow: hidden;
-  overflow-wrap: anywhere;
-
-  /* 保留相同的文字區塊高度 */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-
-/* =========================================================
-   推薦行程按鈕
-========================================================= */
-
-.classic-card .trip-toggle,
-.trip-card .trip-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  margin-top: auto;
-  border: 0;
-  border-top: 1px solid rgba(179, 154, 117, .28);
-  padding: 13px 0;
-  background: transparent;
-  color: var(--gold-dark, #a58b66);
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: .12em;
-  line-height: 1.6;
-  text-align: left;
-  transition: color .25s ease;
-}
-
-.classic-card .trip-toggle:hover,
-.trip-card .trip-toggle:hover {
-  color: #806849;
-}
-
-.classic-card .trip-toggle .plus,
-.trip-card .trip-toggle .plus {
-  display: inline-block;
-  flex: 0 0 auto;
-  font-size: 18px;
-  line-height: 1;
-  transition: transform .3s ease;
-}
-
-/* 展開時加號旋轉 */
-.classic-card.is-open .trip-toggle .plus,
-.trip-card.is-open .trip-toggle .plus {
-  transform: rotate(45deg);
-}
-
-/* 鍵盤操作焦點 */
-.classic-card .trip-toggle:focus-visible,
-.trip-card .trip-toggle:focus-visible {
-  outline: 1px solid #a58b66;
-  outline-offset: 4px;
-}
-
-/* =========================================================
-   推薦行程展開內容
-   改用 JS 計算實際高度，讓動畫平順
-========================================================= */
-
-.classic-card .trip-more,
-.trip-card .trip-more {
-  display: block;
-  flex: 0 0 auto;
-  width: 100%;
-  height: 0;
-  min-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition:
-    height .38s cubic-bezier(.22, .61, .36, 1),
-    opacity .25s ease;
-  will-change: height;
-}
-
-/* 展開時只調整透明度，實際高度交由 JS 控制 */
-.classic-card.is-open .trip-more,
-.trip-card.is-open .trip-more {
-  opacity: 1;
-}
-
-/* 內容容器 */
-.classic-card .trip-more-inner,
-.trip-card .trip-more-inner {
-  display: flow-root;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* 展開文字 */
-.classic-card .trip-more p,
-.trip-card .trip-more p {
-  margin: 0;
-  padding: 0 0 18px;
-  color: #74685e;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.95;
-  overflow-wrap: anywhere;
-}
-
-/* 歐洲原本的 .classic-more 段落 */
-.classic-card .trip-more .classic-more {
-  margin: 0;
-  padding: 0 0 18px;
-  color: #74685e;
-  font-size: 14px;
-  line-height: 1.95;
-}
-
-/* 紐澳展開清單 */
-.classic-card .trip-more ul,
-.trip-card .trip-more ul {
-  margin: 0;
-  padding: 0 0 18px 17px;
-  color: #74685e;
-  font-size: 14px;
-  line-height: 1.9;
-}
-
-.classic-card .trip-more li,
-.trip-card .trip-more li {
-  margin: 0 0 4px;
-}
-
-/* =========================================================
-   平板｜721px～1000px
-========================================================= */
-
-@media (max-width: 1000px) {
-  .classic-section {
-    padding: 78px 0 90px;
-  }
-
-  .classic-section .section-inner {
-    width: calc(100% - 56px);
-  }
-
-  .classic-heading {
-    gap: 22px;
-    transform: translateY(8px);
-  }
-
-  .classic-heading h2 {
-    font-size: clamp(25px, 3.5vw, 33px);
-  }
-
-  .filter-group {
-    gap: 14px;
-  }
-
-  .filter-btn {
-    font-size: 11px;
-  }
-
-  .classic-arrows {
-    gap: 8px;
-  }
-
-  .classic-arrows .circle-btn {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
-  }
-
-  .classic-viewport {
-    margin-top: 34px;
-  }
-
-  .classic-track {
-    gap: 20px;
-  }
-
-  .classic-card,
-  .trip-card {
-    flex: 0 0 calc((100% - 20px) / 2);
-  }
-
-  .classic-card .classic-photo,
-  .classic-card .classic-image,
-  .classic-card .classic-card-image,
-  .classic-card .trip-photo,
-  .trip-photo {
-    height: 290px;
-    flex-basis: 290px;
-  }
-
-  .classic-card .classic-body,
-  .classic-card .classic-content,
-  .classic-card .classic-card-body {
-    padding: 18px 17px 20px;
-  }
-
-  .classic-card h3,
-  .classic-card .classic-title,
-  .classic-card .trip-title {
-    font-size: 19px;
-  }
-}
-
-/* =========================================================
-   手機｜720px 以下
-========================================================= */
-
-@media (max-width: 720px) {
-  .classic-section {
-    padding: 58px 0 70px;
-  }
-
-  .classic-section .section-inner {
-    width: calc(100% - 36px);
-  }
-
-  .classic-heading {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 18px 12px;
-    transform: none;
-  }
-
-  .classic-heading > div:first-child {
-    grid-column: 1 / -1;
-  }
-
-  .classic-heading .section-kicker {
-    margin-bottom: 7px;
-    font-size: 10px;
-    letter-spacing: .2em;
-  }
-
-  .classic-heading h2 {
-    font-size: clamp(25px, 7vw, 32px);
-    line-height: 1.4;
-    letter-spacing: .055em;
-  }
-
-  /* 篩選列在手機獨立一行 */
-  .filter-group {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-content: flex-start;
-    gap: 18px;
-    width: 100%;
-    margin: 0;
-    padding: 0 0 4px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .filter-group::-webkit-scrollbar {
-    display: none;
-  }
-
-  .filter-btn {
-    flex: 0 0 auto;
-    padding: 7px 0;
-    font-size: 11px;
-    letter-spacing: .06em;
-  }
-
-  .classic-arrows {
-    grid-column: 2;
-    grid-row: 3;
-    justify-self: end;
-    gap: 8px;
-  }
-
-  .classic-arrows .circle-btn {
-    width: 35px;
-    height: 35px;
-    flex-basis: 35px;
-    font-size: 15px;
-  }
-
-  .classic-viewport {
-    margin-top: 23px;
-  }
-
-  .classic-track {
-    gap: 15px;
-  }
-
-  .classic-card,
-  .trip-card {
-    flex: 0 0 100%;
-    width: 100%;
-  }
-
-  .classic-card .classic-photo,
-  .classic-card .classic-image,
-  .classic-card .classic-card-image,
-  .classic-card .trip-photo,
-  .trip-photo {
-    height: clamp(230px, 68vw, 330px);
-    flex-basis: auto;
-  }
-
-  .classic-card .classic-body,
-  .classic-card .classic-content,
-  .classic-card .classic-card-body {
-    padding: 17px 17px 19px;
-  }
-
-  .classic-card .classic-tag,
-  .classic-card .classic-kicker,
-  .classic-card .trip-tag,
-  .trip-tag {
-    font-size: 9px;
-  }
-
-  .classic-card h3,
-  .classic-card .classic-title,
-  .classic-card .trip-title,
-  .trip-title {
-    font-size: 19px;
-    line-height: 1.5;
-  }
-
-  .classic-card p,
-  .classic-card .classic-desc {
-    font-size: 12px;
-    line-height: 1.9;
-  }
-
-  .trip-body {
-    padding: 17px 17px 0;
-  }
-
-  .trip-desc {
-    font-size: 11px;
-  }
-
-  .classic-card .trip-more p,
-  .trip-card .trip-more p {
-    font-size: 11px;
-    line-height: 1.9;
-  }
-
-  .classic-card .trip-toggle,
-  .trip-card .trip-toggle {
-    padding: 13px 0;
-  }
-}
-
-/* =========================================================
-   小手機｜420px 以下
-========================================================= */
-
-@media (max-width: 420px) {
-  .classic-section {
-    padding: 48px 0 58px;
-  }
-
-  .classic-section .section-inner {
-    width: calc(100% - 28px);
-  }
-
-  .classic-heading {
-    gap: 14px 10px;
-  }
-
-  .classic-heading h2 {
-    font-size: 25px;
-  }
-
-  .filter-group {
-    gap: 15px;
-  }
-
-  .filter-btn {
-    font-size: 10px;
-  }
-
-  .classic-arrows .circle-btn {
-    width: 32px;
-    height: 32px;
-    flex-basis: 32px;
-  }
-
-  .classic-viewport {
-    margin-top: 18px;
-  }
-
-  .classic-track {
-    gap: 12px;
-  }
-
-  .classic-card .classic-photo,
-  .classic-card .classic-image,
-  .classic-card .classic-card-image,
-  .classic-card .trip-photo,
-  .trip-photo {
-    height: 235px;
-  }
-
-  .classic-card .classic-body,
-  .classic-card .classic-content,
-  .classic-card .classic-card-body,
-  .trip-body {
-    padding-right: 14px;
-    padding-left: 14px;
-  }
-
-  .classic-card h3,
-  .classic-card .classic-title,
-  .classic-card .trip-title,
-  .trip-title {
-    font-size: 18px;
-  }
-}
-
-/* =========================================================
-   減少動態效果偏好
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .classic-track,
-  .classic-card,
-  .trip-card,
-  .classic-card img,
-  .classic-arrows .circle-btn,
-  .filter-btn,
-  .classic-card .trip-toggle .plus,
-  .trip-card .trip-toggle .plus,
-  .classic-card .trip-more,
-  .trip-card .trip-more {
-    transition-duration: .01ms !important;
-  }
-}
-
 
 
 /* 紐澳 */
@@ -4921,5 +3038,574 @@ header .container{
 
   .oceania-region .region-arrows {
     margin-top: 18px;
+  }
+}
+
+
+
+/* =========================================================
+   8. 經典行程 (Classic Tours Section)
+   ========================================================= */
+
+.classic-section {
+  position: relative;
+  width: 100%;
+  padding: 100px 0 110px;
+  background: #fffdf9;
+  overflow: hidden;
+}
+
+.oceania-classic-section {
+  background:
+    radial-gradient(ellipse at 8% 12%, rgba(223,201,163,.14), transparent 36%),
+    linear-gradient(135deg, #f8f0e6 0%, #fdf9f2 58%, #f1e5d9 100%);
+}
+
+.classic-section .section-inner {
+  width: min(1260px, calc(100% - 88px));
+  margin: 0 auto;
+}
+
+/* ========================================
+   區塊標題
+======================================== */
+
+.classic-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  margin: 0;
+}
+
+.classic-heading h2 {
+  margin: 0;
+  color: var(--lux-brown);
+  font-family: var(--serif);
+  font-size: clamp(26px, 2.3vw, 32px);
+  font-weight: 500;
+  letter-spacing: .13em;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.classic-heading h2::after {
+  content: "";
+  display: block;
+  width: 62px;
+  height: 1px;
+  margin-top: 11px;
+  background: linear-gradient(
+    90deg,
+    var(--lux-gold),
+    rgba(184,154,106,.08)
+  );
+}
+
+/* ========================================
+   分類篩選按鈕
+======================================== */
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.5vw, 20px);
+  margin-left: auto;
+}
+
+.filter-btn {
+  position: relative;
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 7px 2px 8px;
+  background: transparent;
+  color: #8a7a6c;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: .07em;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color .25s ease, border-color .25s ease;
+}
+
+.filter-btn:hover {
+  color: #a58b66;
+}
+
+.filter-btn.is-active {
+  color: #493b30;
+  border-bottom-color: var(--lux-gold);
+}
+
+/* ========================================
+   輪播箭頭
+======================================== */
+
+.classic-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  gap: 10px;
+}
+
+/* ========================================
+   輪播視窗
+======================================== */
+
+.classic-viewport {
+  position: relative;
+  width: 100%;
+  margin-top: 32px;
+  overflow-x: clip;
+  overflow-y: visible;
+  touch-action: pan-y;
+}
+
+/* ========================================
+   輪播軌道
+   保留原本輪播定位方式
+======================================== */
+
+.classic-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+  transition: transform .55s cubic-bezier(.2, .75, .25, 1);
+  will-change: transform;
+}
+
+/* ========================================
+   卡片本體
+======================================== */
+
+.classic-card,
+.trip-card {
+  position: relative;
+  display: flex;
+  align-self: flex-start;
+  flex: 0 0 calc((100% - 44px) / 3);
+  flex-direction: column;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(184,154,106,.32);
+  background: linear-gradient(180deg, #fffefa 0%, #fbf5ec 100%);
+  box-shadow: 0 12px 30px rgba(68,53,40,.075);
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+.classic-card:hover,
+.trip-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168,133,86,.68);
+  box-shadow: 0 20px 42px rgba(68,53,40,.14);
+}
+
+/* ========================================
+   圖片容器
+   統一高度 240px
+======================================== */
+
+.classic-card .classic-photo,
+.classic-card .classic-image,
+.classic-card .classic-card-image,
+.classic-card .trip-photo,
+.trip-photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 240px;
+  min-height: 240px;
+  max-height: 240px;
+  flex: 0 0 240px;
+  overflow: hidden;
+  background-color: #e8d9c8;
+}
+
+/* 統一圖片尺寸與裁切 */
+.classic-card img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  min-height: 240px;
+  max-height: 240px;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform .65s cubic-bezier(.2, .75, .25, 1);
+}
+
+/* 滑鼠移入效果 */
+.classic-card:hover img {
+  transform: scale(1.045);
+}
+
+/* ========================================
+   卡片內文
+   固定高度 300px（包含 padding）
+======================================== */
+
+.classic-card .classic-body,
+.classic-card .classic-content,
+.classic-card .classic-card-body {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 20px 20px 22px;
+}
+
+/* ========================================
+   行程標籤
+======================================== */
+
+.classic-card .classic-tag,
+.classic-card .classic-kicker,
+.classic-card .trip-tag {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--gold-dark, #a58b66);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .16em;
+  line-height: 1.7;
+}
+
+/* ========================================
+   行程標題
+   固定三行空間，最多顯示三行
+======================================== */
+
+.classic-card h3,
+.classic-card .classic-title,
+.classic-card .trip-title {
+  margin: 4px 0 0;
+  color: var(--ink, #4b4038);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .07em;
+  line-height: 1.55;
+
+  height: calc(20px * 1.55 * 3);
+  flex: 0 0 calc(20px * 1.55 * 3);
+  box-sizing: border-box;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   一般描述
+======================================== */
+
+.classic-card p,
+.classic-card .classic-desc {
+  margin: 0 0 9px;
+  color: #776b61;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: .1rem;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   描述統一兩行高度
+======================================== */
+
+.classic-card .classic-desc {
+  margin: 0 0 9px;
+  height: 3em;
+  flex: 0 0 3em;
+  line-height: 1.5em;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   行程資訊
+======================================== */
+
+.classic-card .classic-meta {
+  margin-top: 4px;
+  color: #8a7d72;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .07em;
+  line-height: 1.8;
+}
+
+/* ========================================
+   了解更多按鈕
+======================================== */
+
+.classic-card .trip-toggle,
+.trip-card .trip-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  margin-top: auto;
+  border: 0;
+  border-top: 1px solid rgba(179,154,117,.28);
+  padding: 13px 0 0;
+  background: transparent;
+  color: var(--gold-dark, #a58b66);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .12em;
+  line-height: 1.6;
+  text-align: left;
+  transition: color .25s ease;
+}
+
+.classic-card .trip-toggle:hover,
+.trip-card .trip-toggle:hover {
+  color: #806849;
+}
+
+.classic-card .trip-toggle .plus,
+.trip-card .trip-toggle .plus {
+  display: inline-block;
+  flex: 0 0 auto;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform .3s ease;
+}
+
+.classic-card.is-open .trip-toggle .plus,
+.trip-card.is-open .trip-toggle .plus {
+  transform: rotate(45deg);
+}
+
+/* ========================================
+   展開內容
+======================================== */
+
+.classic-card .trip-more,
+.trip-card .trip-more {
+  display: block;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    height .38s cubic-bezier(.22, .61, .36, 1),
+    opacity .25s ease;
+  will-change: height;
+}
+
+.classic-card.is-open .trip-more,
+.trip-card.is-open .trip-more {
+  opacity: 1;
+}
+
+.classic-card .trip-more-inner,
+.trip-card .trip-more-inner {
+  display: flow-root;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 展開文字 */
+
+.classic-card .trip-more p,
+.trip-card .trip-more p {
+  margin: 0;
+  padding: 5px 0 0;
+  color: #74685e;
+  font-size: 14px;
+  line-height: 1.95;
+  overflow-wrap: anywhere;
+}
+
+/* 歐洲原本的 .classic-more 段落 */
+.classic-card .trip-more .classic-more {
+  margin: 0;
+  padding: 5px 0 0;
+  color: #74685e;
+  font-size: 15px;
+  line-height: 1.95;
+}
+
+
+.classic-card .trip-more ul,
+.trip-card .trip-more ul {
+  margin: 0;
+  padding: 0 0 18px 17px;
+  color: #74685e;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.classic-card .trip-more li,
+.trip-card .trip-more li {
+  margin: 0 0 4px;
+}
+
+/* ========================================
+   平板版
+======================================== */
+
+@media (max-width: 1000px) {
+  .classic-section {
+    padding: 78px 0 90px;
+  }
+
+  .classic-section .section-inner {
+    width: calc(100% - 56px);
+  }
+
+  .classic-card,
+  .trip-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+  }
+}
+
+/* ========================================
+   手機版
+======================================== */
+
+@media (max-width: 720px) {
+  .classic-section {
+    padding: 58px 0 70px;
+  }
+
+  .classic-section .section-inner {
+    width: calc(100% - 36px);
+  }
+
+  .classic-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 18px 12px;
+  }
+
+  .classic-heading > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .filter-group {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    gap: 18px;
+    width: 100%;
+    margin: 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .classic-arrows {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: end;
+  }
+
+  .classic-card,
+  .trip-card {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .classic-card:hover,
+  .trip-card:hover,
+  .classic-card:hover img {
+    transform: none;
+  }
+}
+
+
+
+/* =========================================================
+   9. 裝飾與頁尾 (Decorations & Footer)
+   ========================================================= */
+.decorate-visual {
+  position: relative;
+  min-height: 350px;
+  overflow: hidden;
+}
+
+.decorate-visual-image {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(35,25,16,.10), rgba(35,25,16,.02)),
+    url("../images/ar-ul/bg-1.jpg") center / cover no-repeat;
+}
+
+.decorate-visual-copy {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0,0,0,.28);
+  text-align: right;
+}
+
+.decorate-visual-copy span {
+  display: block;
+  font-family: var(--serif);
+  font-size: 10px;
+  letter-spacing: .32em;
+}
+
+.decorate-visual-copy strong {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: .10em;
+}
+
+.site-decorate {
+  background: #40372f;
+  color: #eee5dc;
+  text-align: center;
+  padding: 28px 20px;
+  font-family: var(--serif);
+  letter-spacing: .13em;
+  font-size: 11px;
+}
+
+.site-decorate p {
+  margin: 3px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    transition-duration: .01ms !important;
   }
 }
