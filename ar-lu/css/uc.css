@@ -2318,6 +2318,89 @@ europe-region,
 }
 
 
+/* =========================================================
+   歐洲經典行程、紐澳經典行程｜輪播點點
+========================================================= */
+
+#europeClassicDots,
+#oceaniaClassicDots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin: 28px auto 0;
+  min-height: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+/* 點點按鈕 */
+#europeClassicDots .classic-dot,
+#oceaniaClassicDots .classic-dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d8cbb9;
+  opacity: 1;
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease,
+    border-radius 0.3s ease;
+}
+
+/* 目前所在頁 */
+#europeClassicDots .classic-dot.is-active,
+#oceaniaClassicDots .classic-dot.is-active {
+  width: 24px;
+  height: 7px;
+  border-radius: 10px;
+  background: #9c8366;
+}
+
+/* 滑鼠移入 */
+#europeClassicDots .classic-dot:hover,
+#oceaniaClassicDots .classic-dot:hover {
+  background: #9c8366;
+}
+
+/* 平板 */
+@media (max-width: 991px) {
+  #europeClassicDots,
+  #oceaniaClassicDots {
+    margin-top: 24px;
+    gap: 8px;
+  }
+}
+
+/* 手機 */
+@media (max-width: 575px) {
+  #europeClassicDots,
+  #oceaniaClassicDots {
+    margin-top: 20px;
+    gap: 7px;
+  }
+
+  #europeClassicDots .classic-dot,
+  #oceaniaClassicDots .classic-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  #europeClassicDots .classic-dot.is-active,
+  #oceaniaClassicDots .classic-dot.is-active {
+    width: 20px;
+    height: 6px;
+  }
+}
+
+
+
 /* 紐澳 */
 /* ========================================
    紐澳｜New Zealand & Australia
@@ -3483,6 +3566,29 @@ europe-region,
   margin: 0 0 4px;
 }
 
+.classic-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.classic-card-link:hover,
+.classic-card-link:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 行程介紹：移除底部內距 */
+.classic-card-link .classic-content {
+  padding-bottom: 0;
+}
+
+/* 推薦行程：移除頂部內距，保留底部內距 */
+.classic-card > .classic-content {
+  padding-top: 0;
+  padding-bottom: 24px;
+}
+
 @media (max-width: 1200px) {
   .classic-heading {
     width: 97%;
@@ -3625,5 +3731,104 @@ europe-region,
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     transition-duration: .01ms !important;
+  }
+}
+
+
+/* =========================================================
+   歐洲經典行程、紐澳經典行程｜輪播點點
+   對應 HTML：
+   #europeClassicDots
+   #oceaniaClassicDots
+
+   保留原有樣式，只新增點點外觀
+========================================================= */
+
+#europeClassicDots,
+#oceaniaClassicDots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  width: 100%;
+  min-height: 12px;
+  margin: 28px auto 0;
+  position: relative;
+  z-index: 2;
+}
+
+#europeClassicDots .classic-dot,
+#oceaniaClassicDots .classic-dot {
+  display: block;
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d8cbb9;
+  opacity: 1;
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    flex-basis 0.3s ease,
+    background-color 0.3s ease,
+    border-radius 0.3s ease;
+}
+
+/* 目前所在的行程：金棕色長點 */
+#europeClassicDots .classic-dot.is-active,
+#oceaniaClassicDots .classic-dot.is-active {
+  flex-basis: 24px;
+  width: 24px;
+  height: 7px;
+  border-radius: 10px;
+  background: #9c8366;
+}
+
+/* 滑鼠移入 */
+#europeClassicDots .classic-dot:hover,
+#oceaniaClassicDots .classic-dot:hover {
+  background: #9c8366;
+}
+
+/* 鍵盤操作焦點 */
+#europeClassicDots .classic-dot:focus-visible,
+#oceaniaClassicDots .classic-dot:focus-visible {
+  outline: 2px solid #9c8366;
+  outline-offset: 4px;
+}
+
+/* 平板 */
+@media (max-width: 991px) {
+  #europeClassicDots,
+  #oceaniaClassicDots {
+    margin-top: 24px;
+    gap: 8px;
+  }
+}
+
+/* 手機 */
+@media (max-width: 575px) {
+  #europeClassicDots,
+  #oceaniaClassicDots {
+    margin-top: 20px;
+    gap: 7px;
+  }
+
+  #europeClassicDots .classic-dot,
+  #oceaniaClassicDots .classic-dot {
+    flex-basis: 6px;
+    width: 6px;
+    height: 6px;
+  }
+
+  #europeClassicDots .classic-dot.is-active,
+  #oceaniaClassicDots .classic-dot.is-active {
+    flex-basis: 20px;
+    width: 20px;
+    height: 6px;
   }
 }
