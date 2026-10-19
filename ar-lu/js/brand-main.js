@@ -706,6 +706,70 @@
 
 
   /* =========================================================
+     9A. 經典行程圓點
+     對應 HTML：#europeClassicDots / #oceaniaClassicDots
+     每個圓點代表一個可切換的位置；沿用原有 HTML 卡片
+  ========================================================= */
+
+  function getClassicDots(type) {
+    return document.getElementById(
+      type === "europe" ? "europeClassicDots" : "oceaniaClassicDots"
+    );
+  }
+
+  function renderClassicDots(type) {
+    const wrap = getClassicDots(type);
+    const cards = getClassicCards(type);
+    const state = classicState[type];
+
+    if (!wrap || !state) return;
+
+    const maxOffset = Math.max(0, cards.length - cardsVisible());
+    const dotCount = maxOffset + 1;
+
+    wrap.innerHTML = "";
+    wrap.setAttribute("role", "group");
+    wrap.setAttribute(
+      "aria-label",
+      type === "europe" ? "歐洲經典行程頁面切換" : "紐澳經典行程頁面切換"
+    );
+
+    // 沒有可切換位置時仍保留一個圓點，讓目前狀態清楚可見。
+    for (let index = 0; index < dotCount; index += 1) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "classic-dot";
+      button.setAttribute("aria-label", `切換到第 ${index + 1} 個位置`);
+      button.setAttribute("aria-pressed", String(index === state.offset));
+      button.dataset.classicDot = type;
+      button.dataset.offset = String(index);
+
+      button.addEventListener("click", () => {
+        state.offset = Number(button.dataset.offset) || 0;
+        updateClassicPosition(type);
+      });
+
+      wrap.appendChild(button);
+    }
+
+    updateClassicDots(type);
+  }
+
+  function updateClassicDots(type) {
+    const wrap = getClassicDots(type);
+    const state = classicState[type];
+    if (!wrap || !state) return;
+
+    $$(".classic-dot", wrap).forEach((dot, index) => {
+      const active = index === state.offset;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-pressed", String(active));
+      dot.setAttribute("aria-current", active ? "true" : "false");
+    });
+  }
+
+
+  /* =========================================================
      10. 更新經典行程位置
   ========================================================= */
 
@@ -745,6 +809,8 @@
 
     track.style.transform =
       `translate3d(${-offset}px, 0, 0)`;
+
+    updateClassicDots(type);
   }
 
 
@@ -766,6 +832,7 @@
     classicState.europe.offset = 0;
 
     track.style.transform = "translate3d(0, 0, 0)";
+    renderClassicDots("europe");
     updateClassicPosition("europe");
   }
 
@@ -807,6 +874,7 @@
     classicState.oceania.offset = 0;
 
     track.style.transform = "translate3d(0, 0, 0)";
+    renderClassicDots("oceania");
     updateClassicPosition("oceania");
   }
 
@@ -1024,6 +1092,8 @@
     classicResizeTimer = setTimeout(() => {
       renderFeatured(false);
 
+      renderClassicDots("europe");
+      renderClassicDots("oceania");
       updateClassicPosition("europe");
       updateClassicPosition("oceania");
 
